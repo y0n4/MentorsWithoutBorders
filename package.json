@@ -4,7 +4,7 @@
   "description": "Find a mentor that is potentially across the world",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon server/index.js",
     "dev": "webpack -d --watch ./client/index.js --output ./client/dist/bundle.js",
     "build": "webpack -p ./client/index.js --output ./client/dist/bundle.js"
