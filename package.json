@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Team-Mysk/MentorsWithoutBorders#readme",
   "devDependencies": {
+<<<<<<< HEAD
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
@@ -42,5 +43,10 @@
     "sequelize": "^4.38.0",
     "twilio": "^3.17.4",
     "twilio-video": "^1.10.0"
+=======
+    "react": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
+>>>>>>> Added App.jsx and main index.js
   }
 }
