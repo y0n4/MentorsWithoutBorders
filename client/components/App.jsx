@@ -1,8 +1,9 @@
 import React from 'react';
 
 const App = () => (
-  <div>
-    Mentors without Borders
+  <div className='main'>Mentors
+    <button className='theButton googleOAuth'>
+    </button>
   </div>
 );
 
