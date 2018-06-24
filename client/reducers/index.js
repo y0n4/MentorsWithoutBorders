@@ -26,3 +26,20 @@
   "plugins": ["transform-object-rest-spread"]
   inside .bablerc
 */
+
+import { CHANGE_VIEW } from '../constants/action-types';
+
+const initialState = {
+  view: 'main'
+};
+
+const rootReducer = (state = initialState, action) => {
+  switch(action.type) {
+    case CHANGE_VIEW: 
+      return { ...state, view: 'somethingElse' };
+    default: 
+      return state;
+  }
+};
+
+export default rootReducer;
