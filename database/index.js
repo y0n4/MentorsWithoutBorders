@@ -6,3 +6,5 @@ mongoose.connect('mongodb://localhost/global-mentors');
 var db = mongoose.connection;
 db.on('error', () => console.log('AWWWW, DATABASE IS NOT CONNECTED :('));
 db.once('open', () => console.log('🌸 Database connected🌸 '));
+
+//write funcs here
