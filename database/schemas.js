@@ -41,8 +41,8 @@ var chatSchema = new Schema({
 });
 
 //exporting all schemas for database/index.js
-module.exports = mongoose.model('Users', usersSchema);
-module.exports = mongoose.model('Category', categorySchema);
-module.exports = mongoose.model('Question', questionsSchema);
-module.exports = mongoose.model('Quote', quotesSchema);
-module.exports = mongoose.model('Chat', chatSchema);
+module.exports.Users = mongoose.model('Users', usersSchema);
+module.exports.Category = mongoose.model('Category', categorySchema);
+module.exports.Question = mongoose.model('Question', questionsSchema);
+module.exports.Quote = mongoose.model('Quote', quotesSchema);
+module.exports.Chat = mongoose.model('Chat', chatSchema);
