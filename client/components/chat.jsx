@@ -1,34 +1,52 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
 
 class chat extends Component {
 
-=======
-import React, { Component } from '../../../../../../.cache/typescript/2.9/node_modules/@types/react';
-import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:3000');
-
-class chat extends Component {
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      chat: []
+      message: '',
+      name: ''
     }
 
-    socket.on('test', (data) => {
-      this.setState({
-        chat: data
-      })
-    })
+    this.sendMessage = this.sendMessage.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
->>>>>>> Socket
+  handleChange(event) {
+    this.setState({
+      message: event.target.value
+    });
+  }
+
+  sendMessage(message) {
+    message.preventDefault();
+    this.props.socket.emit('new message', this.state.message);
+  }
+
   render() {
     return (
-      <div>
-        This is the chat
+      <div className='chatBox'>
+        <form onSubmit={this.sendMessage}>
+          <div className='chatTitle'>
+            <h1>TheChatArea</h1>
+          </div>
+          <div className='messagesArea'>
+            {this.props.messages.map((message) => {
+              console.log('Anything', message)
+              return (
+                <div className='aMessage'>
+                  {message.message}
+                </div>
+              )
+            })}
+          </div>
+          <div className='enterMessage'>
+            <textarea className='typeMessage' value={this.state.message} onChange={this.handleChange} />
+            <input type='submit' value='Submit' />
+          </div>
+        </form>
       </div>
     );
   }
