@@ -1,27 +1,24 @@
+import React from 'react'
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker,
 } from "react-google-maps";
-import { API_KEY } from '../../config.js';
 
-const MapWithMentors = withScriptjs(withGoogleMap(props =>
+
+const Map = withScriptjs(withGoogleMap(props =>
   <GoogleMap
     defaultZoom={1}
     defaultCenter={{ lat: 39.828, lng: 98.579 }}
   >
-    <Marker
-      position={{ lat: -34.397, lng: 150.644 }}
-    />
+    {props.locations.map((mentor, i) =>
+      <Marker
+        key={i}
+        position={{ lat: mentor.lat, lng: mentor.lng }}
+      />
+    )}
   </GoogleMap>
 ));
 
-<MapWithAMarker
-  googleMapURL={API_KEY.googleMapUrl}
-  loadingElement={<div style={{ height: `100%` }} />}
-  containerElement={<div style={{ height: `400px` }} />}
-  mapElement={<div style={{ height: `100%` }} />}
-/>
-
-export default MapWithMentors;
+export default Map;
