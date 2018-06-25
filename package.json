@@ -4,13 +4,17 @@
   "description": "Find a mentor that is potentially across the world",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon server/index.js",
-    "dev": "webpack -d --watch ./client/index.js --output ./client/dist/bundle.js"
+    "dev": "webpack -d --watch ./client/index.js --output ./client/dist/bundle.js",
+    "build": "webpack -p ./client/index.js --output ./client/dist/bundle.js"
   },
   "repository": {
     "type": "git",
     "url": "git+git@github.com:Team-Mysk/MentorsWithoutBorders.git"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./tests/setupEnzyme.js"
   },
   "author": "TeamMysk",
   "license": "ISC",
@@ -20,14 +24,20 @@
   "homepage": "https://github.com/Team-Mysk/MentorsWithoutBorders#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.11",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
     "html-loader": "^0.5.5",
     "jest": "^23.1.0",
     "nodemon": "^1.17.5",
+    "regenerator-runtime": "^0.12.0",
+    "socket.io": "^2.1.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.8"
