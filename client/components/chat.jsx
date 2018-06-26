@@ -34,7 +34,6 @@ class chat extends Component {
           </div>
           <div className='messagesArea'>
             {this.props.messages.map((message) => {
-              console.log('Anything', message)
               return (
                 <div className='aMessage'>
                   {message.message}
