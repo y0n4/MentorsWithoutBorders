@@ -1,8 +1,15 @@
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
-const exampleData = require("./exampleData").exampleMessages; //temp stuff
-const bodyParser = require("body-parser");
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const exampleData = require('./exampleData').exampleMessages; //temp stuff
+const bodyParser = require('body-parser');
+const {
+  TWILIO_ACCOUNT_SID,
+  TWILIO_API_KEY,
+  TWILIO_API_SECRET
+} = require('../config.js');
+const AccessToken = require('twilio').jwt.AccessToken;
+const VideoGrant = AccessToken.VideoGrant;
 
 const app = express();
 const server = http.Server(app);
@@ -46,13 +53,16 @@ app.get("/token", function (request, response) {
 
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
-const passport = require("passport"),
-  auth = require("./auth"),
-  cookieParser = require("cookie-parser"),
-  cookieSession = require("cookie-session");
+const passport = require('passport'),
+  auth = require('./auth'),
+  cookieParser = require('cookie-parser'),
+  cookieSession = require('cookie-session');
 auth(passport);
 app.use(passport.initialize());
-app.use(cookieSession({ name: "session", keys: ["123"] }));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['123']
+}));
 app.use(cookieParser());
 //⬆⬆⬆ end ⬆⬆⬆
 
@@ -74,15 +84,19 @@ io.on("connection", socket => {
 app.use(express.static(__dirname + "/../client/dist"));
 
 //------------google oauth------------//=
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   if (req.session.token) {
-    res.cookie("token", req.session.token);
-    res.json({ status: "session cookie set" });
-    console.log("user logged in!");
+    res.cookie('token', req.session.token);
+    res.json({
+      status: 'session cookie set'
+    });
+    console.log('user logged in!');
   } else {
-    res.cookie("token", "");
-    res.json({ status: "session cookie not set" });
-    console.log("user not yet logged in");
+    res.cookie('token', '');
+    res.json({
+      status: 'session cookie not set'
+    });
+    console.log('user not yet logged in');
   }
 });
 
@@ -95,9 +109,10 @@ app.get(
 );
 
 //when user successfully logs in
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }), //back 2 home
+app.get('/auth/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/'
+  }), //back 2 home
   (req, res) => {
     req.session.token = req.user.token; //set cookies
     res.redirect("/"); //back to homepage
@@ -111,6 +126,30 @@ app.get("/logout", (req, res) => {
 });
 //------------google oauth end------------//
 
-server.listen(port, function() {
-  console.log(`Listening on port: ${port}`);
+app.get('/token', (req, res) => {
+  let identity = 'Name Goes Here';
+
+  // Create access token, signed and returned to client containing grant
+  let token = new AccessToken(
+    TWILIO_ACCOUNT_SID,
+    TWILIO_API_KEY,
+    TWILIO_API_SECRET
+  );
+
+  // Assign generated identity to token
+  token.identity = identity;
+
+  const grant = new VideoGrant();
+  // Grant token access to the video API features
+  token.addGrant(grant);
+
+  // Serialize token to JWT string and include JSON response
+  res.send({
+    identity: identity,
+    token: token.toJwt()
+  });
+});
+
+server.listen(port, function () {
+  console.log(`Listening on port: ${port}`)
 });

@@ -3,6 +3,11 @@ import Chat from "./chat.jsx";
 import openSocket from "socket.io-client";
 import "../dist/styles.css";
 import NavBar from "./NavBar.jsx";
+import styles from "../css/app.css";
+import { withStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import VideoComponent from './VideoComponent.jsx';
 
 import VideoComponent from './VideoComponent.jsx';
 
@@ -45,6 +50,9 @@ class App extends Component {
         </div>
         <div>
           <Chat messages={this.state.messages} socket={this.state.socket} />
+        </div>
+        <div>
+          < VideoComponent />
         </div>
       </div>
     );
