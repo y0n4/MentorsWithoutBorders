@@ -2,17 +2,17 @@ import React from 'react';
 import Chat from './chat.jsx';
 import openSocket from 'socket.io-client';
 import styles from '../css/app.css';
-const socket = openSocket('http://localhost:3000');
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      messages: []
+      messages: [],
+      socket: openSocket('http://localhost:3000')
     }
     
-    socket.on('test', (data) => {
+    this.state.socket.on('test', (data) => {
       this.setState({
         messages: data
       })
@@ -25,7 +25,7 @@ class App extends Component {
         <button className='theButton googleOAuth'>
         </button>
         <div className='theButton'>
-          < Chat messages={this.state.messages}/>
+          < Chat messages={this.state.messages} socket={this.state.socket} />
         </div>
       </div>
     )
