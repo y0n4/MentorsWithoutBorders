@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-const sendMessages = require('./socketFuncs/funcs').sendMessages;
+const exampleData = require('./exampleData').exampleMessages; //temp stuff
 const bodyParser = require('body-parser');
 
 const app = express();
