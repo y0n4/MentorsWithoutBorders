@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Chat from './chat.jsx';
 import openSocket from 'socket.io-client';
 import styles from '../css/app.css';
