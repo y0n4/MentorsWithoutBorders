@@ -14,6 +14,8 @@ import Dropdown, {
   DropdownContent
 } from "react-simple-dropdown";
 
+import VideoComponent from './VideoComponent.jsx';
+
 const style = theme => ({
   button: {
     margin: theme.spacing.unit
@@ -104,6 +106,9 @@ class App extends Component {
               {this.googleOAuth()}
             </button>
           </BottomNavigation>
+        </div>
+        <div>
+          <VideoComponent />
         </div>
         <div>
           <Chat messages={this.state.messages} socket={this.state.socket} />
