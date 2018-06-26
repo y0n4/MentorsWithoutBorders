@@ -72,7 +72,7 @@ export default class VideoComponent extends Component {
 
   // Attach participant's track to DOM
   attachParticipantTracks(participant, container) {
-    let tracks = Array.from(participant.track.values());
+    let tracks = Array.from(participant.tracks.values());
     this.attachTracks(tracks, container);
   }
 
@@ -106,9 +106,9 @@ export default class VideoComponent extends Component {
       Shows one or the other depending on current state
     */
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ?
-      (<button label='Leave Room' secondary={true} onClick={() => alert('Leave Room')} />)
+      (<button secondary={true} onClick={() => alert('Leave Room')} >Leave Room</button>)
       :
-      (<button label='Join Room' primary={true} onClick={this.joinRoom} />);
+      (<button label='Join Room' primary={true} onClick={this.joinRoom} >Join Room</button>);
 
     return (
       <div className='videoArea'>
