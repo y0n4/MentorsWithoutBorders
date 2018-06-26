@@ -60,6 +60,7 @@ app.get('/auth/google/callback',
   (req, res) => {
     req.session.token = req.user.token; //set cookies
     res.redirect('/'); //back to homepage
+    //todo save logged in google user to db
   }
 );
 
