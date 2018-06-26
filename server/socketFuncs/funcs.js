@@ -1,8 +1,14 @@
-const sendMessages = (whereToSend, socket) => {
-  return socket.emit(whereToSend, { hello: 'world' })
+const getMessages = (action, socket, messages) => {
+  return socket.on(action, { hello: 'world' });
+};
+
+const sendMessage = (action, message, socket) => {
+  return socket.broadcast.emit(action, {
+    message: message
+  });
 };
 
 module.exports = {
-  sendMessages: sendMessages,
-
-}
+  getMessages: getMessages,
+  sendMessage: sendMessage
+};
