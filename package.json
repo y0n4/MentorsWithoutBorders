@@ -45,10 +45,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.3",
     "graphql": "^0.13.2",
     "mongoose": "^5.1.6",
     "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
     "pg": "^7.4.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
