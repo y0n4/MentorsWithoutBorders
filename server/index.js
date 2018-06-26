@@ -3,10 +3,11 @@ const http = require('http');
 const socketIo = require('socket.io');
 const exampleData = require('./exampleData').exampleMessages; //temp stuff
 const bodyParser = require('body-parser');
-
+const morgan = require('morgan');
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
+app.use(morgan('dev'));
 
 //------------video stuffs------------//=
 
