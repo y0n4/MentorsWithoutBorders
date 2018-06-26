@@ -3,10 +3,10 @@ import Chat from "./chat.jsx";
 import openSocket from "socket.io-client";
 import "../dist/styles.css";
 import NavBar from "./NavBar.jsx";
-
+import { withStyles } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import VideoComponent from './VideoComponent.jsx';
-
-// import VideoComponent from "./VideoComponent.jsx";
 
 
 class App extends Component {
