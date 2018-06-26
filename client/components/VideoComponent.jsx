@@ -19,6 +19,7 @@ export default class VideoComponent extends Component {
     this.joinRoom = this.joinRoom.bind(this);
     this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
     this.roomJoined = this.roomJoined.bind(this);
+    this.leaveRoom = this.leaveRoom.bind(this);
   }
 
   componentDidMount() {
@@ -92,6 +93,14 @@ export default class VideoComponent extends Component {
     }
   }
 
+  leaveRoom() {
+    this.state.activeRoom.disconnect();
+    this.setState({
+      hasJoinedRoom: false,
+      localMediaAvailable: false
+    });
+  }
+
   render() {
     /*
       Controls showing the local track
@@ -106,7 +115,7 @@ export default class VideoComponent extends Component {
       Shows one or the other depending on current state
     */
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ?
-      (<button secondary={true} onClick={() => alert('Leave Room')} >Leave Room</button>)
+      (<button secondary={true} onClick={this.leaveRoom} >Leave Room</button>)
       :
       (<button label='Join Room' primary={true} onClick={this.joinRoom} >Join Room</button>);
 
