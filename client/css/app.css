@@ -10,3 +10,24 @@
   width: 400px;
   border: 1px solid black;
 }
+
+.dropdown {
+  display: inline-block;
+}
+
+.dropdown__content {
+  display: none;
+  position: absolute;
+}
+
+.dropdown--active .dropdown__content {
+  display: block;
+}
+
+.navContainer {
+
+  border-radius: 4px;
+  border: 1px solid #77777769;
+
+
+} 
