@@ -60,6 +60,10 @@
     "redux": "^4.0.0",
     "sequelize": "^4.38.0",
     "twilio": "^3.17.4",
-    "twilio-video": "^1.10.0"
+    "twilio-video": "^1.10.0",
+    "@material-ui/core": "^1.2.3",
+    "@material-ui/icons": "^1.1.0",
+    "react-simple-dropdown": "^3.2.0",
+    "typeface-roboto": "0.0.54"
   }
 }
