@@ -16,7 +16,8 @@ const passport = require('passport'),
 auth(passport);
 app.use(passport.initialize());
 app.use(cookieSession({name: 'session', keys: ['123']}));
-app.use(cookieParser()); //end
+app.use(cookieParser());
+//⬆⬆⬆ end ⬆⬆⬆
 
 const port = process.env.PORT || 3000;
 const data = require('../database');
@@ -37,9 +38,15 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 //------------google oauth------------//=
 app.get('/', (req, res) => {
-  res.json({
-      status: 'session cookie not set'
-  });
+  if(req.session.token) {
+    res.cookie('token', req.session.token);
+    res.json({status: 'session cookie set'});
+    console.log('user logged in!');
+  } else {
+    res.cookie('token', '');
+    res.json({status: 'session cookie not set'});
+    console.log('user not yet logged in');
+  }
 });
 
 //redirects client to google login page
@@ -55,6 +62,13 @@ app.get('/auth/google/callback',
     res.redirect('/'); //back to homepage
   }
 );
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session = null;
+  res.redirect('/');
+});
+//------------google oauth end------------//
 
 server.listen(port, function () {
   console.log(`Listening on port: ${port}`)
