@@ -12,7 +12,7 @@ class App extends Component {
       socket: openSocket('http://localhost:3000')
     }
     
-    this.state.socket.on('test', (data) => {
+    this.state.socket.on('get message', (data) => {
       this.setState({
         messages: data
       })
