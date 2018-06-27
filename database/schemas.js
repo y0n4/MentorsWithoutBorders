@@ -5,10 +5,10 @@ var Schema = mongoose.Schema;
 
 var usersSchema = new Schema({
   id: String,
-  fullName:  {type: String, unique: true},
-  ratings: Number,
+  fullName: {type: String, unique: true},
+  ratings: {type: Number, default: 0},
   bio: String,
-  isMentor: Boolean,
+  isMentor: {type: Boolean, default: false},
   isMentee: {type: Boolean, default: true},
   mentors: [String],
   mentees: [String],

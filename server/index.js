@@ -77,15 +77,23 @@ app.get('/auth/google/callback',
     failureRedirect: '/'
   }), //back 2 home
   (req, res) => {
-    console.log(req.user);
     var googleId = req.user.profile.id;
     var fullName = `${req.user.profile.name.givenName} ${req.user.profile.name.familyName}`;
 
     console.log(fullName);
 
     //check if user exists
-      //if doesn't exist
-        //save to database
+    data.confirmUser(googleId, (err, results) => {
+      console.log(results);
+      if(err) {console.log('not sigining in?')}
+      else if(!results.length) {
+        console.log('not in database yet, saving...');
+        data.saveUser(googleId, fullName, (err, results) => {
+          if(err) console.log('not saving correctly');
+          else console.log('congrats!, saved');
+        });
+      } else console.log('it here hunni');
+    });
         
     req.session.token = req.user.token; //set cookies
     res.redirect("/"); //back to homepage

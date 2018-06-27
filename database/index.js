@@ -27,10 +27,15 @@ var saveUser = (googleId, fullName, callback) => {
     'googleId': googleId,
     'fullName': fullName
   }
+
+  console.log(data);
   var newUser = new schemas.User(data);
   newUser.save((err, savedAccount) => {
-    if(err) callback(err, null);
-    else callback(null, savedEntry);
+    if(err) {
+      console.log(err);
+      callback(err, null);
+    }
+    else callback(null, savedAccount);
   });
 };
 
