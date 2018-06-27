@@ -3,11 +3,13 @@ import Chat from "./chat.jsx";
 import openSocket from "socket.io-client";
 import "../dist/styles.css";
 import NavBar from "./NavBar.jsx";
-import Login from "./Login.jsx"
-// import config from "../../config.js";
-
-import VideoComponent from './VideoComponent.jsx';
-
+import { Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+import Home from "./Home.jsx";
+import MentorHome from "./MentorHome.jsx";
+import MenteeHome from "./MenteeHome.jsx";
+// import VideoComponent from "./VideoComponent.jsx";
 
 class App extends Component {
   constructor() {
@@ -33,10 +35,8 @@ class App extends Component {
     this.refs.dropdown.hide();
   }
 
-  googleResponse(response) {
-    console.log('works?');
-    console.log(response);
-  }
+  googleOAuth() {
+    return "sign in";
 
   onFailure(response){
     console.log('not working');
@@ -55,20 +55,22 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <div className="container">
+        <div className="nav">
           <NavBar />
         </div>
-        {this.googleOAuth()}
-        <div>
-          <VideoComponent />
+        <div class="links">
+          <Link to="/mentee" />
         </div>
-        <div>
-          <Chat messages={this.state.messages} socket={this.state.socket} />
+        <div className="routes">
+          <Route path="/home" component={Home} />
+          <Route path="/mentor" component={MentorHome} />
+          <Route path="/mentee" component={MenteeHome} />
         </div>
       </div>
     );
   }
 }
 
-export default App;
+const AppWithRouter = withRouter(App);
+export default AppWithRouter;
