@@ -14,6 +14,7 @@ const VideoGrant = AccessToken.VideoGrant;
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
+app.use(morgan('dev'));
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport'),
@@ -46,13 +47,8 @@ io.on("connection", socket => {
 
 app.use(express.static(__dirname + "/../client/dist"));
 
-<<<<<<< HEAD
-//------------google oauth------------//=
-app.get('/', (req, res) => {
-=======
 //------------google oauth------------//
 app.get("/", (req, res) => {
->>>>>>> set the prop, prepare to pass this to database
   if (req.session.token) {
     res.cookie('token', req.session.token);
     res.json({
