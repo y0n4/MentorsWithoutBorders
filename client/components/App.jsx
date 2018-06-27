@@ -46,9 +46,6 @@ class App extends Component {
         <div>
           <Chat messages={this.state.messages} socket={this.state.socket} />
         </div>
-        <div>
-          < VideoComponent />
-        </div>
       </div>
     );
   }
