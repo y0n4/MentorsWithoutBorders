@@ -1,34 +1,34 @@
-const path = require("path");
-
-const source = path.join(__dirname, "./client");
-const destination = path.join(__dirname, "./client/dist");
+var path = require("path");
+var SRC_DIR = path.join(__dirname, "/client");
+var DIST_DIR = path.join(__dirname, "/client/dist");
 
 module.exports = {
-  entry: `${source}/index.js`,
+  entry: `${SRC_DIR}/index.js`,
   output: {
     filename: "bundle.js",
-    path: destination
+    path: DIST_DIR
   },
   module: {
     rules: [
       {
-        test: /\.jsx?/,
-        include: source,
-        loader: "babel-loader",
-        query: {
-          presets: ["react", "es2015"]
-        }
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.html$/,
         use: [
           {
-            loader: "url-loader",
+            loader: "html-loader",
             options: {
-              limit: 8192
+              minimize: true
             }
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
       }
     ]
   }
