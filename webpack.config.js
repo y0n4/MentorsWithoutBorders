@@ -1,22 +1,34 @@
+const path = require("path");
+
+const source = path.join(__dirname, "./client/src");
+const destination = path.join(__dirname, "./client/dist");
+
 module.exports = {
+  entry: `${source}/index.jsx`,
+  output: {
+    filename: "bundle.js",
+    path: destination
+  },
   module: {
-    rules: [{
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loader: "babel-loader"
+    rules: [
+      {
+        test: /\.jsx?/,
+        include: source,
+        loader: "babel-loader",
+        query: {
+          presets: ["react", "es2015"]
+        }
       },
       {
-        test: /\.html$/,
-        use: [{
-          loader: "html-loader",
-          options: {
-            minimize: true
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 8192
+            }
           }
-        }]
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        ]
       }
     ]
   }

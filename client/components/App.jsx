@@ -20,8 +20,8 @@ class App extends Component {
       isUserOn: false,
       isAuthenticated: false,
       user: null,
-      token: '',
-      session: ''
+      token: "",
+      session: ""
     };
 
     this.state.socket.on("get message", data => {
@@ -33,24 +33,6 @@ class App extends Component {
 
   handleLinkClick() {
     this.refs.dropdown.hide();
-  }
-
-  googleOAuth() {
-    return "sign in";
-
-  onFailure(response){
-    console.log('not working');
-  }
-
-
-  googleOAuth() {
-    if(!this.state.isAuthenticated) {
-      console.log('true');
-      return (
-        <Login />
-      )
-    }
-    //⭐️TODO >> want to pass in new component dedicated just for google sign in
   }
 
   render() {

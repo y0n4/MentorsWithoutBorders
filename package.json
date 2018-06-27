@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon server/index.js",
-    "dev": "webpack -d --watch ./client/index.js --output ./client/dist/bundle.js",
-    "build": "webpack -p ./client/index.js --output ./client/dist/bundle.js"
+    "start": "node server/index",
+    "start-dev": "concurrently \"nodemon server/index\" \"webpack --watch --mode=development\"",
+    "react-dev": "webpack --watch --mode=development",
+    "react-prod": "webpack --mode production",
+    "eslint": "node ./node_modules/eslint/bin/eslint.js",
+    "postinstall": "npm run react-prod"
   },
   "repository": {
     "type": "git",
@@ -47,6 +50,7 @@
     "@material-ui/core": "^1.2.3",
     "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
+    "concurrently": "^3.6.0",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^6.0.0",
