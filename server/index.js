@@ -11,12 +11,9 @@ const {
 const AccessToken = require('twilio').jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 
-const morgan = require('morgan');
-
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
-app.use(morgan('dev'));
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport'),
