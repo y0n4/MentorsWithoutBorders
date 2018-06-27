@@ -4,6 +4,6 @@ module.exports = {
   GOOGLE_ID: '390790142733-k08dau2l5pjrsgopke88olt0r9tmhc6c.apps.googleusercontent.com',
   GOOGLE_SECRET: 'cyZDXXoCc6Scu0-kNXhXibtf',
   TWILIO_ACCOUNT_SID: 'ACd2bbc4114282568bc3fd22275dfe1501',
-  TWILIO_API_KEY: 'SK921c5320d4c7b70dfed763037afb1fac',
-  TWILIO_API_SECRET: 'PyVCMwAk1tXvoQgjw41LoDRn9bAeBykI'
+  TWILIO_API_KEY: 'SK7e49fd99516924e11ce9a84482a26a00',
+  TWILIO_API_SECRET: 'UzRnFowV9vyqT86tsHeptEH5XJYcYGwC'
 };
