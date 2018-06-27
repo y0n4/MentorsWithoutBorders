@@ -70,7 +70,7 @@ app.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: ["https://www.googleapis.com/auth/userinfo.profile"]
-  })
+  });
 );
 
 //when user successfully logs in
@@ -80,23 +80,22 @@ app.get(
     failureRedirect: "/"
   }), //back 2 home
   (req, res) => {
-    var googleId = req.user.profile.id;
-    var fullName = `${req.user.profile.name.givenName} ${
-      req.user.profile.name.familyName
-    }`;
 
-    console.log(fullName);
+    var info = { //info to save into database
+      googleId: req.user.profile.id,
+      fullName: req.user.profile.name.givenName + ' ' + req.user.profile.name.familyName,
+      gender: req.user.profile.gender
+    };
 
     //check if user exists
-    data.confirmUser(googleId, (err, results) => {
-      console.log(results);
-      if (err) {
-        console.log("not sigining in?");
-      } else if (!results.length) {
-        console.log("not in database yet, saving...");
-        data.saveUser(googleId, fullName, (err, results) => {
-          if (err) console.log("not saving correctly");
-          else console.log("congrats!, saved");
+    data.confirmUser(info.googleId, (err, results) => {
+      if(err) {
+        console.log(err);
+      } else if(!results.length) {
+        console.log('not in database yet, saving...');
+        data.saveUser(info, (err, results) => {
+          if(err) console.log('not saving correctly');
+          else console.log('saved');
         });
       } else console.log("it here hunni");
     });
