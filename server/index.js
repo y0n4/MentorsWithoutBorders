@@ -3,6 +3,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const exampleData = require('./exampleData').exampleMessages; //temp stuff
 const bodyParser = require('body-parser');
+<<<<<<< HEAD
 const {
   TWILIO_ACCOUNT_SID,
   TWILIO_API_KEY,
@@ -11,9 +12,13 @@ const {
 const AccessToken = require('twilio').jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 
+=======
+const morgan = require('morgan');
+>>>>>>> b9edf8236475611e803adf131dd5af215b91a790
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
+app.use(morgan('dev'));
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport'),
