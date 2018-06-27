@@ -18,7 +18,8 @@ class App extends Component {
       isUserOn: false,
       isAuthenticated: false,
       user: null,
-      token: ''
+      token: '',
+      session: ''
     };
 
     this.state.socket.on("get message", data => {
