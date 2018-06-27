@@ -9,6 +9,7 @@ import { withRouter } from "react-router";
 import Home from "./Home.jsx";
 import MentorHome from "./MentorHome.jsx";
 import MenteeHome from "./MenteeHome.jsx";
+import Login from "./Login.jsx";
 // import VideoComponent from "./VideoComponent.jsx";
 
 class App extends Component {
@@ -51,6 +52,7 @@ class App extends Component {
         <div className="nav">
           <NavBar />
         </div>
+        {this.googleOAuth()}
         <div class="links">
           <Link to="/mentee" />
         </div>
