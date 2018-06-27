@@ -14,7 +14,6 @@ const VideoGrant = AccessToken.VideoGrant;
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
-app.use(morgan('dev'));
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport'),

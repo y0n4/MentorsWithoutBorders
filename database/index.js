@@ -35,6 +35,6 @@ var saveUser = (googleId, fullName, callback) => {
 };
 
 module.exports = {
-  confirmUser = confirmUser,
-  saveUser = saveUser
+  confirmUser: confirmUser,
+  saveUser: saveUser
 }
