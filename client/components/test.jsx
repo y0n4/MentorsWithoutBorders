@@ -18,7 +18,6 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Home from "./Home.jsx";
-import { Target } from "react-popper";
 
 const styles = theme => ({
   button: {
@@ -34,27 +33,19 @@ class NavBar extends React.Component {
     };
 
     this.handleLinkClick = this.handleLinkClick.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
-    // this.renderMentor = this.renderMentor.bind(this);
+
+    this.renderMentor = this.renderMentor.bind(this);
   }
 
-  handleChange() {
+  changeMentorView() {
     this.setState({
-      mentor: !this.state.mentor
+      mentor: true || false
     });
   }
-  // renderButton(value) {
-  //   this.setState({
-  //     value: this.state
-  //   });
-  // }
+
   renderMentor() {
     if (this.state.mentor) {
       return <Redirect to="/mentor" />;
-    } else if (this.state.home) {
-      return <Redirect to="/mentee" />;
-    } else {
-      return <Redirect to="/" />;
     }
   }
 
@@ -67,7 +58,7 @@ class NavBar extends React.Component {
     const { value } = this.state;
     return (
       <div className="navContainer text-center">
-        {/* console.log(value) */}
+        <div>{this.renderMentor()}</div>
         <BottomNavigation
           value={value}
           onChange={this.handleChange}
@@ -84,7 +75,6 @@ class NavBar extends React.Component {
             value="chat"
             icon={<ChatIcon />}
           />
-
           <Dropdown className="account-dropdown" ref="dropdown">
             <DropdownTrigger>
               <BottomNavigationAction
@@ -101,14 +91,12 @@ class NavBar extends React.Component {
               </ul>
               <ul>
                 <FormControl component="fieldset">
-                  <div>{this.renderMentor()}</div>
-                  <FormGroup>
+                  <FormGroup row>
                     <FormControlLabel
                       control={
                         <Switch
                           checked={this.state.mentor}
-                          onChange={this.handleChange.bind(this)}
-                          value="mentor"
+                          onChange={this.changeMentorView.bind(this)}
                         />
                       }
                       label="Mentor"

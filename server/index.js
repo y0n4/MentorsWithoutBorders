@@ -1,14 +1,14 @@
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const exampleData = require('./exampleData').exampleMessages; //temp stuff
-const bodyParser = require('body-parser');
+const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
+const exampleData = require("./exampleData").exampleMessages; //temp stuff
+const bodyParser = require("body-parser");
 const {
   TWILIO_ACCOUNT_SID,
   TWILIO_API_KEY,
   TWILIO_API_SECRET
-} = require('../config.js');
-const AccessToken = require('twilio').jwt.AccessToken;
+} = require("../config.js");
+const AccessToken = require("twilio").jwt.AccessToken;
 const VideoGrant = AccessToken.VideoGrant;
 
 const app = express();
@@ -16,16 +16,18 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
-const passport = require('passport'),
-  auth = require('./auth'),
-  cookieParser = require('cookie-parser'),
-  cookieSession = require('cookie-session');
+const passport = require("passport"),
+  auth = require("./auth"),
+  cookieParser = require("cookie-parser"),
+  cookieSession = require("cookie-session");
 auth(passport);
 app.use(passport.initialize());
-app.use(cookieSession({
-  name: 'session',
-  keys: ['123']
-}));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["123"]
+  })
+);
 app.use(cookieParser());
 //⬆⬆⬆ end ⬆⬆⬆
 
@@ -49,17 +51,17 @@ app.use(express.static(__dirname + "/../client/dist"));
 //------------google oauth------------//
 app.get("/", (req, res) => {
   if (req.session.token) {
-    res.cookie('token', req.session.token);
+    res.cookie("token", req.session.token);
     res.json({
-      status: 'session cookie set'
+      status: "session cookie set"
     });
-    console.log('user logged in!');
+    console.log("user logged in!");
   } else {
-    res.cookie('token', '');
+    res.cookie("token", "");
     res.json({
-      status: 'session cookie not set'
+      status: "session cookie not set"
     });
-    console.log('user not yet logged in');
+    console.log("user not yet logged in");
   }
 });
 
@@ -72,29 +74,33 @@ app.get(
 );
 
 //when user successfully logs in
-app.get('/auth/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/'
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/"
   }), //back 2 home
   (req, res) => {
     var googleId = req.user.profile.id;
-    var fullName = `${req.user.profile.name.givenName} ${req.user.profile.name.familyName}`;
+    var fullName = `${req.user.profile.name.givenName} ${
+      req.user.profile.name.familyName
+    }`;
 
     console.log(fullName);
 
     //check if user exists
     data.confirmUser(googleId, (err, results) => {
       console.log(results);
-      if(err) {console.log('not sigining in?')}
-      else if(!results.length) {
-        console.log('not in database yet, saving...');
+      if (err) {
+        console.log("not sigining in?");
+      } else if (!results.length) {
+        console.log("not in database yet, saving...");
         data.saveUser(googleId, fullName, (err, results) => {
-          if(err) console.log('not saving correctly');
-          else console.log('congrats!, saved');
+          if (err) console.log("not saving correctly");
+          else console.log("congrats!, saved");
         });
-      } else console.log('it here hunni');
+      } else console.log("it here hunni");
     });
-        
+
     req.session.token = req.user.token; //set cookies
     res.redirect("/"); //back to homepage
   }
@@ -105,10 +111,15 @@ app.get("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
+
+app.get("/*", (req, res) => {
+  // console.log(req.session);
+  res.redirect("/");
+});
 //------------google oauth end------------//
 
-app.get('/token', (req, res) => {
-  let identity = 'Name Goes Here';
+app.get("/token", (req, res) => {
+  let identity = "Name Goes Here";
 
   // Create access token, signed and returned to client containing grant
   let token = new AccessToken(
@@ -131,6 +142,6 @@ app.get('/token', (req, res) => {
   });
 });
 
-server.listen(port, function () {
-  console.log(`Listening on port: ${port}`)
+server.listen(port, function() {
+  console.log(`Listening on port: ${port}`);
 });
