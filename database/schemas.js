@@ -5,7 +5,9 @@ var Schema = mongoose.Schema;
 
 var usersSchema = new Schema({
   id: String,
+  googleId: String,
   fullName: {type: String, unique: true},
+  gender: String,
   ratings: {type: Number, default: 0},
   bio: String,
   isMentor: {type: Boolean, default: false},
@@ -22,19 +24,16 @@ var categorySchema = new Schema({
 });
 
 var questionsSchema = new Schema({
-  username: String,
   time: String,
   quote: String
 });
 
 var quotesSchema = new Schema({
-  username: String,
   time: String,
   quote: String
 });
 
 var chatSchema = new Schema({
-  username: [String],
   date: String,
   messages: [String]
 });
