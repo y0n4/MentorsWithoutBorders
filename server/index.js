@@ -70,7 +70,7 @@ app.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: ["https://www.googleapis.com/auth/userinfo.profile"]
-  });
+  })
 );
 
 //when user successfully logs in
