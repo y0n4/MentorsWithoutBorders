@@ -35,6 +35,16 @@ class App extends Component {
     this.refs.dropdown.hide();
   }
 
+  googleOAuth() {
+    if(!this.state.isAuthenticated) {
+      console.log('true');
+      return (
+        <Login />
+      )
+    }
+    //⭐️TODO >> want to pass in new component dedicated just for google sign in
+  }
+
   render() {
     return (
       <div className="container">
