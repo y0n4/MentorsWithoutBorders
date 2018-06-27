@@ -46,8 +46,13 @@ io.on("connection", socket => {
 
 app.use(express.static(__dirname + "/../client/dist"));
 
+<<<<<<< HEAD
 //------------google oauth------------//=
 app.get('/', (req, res) => {
+=======
+//------------google oauth------------//
+app.get("/", (req, res) => {
+>>>>>>> set the prop, prepare to pass this to database
   if (req.session.token) {
     res.cookie('token', req.session.token);
     res.json({
@@ -77,6 +82,16 @@ app.get('/auth/google/callback',
     failureRedirect: '/'
   }), //back 2 home
   (req, res) => {
+    console.log(req.user);
+    var googleId = req.user.profile.id;
+    var fullName = `${req.user.profile.name.givenName} ${req.user.profile.name.familyName}`;
+
+    console.log(fullName);
+
+    //check if user exists
+      //if doesn't exist
+        //save to database
+        
     req.session.token = req.user.token; //set cookies
     res.redirect("/"); //back to homepage
   }
