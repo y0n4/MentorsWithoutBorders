@@ -4,9 +4,8 @@ var Schema = mongoose.Schema;
 //all schemas located here
 
 var usersSchema = new Schema({
-  username: {type: String, unique: true},
+  id: String,
   fullName:  {type: String, unique: true},
-  email: String,
   ratings: Number,
   bio: String,
   isMentor: Boolean,
@@ -41,7 +40,7 @@ var chatSchema = new Schema({
 });
 
 //exporting all schemas for database/index.js
-module.exports.Users = mongoose.model('Users', usersSchema);
+module.exports.User = mongoose.model('User', usersSchema);
 module.exports.Category = mongoose.model('Category', categorySchema);
 module.exports.Question = mongoose.model('Question', questionsSchema);
 module.exports.Quote = mongoose.model('Quote', quotesSchema);
