@@ -40,7 +40,7 @@ class NavBar extends React.Component {
 
   handleChange() {
     this.setState({
-      mentor: !this.state.mentor
+      // mentor: !this.state.mentor
     });
   }
   // renderButton(value) {
@@ -107,7 +107,7 @@ class NavBar extends React.Component {
                       control={
                         <Switch
                           checked={this.state.mentor}
-                          onChange={this.handleChange.bind(this)}
+                          onChange={this.handleChange.("mentor")}
                           value="mentor"
                         />
                       }
