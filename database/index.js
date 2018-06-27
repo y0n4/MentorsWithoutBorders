@@ -16,20 +16,15 @@ db.once('open', () => console.log('🌸 Database connected🌸 '));
 //confirms if user exists in database
 var confirmUser = (googleId, callback) => {
   schemas.User.find({'googleId': googleId}, (err, results) => {
+    console.log(googleId, 19)
     if(err) callback(err, null);
     else callback(null, results);
   });
 };
 
 //saves user to database
-var saveUser = (googleId, fullName, callback) => {
-  var data = {
-    'googleId': googleId,
-    'fullName': fullName
-  }
-
-  console.log(data);
-  var newUser = new schemas.User(data);
+var saveUser = (query, callback) => {
+  var newUser = new schemas.User(query);
   newUser.save((err, savedAccount) => {
     if(err) {
       console.log(err);
