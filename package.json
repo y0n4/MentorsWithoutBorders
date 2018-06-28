@@ -9,7 +9,8 @@
     "start-dev": "concurrently \"nodemon server/index\" \"webpack --watch --mode=development\"",
     "react-dev": "webpack --watch --mode=development",
     "react-prod": "webpack --mode production",
-    "eslint": "node ./node_modules/eslint/bin/eslint.js",
+    "lintfix": "node ./node_modules/eslint/bin/eslint.js --fix ./",
+    "eslint": "node ./node_modules/eslint/bin/eslint.js ./",
     "postinstall": "npm run react-prod"
   },
   "repository": {
@@ -36,6 +37,11 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0",
     "html-loader": "^0.5.5",
     "jest": "^23.1.0",
     "nodemon": "^1.17.5",
