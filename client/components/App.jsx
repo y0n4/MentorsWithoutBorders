@@ -18,7 +18,8 @@ class App extends Component {
     this.state = {
       messages: [],
       socket: openSocket("http://localhost:3000"),
-      isUserOn: false
+      isUserOn: false,
+      fullName: ''
     };
     this.setIsUserOn = this.setIsUserOn.bind(this);
     this.googleOAuth = this.googleOAuth.bind(this);
@@ -43,15 +44,15 @@ class App extends Component {
     } else if (this.state.isUserOn === true) { //true
       console.log('43');
       return (
-        <div>hi</div>
+        <h2>Welcome to Mentors without Borders!</h2>
       )
     }
   }
 
   setIsUserOn(info) {
-    // console.log('post malone', info);
     this.setState({
-      isUserOn: true
+      isUserOn: true,
+      fullName: info.dbInfo.fullName
     });
     this.googleOAuth();
   }

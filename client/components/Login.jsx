@@ -20,9 +20,8 @@ class Login extends React.Component {
   google() {
     axios.get('/home')
     .then(res => {
-      console.log(res.data.status);
       if(res.data.status === 'cookie') {
-        this.props.setUser('is bae');
+        this.props.setUser(res.data);
       }
     })
     .catch(err => {

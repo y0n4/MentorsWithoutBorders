@@ -52,10 +52,19 @@ app.use(express.static(__dirname + "/../client/dist"));
 app.get("/home", (req, res) => {
   if (req.session.token) {
     console.log('it exists!');
-    res.cookie("token", req.session.token);
-    res.json({
-      status: "cookie"
+    var googleId = req.session.passport.user.profile.id;
+
+    data.confirmUser(googleId, (err, results) => {
+      if(err) console.log(err);
+      else {
+        res.json({
+          status: 'cookie',
+          dbInfo: results[0]
+        });
+      }
     });
+
+    res.cookie("token", req.session.token);
     console.log("user logged in!");
   } else {
     console.log("user not yet logged in");
