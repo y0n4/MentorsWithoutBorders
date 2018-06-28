@@ -16,10 +16,10 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
-const passport = require("passport"),
-  auth = require("./auth"),
-  cookieParser = require("cookie-parser"),
-  cookieSession = require("cookie-session");
+const passport = require("passport");
+const auth = require("./auth");
+const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 auth(passport);
 app.use(passport.initialize());
 app.use(
@@ -29,7 +29,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-//⬆⬆⬆ end ⬆⬆⬆
+//⬆⬆⬆ end ⬆⬆
 
 const port = process.env.PORT || 3000;
 const data = require("../database");
@@ -49,19 +49,20 @@ io.on("connection", socket => {
 app.use(express.static(__dirname + "/../client/dist"));
 
 //------------google oauth------------//
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   if (req.session.token) {
+    console.log('it exists!');
     res.cookie("token", req.session.token);
     res.json({
-      status: "session cookie set"
+      status: "cookie"
     });
     console.log("user logged in!");
   } else {
+    console.log("user not yet logged in");
     res.cookie("token", "");
     res.json({
-      status: "session cookie not set"
+      status: "no cookie"
     });
-    console.log("user not yet logged in");
   }
 });
 
@@ -80,23 +81,22 @@ app.get(
     failureRedirect: "/"
   }), //back 2 home
   (req, res) => {
-    var googleId = req.user.profile.id;
-    var fullName = `${req.user.profile.name.givenName} ${
-      req.user.profile.name.familyName
-    }`;
 
-    console.log(fullName);
+    var info = { //info to save into database
+      googleId: req.user.profile.id,
+      fullName: req.user.profile.name.givenName + ' ' + req.user.profile.name.familyName,
+      gender: req.user.profile.gender
+    };
 
     //check if user exists
-    data.confirmUser(googleId, (err, results) => {
-      console.log(results);
-      if (err) {
-        console.log("not sigining in?");
-      } else if (!results.length) {
-        console.log("not in database yet, saving...");
-        data.saveUser(googleId, fullName, (err, results) => {
-          if (err) console.log("not saving correctly");
-          else console.log("congrats!, saved");
+    data.confirmUser(info.googleId, (err, results) => {
+      if(err) {
+        console.log(err);
+      } else if(!results.length) {
+        console.log('not in database yet, saving...');
+        data.saveUser(info, (err, results) => {
+          if(err) console.log('not saving correctly');
+          else console.log('saved');
         });
       } else console.log("it here hunni");
     });

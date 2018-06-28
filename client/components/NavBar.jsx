@@ -123,7 +123,6 @@ class NavBar extends React.Component {
               </ul>
             </DropdownContent>
           </Dropdown>
-          {/* <button className="google-oauth">{this.googleOAuth()}</button> */}
         </BottomNavigation>
       </div>
     );
