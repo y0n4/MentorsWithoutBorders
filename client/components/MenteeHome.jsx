@@ -45,7 +45,7 @@ const MenteeHome = props => {
 //         </Grid>
 //       </Grid>
 //     </div>
-//   );
+  );
 };
 
 export default withStyles(styles)(MenteeHome);
