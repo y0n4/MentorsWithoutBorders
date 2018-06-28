@@ -7,7 +7,7 @@ mongoose.connect(process.env.MONGO_URI);
 var schemas = require('./schemas.js');
 
 var db = mongoose.connection;
-db.on('error', () => console.log('AWWWW, DATABASE IS NOT CONNECTED :('));
+db.on('error', (err) => console.log('AWWWW, DATABASE IS NOT CONNECTED :(', err));
 db.once('open', () => console.log('🌸 Database connected🌸 '));
 
 
