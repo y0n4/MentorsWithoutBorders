@@ -9,10 +9,11 @@ class Login extends React.Component {
       login: ''
     };
     this.google = this.google.bind(this);
+
   }
 
   componentDidMount() {
-    console.log(1, 'mounted');
+    console.log(1, 'mounted', this.props);
     this.google();
   }
 
@@ -21,30 +22,12 @@ class Login extends React.Component {
     .then(res => {
       console.log(res.data.status);
       if(res.data.status === 'cookie') {
-        this.setState({login: true});
+        this.props.setUser('is bae');
       }
     })
     .catch(err => {
       console.error(err);
     });
-    // $.ajax({
-    //   url: '/auth/google',
-    //   type: 'GET',
-    //   contentType: 'application/json',      success: (loc) => {
-    //     console.log('worked');
-    //   },
-    //   error: (err) => {
-    //     console.error(err);
-    //   },
-    // });
-    
-    // axios.get('/auth/google')//endpoint
-    //   .then(res => {
-    //     console.log('worked!!');
-    //   })
-    //   .catch(err => {
-    //     console.log('too bad :(');
-    //   });
   }
 
   render() {
@@ -60,3 +43,4 @@ class Login extends React.Component {
 
 export default Login;
 
+//req.session.passport.user.profile.displayName
