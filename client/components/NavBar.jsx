@@ -12,7 +12,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ChatIcon from '@material-ui/icons/Chat';
 import FaceIcon from '@material-ui/icons/Face';
 import Switch from "@material-ui/core/Switch";
-import $ from "jquery";
+// import $ from "jquery";
 import Dropdown, {
   DropdownTrigger,
   DropdownContent
