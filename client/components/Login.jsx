@@ -12,16 +12,17 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    console.log('did mounted');
+    console.log(1, 'mounted');
     this.google();
   }
 
   google() {
-    console.log('oui');
     axios.get('/home')
     .then(res => {
-      console.log(res.data);
-      this.setState({login: true});
+      console.log(res.data.status);
+      if(res.data.status === 'cookie') {
+        this.setState({login: true});
+      }
     })
     .catch(err => {
       console.error(err);
