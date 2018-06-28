@@ -30,18 +30,23 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mentor: false
+      mentor: false,
+      chat: false,
     };
 
     this.handleLinkClick = this.handleLinkClick.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     // this.renderMentor = this.renderMentor.bind(this);
   }
 
-  handleChange() {
-    this.setState({
-      mentor: !this.state.mentor
-    });
+  handleChange(event, value) {
+    console.log('This is the event', event)
+    console.log('This is the value', value);
+    if(value === 'chat') {
+      this.setState({
+        chat: true
+      })
+    }
   }
   // renderButton(value) {
   //   this.setState({
@@ -53,6 +58,8 @@ class NavBar extends React.Component {
       return <Redirect to="/mentor" />;
     } else if (this.state.home) {
       return <Redirect to="/mentee" />;
+    } else if (this.state.chat) {
+      return <Redirect to='/chat' />;
     } else {
       return <Redirect to="/" />;
     }

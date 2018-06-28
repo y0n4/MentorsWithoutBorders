@@ -121,14 +121,11 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/*", (req, res) => {
-  // console.log(req.session);
-  res.redirect("/");
-});
 //------------google oauth end------------//
 
-app.get("/token", (req, res) => {
+app.get('/token', (req, res) => {
   let identity = "Name Goes Here";
+  console.log('This is the get')
 
   // Create access token, signed and returned to client containing grant
   let token = new AccessToken(
@@ -149,6 +146,11 @@ app.get("/token", (req, res) => {
     identity: identity,
     token: token.toJwt()
   });
+});
+
+app.get("/*", (req, res) => {
+  // console.log(req.session);
+  res.redirect("/");
 });
 
 server.listen(port, function() {
