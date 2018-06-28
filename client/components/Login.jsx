@@ -2,15 +2,30 @@ import React, { Component } from "react";
 // import $ from 'jquery'; //for request
 import axios from 'axios';
 
-class Login extends Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-
-    // };
+    this.state = {
+      login: ''
+    };
+    this.google = this.google.bind(this);
   }
 
-  userLogin() {
+  componentDidMount() {
+    console.log('did mounted');
+    this.google();
+  }
+
+  google() {
+    console.log('oui');
+    axios.get('/home')
+    .then(res => {
+      console.log(res.data);
+      this.setState({login: true});
+    })
+    .catch(err => {
+      console.error(err);
+    });
     // $.ajax({
     //   url: '/auth/google',
     //   type: 'GET',
@@ -32,7 +47,13 @@ class Login extends Component {
   }
 
   render() {
-    return <a href="/auth/google"><button className="login-btn">Sign in</button></a>
+    return (
+      <div>
+        <a href="/auth/google"><button className="login-btn">
+          Sign in
+        </button></a>
+      </div>
+    );
   }
 }
 
