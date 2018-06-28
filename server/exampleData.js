@@ -1,11 +1,15 @@
 const exampleMessages = [
   { 
     name: 'Bob',
-    message: 'Whaddup tho'
+    message: 'Bob: Whaddup tho'
   },
   {
     name: 'Bobbert',
-    message: 'shush your face'
+    message: 'Bobbert: Nothing much meh dude'
+  },
+  {
+    name: 'Bobbly',
+    message: 'Bobbly: Stop this nonsense'
   }
 ]
 
