@@ -1,6 +1,6 @@
 import React from "react";
 import Map from "./Map.jsx";
-import { API } from "../../config.js";
+// import { API } from "../../config.js";
 
 const Home = props => {
   return (
