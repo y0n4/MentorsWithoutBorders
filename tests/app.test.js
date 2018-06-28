@@ -1,6 +1,8 @@
 import React from 'react';
 // Functions needed for testing
-import { configure, shallow, mount, render } from 'enzyme';
+import {
+  configure, shallow, mount, render,
+} from 'enzyme';
 
 import App from '../client/components/App';
 
