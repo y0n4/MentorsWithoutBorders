@@ -54,7 +54,7 @@ app.get("/home", (req, res) => {
     console.log('it exists!');
     var googleId = req.session.passport.user.profile.id;
 
-    data.confirmUser(googleId, (err, results) => {
+    data.findUser(googleId, (err, results) => {
       if(err) console.log(err);
       else {
         res.json({
@@ -98,7 +98,7 @@ app.get(
     };
 
     //check if user exists
-    data.confirmUser(info.googleId, (err, results) => {
+    data.findUser(info.googleId, (err, results) => {
       if(err) {
         console.log(err);
       } else if(!results.length) {
