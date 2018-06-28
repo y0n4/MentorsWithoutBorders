@@ -16,10 +16,10 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 //⬇⬇⬇ for google oauth ⬇⬇⬇
-const passport = require("passport"),
-  auth = require("./auth"),
-  cookieParser = require("cookie-parser"),
-  cookieSession = require("cookie-session");
+const passport = require("passport");
+const auth = require("./auth");
+const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 auth(passport);
 app.use(passport.initialize());
 app.use(
@@ -29,7 +29,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-//⬆⬆⬆ end ⬆⬆⬆
+//⬆⬆⬆ end ⬆⬆
 
 const port = process.env.PORT || 3000;
 const data = require("../database");
@@ -49,19 +49,20 @@ io.on("connection", socket => {
 app.use(express.static(__dirname + "/../client/dist"));
 
 //------------google oauth------------//
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   if (req.session.token) {
+    console.log('it exists!');
     res.cookie("token", req.session.token);
     res.json({
-      status: "session cookie set"
+      status: "cookie"
     });
     console.log("user logged in!");
   } else {
+    console.log("user not yet logged in");
     res.cookie("token", "");
     res.json({
-      status: "session cookie not set"
+      status: "no cookie"
     });
-    console.log("user not yet logged in");
   }
 });
 
