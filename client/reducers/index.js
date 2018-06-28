@@ -12,9 +12,9 @@
 
   const rootReducer = (state = initialState, action) => {
     switch(action.type) {
-      case CHANGE_VIEW: 
+      case CHANGE_VIEW:
         return { ...state, view: 'somethingElse' }; <-- not sure if correct since state is supposed to be immutable
-      default: 
+      default:
         return state;
     }
   };
@@ -22,7 +22,7 @@
   export default rootReducer;
 
 
-  Tip: The spread operator is not valid yet therefore include 
+  Tip: The spread operator is not valid yet therefore include
   "plugins": ["transform-object-rest-spread"]
   inside .bablerc
 */
@@ -30,14 +30,14 @@
 import { CHANGE_VIEW } from '../constants/action-types';
 
 const initialState = {
-  view: 'main'
+  view: 'main',
 };
 
 const rootReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case CHANGE_VIEW: 
+  switch (action.type) {
+    case CHANGE_VIEW:
       return { ...state, view: 'somethingElse' };
-    default: 
+    default:
       return state;
   }
 };
