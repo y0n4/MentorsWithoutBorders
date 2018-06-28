@@ -20,7 +20,8 @@ export default class VideoComponent extends Component {
     this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
     this.detachTracks = this.detachTracks.bind(this);
-    this.detachParticipantTracks =this.detachParticipantTracks.bind(this);
+    this.detachParticipantTracks = this.detachParticipantTracks.bind(this);
+    this.roomJoined = this.roomJoined.bind(this);
   }
 
   componentDidMount() {
