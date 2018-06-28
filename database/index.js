@@ -14,7 +14,7 @@ db.once('open', () => console.log('🌸 Database connected🌸 '));
 //⭐️ write funcs here⭐️
 
 //confirms if user exists in database
-var confirmUser = (googleId, callback) => {
+var findUser = (googleId, callback) => {
   schemas.User.find({'googleId': googleId}, (err, results) => {
     console.log(googleId, 19)
     if(err) callback(err, null);
@@ -35,6 +35,6 @@ var saveUser = (query, callback) => {
 };
 
 module.exports = {
-  confirmUser: confirmUser,
+  findUser: findUser,
   saveUser: saveUser
 }

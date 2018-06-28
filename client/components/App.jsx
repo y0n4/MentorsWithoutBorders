@@ -34,15 +34,12 @@ class App extends Component {
     this.refs.dropdown.hide();
   }
 
-  googleOAuth() {
-    console.log('37', this.state.isUserOn)
-    if(this.state.isUserOn == false) { //false
-      console.log(39)
+  googleOAuth() { //the sign in button component
+    if(!this.state.isUserOn) { //false
       return (
         <Login setUser={this.setIsUserOn} />
       )
-    } else if (this.state.isUserOn === true) { //true
-      console.log('43');
+    } else if (!!this.state.isUserOn) { //true
       return (
         <h2>Welcome to Mentors without Borders!</h2>
       )

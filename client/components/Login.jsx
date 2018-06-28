@@ -6,18 +6,17 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: ''
+      login: '' //?not needed atm?
     };
-    this.google = this.google.bind(this);
-
+    this.findUserInfo = this.findUserInfo.bind(this);
   }
 
   componentDidMount() {
     console.log(1, 'mounted', this.props);
-    this.google();
+    this.findUserInfo();
   }
 
-  google() {
+  findUserInfo() {
     axios.get('/home')
     .then(res => {
       if(res.data.status === 'cookie') {
@@ -41,5 +40,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-//req.session.passport.user.profile.displayName
