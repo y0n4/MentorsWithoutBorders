@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Chat from "./chat.jsx";
+import Chat from "./Chat.jsx";
 import openSocket from "socket.io-client";
 import "../dist/styles.css";
 import NavBar from "./NavBar.jsx";
@@ -61,7 +61,7 @@ class App extends Component {
     return (
       <div className="container">
         <div className="nav">
-          <NavBar />
+          <NavBar socket={this.state.socket} messages={this.state.messages} />
         </div>
         {this.googleOAuth()}
         <div class="links">
@@ -71,6 +71,7 @@ class App extends Component {
           <Route path="/home" component={Home} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
+          <Route path='/chat' component={() => <Chat messages={this.state.messages} socket={this.state.socket}/>} />
         </div>
       </div>
     );
