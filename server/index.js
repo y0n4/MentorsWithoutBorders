@@ -123,9 +123,9 @@ app.get('/token', (req, res) => {
 
   // Create access token, signed and returned to client containing grant
   let token = new AccessToken(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_API_KEY,
-    process.env.TWILIO_API_SECRET
+    process.env.TWILIO_ACCOUNT_SID || require('../config.js').TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_API_KEY || require('../config.js').TWILIO_API_KEY,
+    process.env.TWILIO_API_SECRET || require('../config.js').TWILIO_API_SECRET
   );
   // Assign generated identity to token
   token.identity = identity;
