@@ -49,27 +49,31 @@ class Chat extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <VideoComponent />
+            <Paper className={classes.paper}>
+              <VideoComponent />
+            </Paper>
           </Grid>
           <Grid item xs={12}>
-            <form onSubmit={this.sendMessage}>
-              <div className='chatTitle'>
-                <h1>TheChatArea</h1>
-              </div>
-              <div className='messagesArea'>
-                {this.props.messages.map((message) => {
-                  return (
-                    <div className='aMessage'>
-                      {message.message}
-                    </div>
-                  )
-                })}
-              </div>
-              <div className='enterMessage'>
-                <textarea className='typeMessage' value={this.state.message} onChange={this.handleChange} />
-                <input type='submit' value='Submit' />
-              </div>
-            </form>
+            <Paper className={classes.paper}>
+              <form onSubmit={this.sendMessage}>
+                <div className='chatTitle'>
+                  <h1>TheChatArea</h1>
+                </div>
+                <div className='messagesArea'>
+                  {this.props.messages.map((message) => {
+                    return (
+                      <div className='aMessage'>
+                        {message.message}
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className='enterMessage'>
+                  <textarea className='typeMessage' value={this.state.message} onChange={this.handleChange} />
+                  <input type='submit' value='Submit' />
+                </div>
+              </form>
+            </Paper>
           </Grid>
         </Grid>
       </div>

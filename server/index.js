@@ -124,8 +124,7 @@ app.get("/logout", (req, res) => {
 //------------google oauth end------------//
 
 app.get('/token', (req, res) => {
-  let identity = "Name Goes Here";
-  console.log('This is the get')
+  let identity = req.session.passport.user.profile.displayName;
 
   // Create access token, signed and returned to client containing grant
   let token = new AccessToken(
