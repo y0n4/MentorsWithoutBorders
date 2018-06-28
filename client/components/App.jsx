@@ -20,7 +20,8 @@ class App extends Component {
       socket: openSocket("http://localhost:3000"),
       isUserOn: false
     };
-
+    this.setIsUserOn = this.setIsUserOn.bind(this);
+    this.googleOAuth = this.googleOAuth.bind(this);
     this.state.socket.on("get message", data => {
       this.setState({
         messages: data
@@ -33,12 +34,26 @@ class App extends Component {
   }
 
   googleOAuth() {
-    if(!this.state.isAuthenticated) {
-      console.log('true');
+    console.log('37', this.state.isUserOn)
+    if(this.state.isUserOn == false) { //false
+      console.log(39)
       return (
-        <Login />
+        <Login setUser={this.setIsUserOn} />
+      )
+    } else if (this.state.isUserOn === true) { //true
+      console.log('43');
+      return (
+        <div>hi</div>
       )
     }
+  }
+
+  setIsUserOn(info) {
+    // console.log('post malone', info);
+    this.setState({
+      isUserOn: true
+    });
+    this.googleOAuth();
   }
 
   render() {
