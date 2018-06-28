@@ -18,11 +18,7 @@ class App extends Component {
     this.state = {
       messages: [],
       socket: openSocket("http://localhost:3000"),
-      isUserOn: false,
-      isAuthenticated: false,
-      user: null,
-      token: "",
-      session: ""
+      isUserOn: false
     };
 
     this.state.socket.on("get message", data => {
@@ -43,7 +39,6 @@ class App extends Component {
         <Login />
       )
     }
-    //⭐️TODO >> want to pass in new component dedicated just for google sign in
   }
 
   render() {
