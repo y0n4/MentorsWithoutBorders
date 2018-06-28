@@ -13,7 +13,9 @@ export default class VideoComponent extends Component {
       previewTracks: null,
       localMediaAvailable: false, // Represents availability of LocalAudioTrack(mic) and LocalVideoTrack(cam)
       hasJoinedRoom: false,
-      activeRoom: null // Tracks current active room
+      activeRoom: null, // Tracks current active room
+      identity: '',
+      token: ''
     };
 
     this.joinRoom = this.joinRoom.bind(this);
