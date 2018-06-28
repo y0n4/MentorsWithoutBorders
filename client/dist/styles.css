@@ -1,3 +1,12 @@
+  body, html{
+    height:100%;
+    background-image: url('https://i1.wp.com/www.dargadgetz.com/wp-content/uploads/2016/10/Lake-Minimal-Wallpaper-DarGadgetZ.png?w%5Cx3d1200');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
 .messagesArea {
   border: 2px solid black;
   height: 300px;
