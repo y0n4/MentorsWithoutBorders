@@ -2,21 +2,26 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
-const AccessToken = require('twilio').jwt.AccessToken;
+const { AccessToken } = require('twilio').jwt;
+require('dotenv').load({ silent: true });
 
-const VideoGrant = AccessToken.VideoGrant;
+const { VideoGrant } = AccessToken;
+const cors = require('cors');
 
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
 
+
 // ⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const watson = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 // temp stuff
+watson(app);
 auth(passport);
 app.use(passport.initialize());
 app.use(
@@ -31,6 +36,7 @@ app.use(cookieParser());
 const port = process.env.PORT || 3000;
 const data = require('../database');
 
+
 io.on('connection', (socket) => {
   socket.emit('get message', exampleData);
   socket.on('new message', (message) => {
@@ -43,6 +49,7 @@ io.on('connection', (socket) => {
   });
 });
 
+app.use(cors());
 app.use(express.static(`${__dirname}/../client/dist`));
 
 // ------------google oauth------------//

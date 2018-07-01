@@ -46,8 +46,6 @@
     "jest": "^23.1.0",
     "nodemon": "^1.17.5",
     "regenerator-runtime": "^0.12.0",
-    "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.8"
@@ -59,6 +57,7 @@
     "concurrently": "^3.6.0",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
+    "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
@@ -83,10 +82,16 @@
     "react-simple-dropdown": "^3.2.0",
     "redux": "^4.0.0",
     "sequelize": "^4.38.0",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "socket.io-stream": "^0.9.1",
     "stream-buffers": "^3.0.2",
     "twilio": "^3.17.4",
     "twilio-video": "^1.10.0",
     "typeface-roboto": "0.0.54",
+    "vcap_services": "^0.3.4",
+    "watson-developer-cloud": "^3.5.3",
+    "watson-speech": "^0.34.1",
     "websocket": "^1.0.26"
   }
 }
