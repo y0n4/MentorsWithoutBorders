@@ -83,8 +83,10 @@
     "react-simple-dropdown": "^3.2.0",
     "redux": "^4.0.0",
     "sequelize": "^4.38.0",
+    "stream-buffers": "^3.0.2",
     "twilio": "^3.17.4",
     "twilio-video": "^1.10.0",
-    "typeface-roboto": "0.0.54"
+    "typeface-roboto": "0.0.54",
+    "websocket": "^1.0.26"
   }
 }
