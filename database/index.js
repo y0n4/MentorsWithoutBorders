@@ -39,7 +39,8 @@ const User = sequelize.define('user', {
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
 });
-// can also write getterMethods and setterMethods (http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
+// can also write getterMethods and setterMethods, useful?(http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
+// future plans: import all model definitions from another file
 
 // sync model to database
 User.sync({ force: true }).then(() => {
@@ -56,6 +57,13 @@ const findUser = (googleId, callback) => {
 
 // saves user to database
 const saveUser = (query, callback) => {
-  User.create({query})
-  .them
+  // .create() combines .build() and .save()
+  User
+    .create(query)
+    .then((user) => {
+      console.log(user.get({ plain: true }));
+    })
+    .catch((err) => {
+      console.log('not saved to database');
+    });
 };
