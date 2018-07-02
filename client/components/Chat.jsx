@@ -25,13 +25,25 @@ class Chat extends Component {
       name: '',
       test: '',
     };
+    this.translate = this.translate.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
     this.socket = this.props.socket;
+    this.socket.on('results', (translation) => {
+      console.log('console.log --- ', JSON.parse(translation));
+      const newMessage = this.state.messages.slice();
+      newMessage.push({
+        name: 'Watson',
+        message: JSON.parse(translation.translations),
+        time: new Date(),
+      });
+      this.setState({ test: newMessage });
+    });
   }
 
   componentWillMount() {
+    console.log('inside will mount');
     const { name } = this.props;
     this.socket.emit('userJoin', { name });
     this.setState({ name });
@@ -66,6 +78,11 @@ class Chat extends Component {
       }).catch((error) => {
         console.log(error);
       });
+  }
+
+  translate() {
+    const { test } = this.state;
+    this.socket.emit('translationJob', test);
   }
 
   sendMessage(message) {
@@ -121,7 +138,7 @@ class Chat extends Component {
         <button type="button" onClick={() => this.onListenClick()}>
           Listen
         </button>
-        <button type="button" className="stop">
+        <button type="button" className="stop" onClick={() => this.translate()}>
           Stop
         </button>
         {test}
