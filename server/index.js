@@ -17,11 +17,13 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const watson = require('./watson');
+const { speechToText, translate } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 // temp stuff
-watson(app);
+speechToText(app);
+
+
 auth(passport);
 app.use(passport.initialize());
 app.use(
@@ -38,6 +40,8 @@ const data = require('../database');
 
 
 io.on('connection', (socket) => {
+  console.log('New Socket Connection');
+
   socket.emit('get message', exampleData);
   socket.on('new message', (message) => {
     exampleData.push({
@@ -46,6 +50,11 @@ io.on('connection', (socket) => {
     });
 
     socket.broadcast.emit('get message', exampleData);
+  });
+
+  socket.on('translationJob', (text) => {
+    console.log('text', text);
+    translate(text, socket);
   });
 });
 
@@ -128,7 +137,6 @@ app.get('/logout', (req, res) => {
 
 app.get('/token', (req, res) => {
   const identity = req.session.passport.user.profile.displayName;
-
   // Create access token, signed and returned to client containing grant
   const token = new AccessToken(
     process.env.TWILIO_ACCOUNT_SID || require('../config').TWILIO_ACCOUNT_SID,

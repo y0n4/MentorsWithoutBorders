@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
-import VideoComponent from './VideoComponent.jsx';
+import VideoComponent from './VideoComponent';
 
 const styles = theme => ({
   root: {
@@ -20,13 +20,39 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: '',
+      messages: [],
+      msgHistory: '',
       name: '',
       test: '',
     };
+    this.translate = this.translate.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
+    this.socket = this.props.socket;
+    this.socket.on('results', (translation) => {
+      console.log('console.log --- ', JSON.parse(translation));
+      const newMessage = this.state.messages.slice();
+      newMessage.push({
+        name: 'Watson',
+        message: JSON.parse(translation.translations),
+        time: new Date(),
+      });
+      this.setState({ test: newMessage });
+    });
+  }
+
+  componentWillMount() {
+    console.log('inside will mount');
+    const { name } = this.props;
+    this.socket.emit('userJoin', { name });
+    this.setState({ name });
+  }
+
+  componentDidMount() {
+    this.socket.on('oldMessages', (msgHistory) => {
+      this.setState({ msgHistory });
+    });
   }
 
   onListenClick() {
@@ -54,12 +80,20 @@ class Chat extends Component {
       });
   }
 
+  translate() {
+    const { test } = this.state;
+    this.socket.emit('translationJob', test);
+  }
+
   sendMessage(message) {
     message.preventDefault();
     this.props.socket.emit('new message', this.state.message);
   }
 
   handleChange(event) {
+    const currentState = this.state;
+    event.target.value;
+
     this.setState({
       message: event.target.value,
     });
@@ -67,7 +101,7 @@ class Chat extends Component {
 
   render() {
     const { classes } = this.props;
-
+    const { test } = this.state;
     return (
       <div>
         <div className={classes.root}>
@@ -86,9 +120,9 @@ class Chat extends Component {
                     </h1>
                   </div>
                   <div className="messagesArea">
-                    {this.props.messages.map(message => (
-                      <div className="aMessage">
-                        {message.message}
+                    {this.state.messages.map((message, i) => (
+                      <div key={i} className="aMessage">
+                        {message}
                       </div>
                     ))}
                   </div>
@@ -101,9 +135,13 @@ class Chat extends Component {
             </Grid>
           </Grid>
         </div>
-        <button onClick={() => this.onListenClick()} />
-        <button className="stop" />
-        {this.state.test}
+        <button type="button" onClick={() => this.onListenClick()}>
+          Listen
+        </button>
+        <button type="button" className="stop" onClick={() => this.translate()}>
+          Stop
+        </button>
+        {test}
       </div>
     );
   }

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node server/index",
-    "start-dev": "concurrently \"nodemon server/index\" \"webpack --watch --mode=development\"",
+    "start-dev": "nodemon server/index",
     "react-dev": "webpack --watch --mode=development",
     "react-prod": "webpack --mode production",
     "lintfix": "node ./node_modules/eslint/bin/eslint.js --fix ./",

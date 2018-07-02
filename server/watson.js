@@ -1,7 +1,9 @@
 const watson = require('watson-developer-cloud');
 const vcapServices = require('vcap_services');
+const LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
 
-module.exports = (app) => {
+
+module.exports.speechToText = (app) => {
   const sttAuthService = new watson.AuthorizationV1(
     Object.assign(
       {
@@ -27,4 +29,29 @@ module.exports = (app) => {
       },
     );
   });
+};
+
+module.exports.translate = (text, socket) => {
+  let result = '';
+
+  const languageTranslator = new LanguageTranslatorV3({
+    version: '2018-05-01',
+    iam_apikey: 'EoVCSa2DIAALYy59xF0N9IBG1gEcgtWUj9zGZBlsGQ5t',
+  });
+
+  const parameters = {
+    text,
+    model_id: 'en-es',
+  };
+
+  languageTranslator.translate(
+    parameters,
+    (error, response) => {
+      if (error) { console.log(error); }
+      console.log(JSON.stringify(response, null, 2));
+      result = JSON.stringify(response, null, 2);
+      // console.log(socket);
+      socket.emit('results', result);
+    },
+  );
 };
