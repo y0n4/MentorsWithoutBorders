@@ -48,17 +48,18 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // ------------google oauth------------//
 app.get('/home', (req, res) => {
   if (req.session.token) {
-    console.log('it exists!');
+    // console.log('it exists!');
     const googleId = req.session.passport.user.profile.id;
 
     data.findUser(googleId, (err, results) => {
-      if (err) console.log(err);
-      else {
-        res.json({
-          status: 'cookie',
-          dbInfo: results[0],
-        });
-      }
+      // if (err) console.log(err);
+      // else {
+      //   res.json({
+      //     status: 'cookie',
+      //     dbInfo: results[0],
+      //   });
+      // }
+      console.log(err);
     });
 
     res.cookie('token', req.session.token);
@@ -93,17 +94,14 @@ app.get(
       gender: req.user.profile.gender,
     };
 
+    console.log('node', info);
+
     // check if user exists
-    data.findUser(info.googleId, (err, results) => {
-      if (err) {
-        console.log(err);
-      } else if (!results.length) {
-        console.log('not in database yet, saving...');
-        data.saveUser(info, (err, results) => {
-          if (err) console.log('not saving correctly');
-          else console.log('saved');
-        });
-      } else console.log('it here hunni');
+    data.findUser(info.googleId, (results) => {
+      // console.log(results, 'this is from data.findUser');
+      if (results === null) { // null is if user doesn't exist
+        data.saveUser(info);
+      }
     });
 
     req.session.token = req.user.token; // set cookies
