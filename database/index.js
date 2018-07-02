@@ -26,19 +26,17 @@ const User = sequelize.define('user', {
   bio: Sequelize.STRING,
   isMentor: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
     defaultValue: false,
   },
   isMentee: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
     defaultValue: false,
   },
   mentors: Sequelize.ARRAY(Sequelize.TEXT),
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
-});
+},   {timestamps: false});
 // can also write getterMethods and setterMethods, useful?(http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
 // future plans: import all model definitions from another file
 
@@ -52,18 +50,27 @@ User.sync({ force: true }).then(() => {
 
 // confirm if user exists in database
 const findUser = (googleId, callback) => {
-
+  User.findOne({
+    where: {googleId: googleId}
+  }).then((user) => {
+    console.log('user', user.dataValues);
+    callback(user);
+  }).catch((err) => {
+    console.log(err, 'ERROR');
+  });
 };
 
 // saves user to database
-const saveUser = (query, callback) => {
+const saveUser = (query) => {
   // .create() combines .build() and .save()
-  User
-    .create(query)
-    .then((user) => {
-      console.log(user.get({ plain: true }));
-    })
-    .catch((err) => {
-      console.log('not saved to database');
-    });
+  User.create(query).then((user) => {
+    console.log(user.get({ plain: true }));
+  }).catch((err) => {
+    console.log('not saved to database');
+  });
+};
+
+module.exports = {
+  findUser,
+  saveUser,
 };
