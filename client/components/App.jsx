@@ -19,8 +19,8 @@ class App extends Component {
       isUserOn: false,
       name: '',
     };
-    this.setIsUserOn = this.setIsUserOn.bind(this);
     this.socket = io.connect();
+    this.setIsUserOn = this.setIsUserOn.bind(this);
 
     this.socket.on('get message', (data) => {
       this.setState({
@@ -34,7 +34,6 @@ class App extends Component {
       isUserOn: true,
       name: info.dbInfo.fullName,
     });
-    // this.googleOAuth();
   }
 
   handleLinkClick() {
@@ -42,21 +41,18 @@ class App extends Component {
   }
 
   render() {
-    const { isUserOn, messages } = this.state;
+    const { isUserOn, messages, name } = this.state;
     return (
       <div className="container">
         <div className="nav">
           <NavBar messages={messages} socket={this.socket} />
         </div>
         {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
-        {/* <div className="links">
-          <Link to="/mentee" />
-        </div> */}
         <div className="routes">
           <Route exact path="/" component={Home} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
-          <Route path="/chat" component={() => <Chat messages={messages} socket={this.socket} />} />
+          <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
         </div>
       </div>
     );

@@ -20,13 +20,27 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: '',
+      messages: [],
+      msgHistory: '',
       name: '',
       test: '',
     };
     this.sendMessage = this.sendMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
+    this.socket = this.props.socket;
+  }
+
+  componentWillMount() {
+    const { name } = this.props;
+    this.socket.emit('userJoin', { name });
+    this.setState({ name });
+  }
+
+  componentDidMount() {
+    this.socket.on('oldMessages', (msgHistory) => {
+      this.setState({ msgHistory });
+    });
   }
 
   onListenClick() {
@@ -60,6 +74,9 @@ class Chat extends Component {
   }
 
   handleChange(event) {
+    const currentState = this.state;
+    event.target.value;
+
     this.setState({
       message: event.target.value,
     });
@@ -86,9 +103,9 @@ class Chat extends Component {
                     </h1>
                   </div>
                   <div className="messagesArea">
-                    {this.props.messages.map((message, i) => (
+                    {this.state.messages.map((message, i) => (
                       <div key={i} className="aMessage">
-                        {message.message}
+                        {message}
                       </div>
                     ))}
                   </div>
