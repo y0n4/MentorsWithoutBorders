@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-const MentorHome = () => {
-  return (
+const MentorHome = () => (
+  <div>
+    <h1>
+      haroooo
+    </h1>
     <div>
-      <h1>haroooo</h1>
-      <div>
-        {/* <Chat messages={this.state.messages} socket={this.state.socket} /> */}
-      </div>
+      {/* <Chat messages={this.state.messages} socket={this.state.socket} /> */}
     </div>
-  );
-};
+  </div>
+);
 
 export default MentorHome;

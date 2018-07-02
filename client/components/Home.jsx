@@ -1,12 +1,11 @@
-import React from "react";
-import Map from "./Map.jsx";
+import React from 'react';
+import Map from './Map';
 // import { API } from "../../config.js";
 
-const Home = props => {
-  return (
-    <div>
-      what up
-      {/* <Map
+const Home = props => (
+  <div>
+    what up
+    {/* <Map
         locations={[
           { lat: 38, lng: 90 },
           { lat: 60, lng: 70 },
@@ -17,8 +16,7 @@ const Home = props => {
         containerElement={<div style={{ height: `400px` }} />}
         mapElement={<div style={{ height: `100%`, width: `50%` }} />}
       /> */}
-    </div>
-  );
-};
+  </div>
+);
 
 export default Home;

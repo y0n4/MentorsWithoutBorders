@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
-import '../dist/styles.css';
 import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import NavBar from './NavBar.jsx';
-import Chat from './Chat.jsx';
-import Home from './Home.jsx';
-import MentorHome from './MentorHome.jsx';
-import MenteeHome from './MenteeHome.jsx';
-import Login from './Login.jsx';
+import io from 'socket.io-client';
+import MentorHome from './MentorHome';
+import MenteeHome from './MenteeHome';
+import NavBar from './NavBar';
+import Login from './Login';
+import Chat from './Chat';
+import Home from './Home';
+import '../dist/styles.css';
 
 class App extends Component {
   constructor() {
@@ -16,7 +16,7 @@ class App extends Component {
     this.state = {
       messages: [],
       isUserOn: false,
-      fullName: '',
+      name: '',
     };
     this.setIsUserOn = this.setIsUserOn.bind(this);
     this.socket = io.connect();
@@ -31,9 +31,9 @@ class App extends Component {
   setIsUserOn(info) {
     this.setState({
       isUserOn: true,
-      fullName: info.dbInfo.fullName,
+      name: info.dbInfo.fullName,
     });
-    this.googleOAuth();
+    // this.googleOAuth();
   }
 
   handleLinkClick() {
@@ -48,9 +48,9 @@ class App extends Component {
           <NavBar messages={messages} socket={this.socket} />
         </div>
         {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
-        <div className="links">
+        {/* <div className="links">
           <Link to="/mentee" />
-        </div>
+        </div> */}
         <div className="routes">
           <Route path="/home" component={Home} />
           <Route path="/mentor" component={MentorHome} />

@@ -16,6 +16,7 @@ import Dropdown, {
   DropdownContent,
 } from 'react-simple-dropdown';
 
+
 const styles = {
   root: {
     width: 500,
@@ -33,13 +34,14 @@ class NavBar extends React.Component {
       value: '',
       mentor: false,
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    this.switchMode = this.switchMode.bind(this);
   }
 
-  handleChange(event, value) {
-    console.log(value, 'this value!!');
-    this.setState({ value });
-  }
+  // handleChange(event, value) {
+  //   console.log(value, 'this value!!');
+  //   this.setState({ value });
+  // }
 
   switchMode() {
     const { mentor } = this.state;
@@ -48,33 +50,37 @@ class NavBar extends React.Component {
     });
   }
 
-  renderMentor() {
-    const { mentor } = this.state;
-    if (mentor) {
-      return <Redirect to="/mentor" />;
-    } return <Redirect to="/mentee" />;
-  }
+  // renderMentor() {
+  //   const { mentor } = this.state;
+  //   if (mentor) {
+  //     return <Redirect to="/mentor" />;
+  //   } return <Redirect to="/mentee" />;
+  // }
 
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    // const { value } = this.state;
     return (
       <div className="navContainer">
-        <Redirect to={`/${value}`} />
+        {/* <Redirect to={`/${value}`} /> */}
         <BottomNavigation
-          value={value}
           onChange={this.handleChange}
           className={classes.app}
           style={styles.large}
+          showlabel=""
         >
           <BottomNavigationAction
-            value="home"
+            value=""
             icon={<HomeIcon />}
+            component={Link}
+            to="/"
           />
           <BottomNavigationAction
             value="chat"
             icon={<ChatIcon />}
+            component={Link}
+            to="/chat"
           />
           <Dropdown className="account-dropdown" ref="dropdown">
             <DropdownTrigger>
@@ -85,21 +91,16 @@ class NavBar extends React.Component {
             </DropdownTrigger>
             <DropdownContent>
               <ul>
-                <Link to="/home">
-                  Home
-                </Link>
-              </ul>
-              <ul>
                 <FormControl component="fieldset">
-                  <div>
+                  {/* <div>
                     {this.renderMentor()}
-                  </div>
+                  </div> */}
                   <FormGroup>
                     <FormControlLabel
                       control={(
                         <Switch
                           checked={this.state.mentor}
-                          onChange={this.switchMode.bind(this)}
+                          onChange={this.switchMode}
                           value="mentor"
                         />
                       )}

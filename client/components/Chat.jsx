@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
-import VideoComponent from './VideoComponent.jsx';
+import VideoComponent from './VideoComponent';
 
 const styles = theme => ({
   root: {

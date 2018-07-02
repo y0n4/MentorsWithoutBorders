@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default class VideoComponent extends Component {
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       name: null, // Holds name assigned to client
