@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import io from 'socket.io-client';
+import VideoChatRoom from './VideoChatRoom';
 import MentorHome from './MentorHome';
 import MenteeHome from './MenteeHome';
 import NavBar from './NavBar';
@@ -52,7 +53,7 @@ class App extends Component {
           <Link to="/mentee" />
         </div> */}
         <div className="routes">
-          <Route path="/home" component={Home} />
+          <Route exact path="/" component={Home} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
           <Route path="/chat" component={() => <Chat messages={messages} socket={this.socket} />} />
