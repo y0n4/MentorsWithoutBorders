@@ -12,19 +12,19 @@ module.exports = (app) => {
     ),
   );
 
-  app.use('/api/speech-to-text/token', (req, res) => {
-    sttAuthService.getToken(
-      {
-        url: watson.SpeechToTextV1.URL,
-      },
-      (err, token) => {
-        if (err) {
-          console.log('Error retrieving token: ', err);
-          res.status(500).send('Error retrieving token');
-          return;
-        }
-        res.send(token);
-      },
-    );
-  });
+  // app.use('/api/speech-to-text/token', (req, res) => {
+  //   sttAuthService.getToken(
+  //     {
+  //       url: watson.SpeechToTextV1.URL,
+  //     },
+  //     (err, token) => {
+  //       if (err) {
+  //         console.log('Error retrieving token: ', err);
+  //         res.status(500).send('Error retrieving token');
+  //         return;
+  //       }
+  //       res.send(token);
+  //     },
+  //   );
+  // });
 };

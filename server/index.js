@@ -38,6 +38,7 @@ const data = require('../database');
 
 
 io.on('connection', (socket) => {
+  console.log('New Socket Connection');
   socket.emit('get message', exampleData);
   socket.on('new message', (message) => {
     exampleData.push({
@@ -128,7 +129,6 @@ app.get('/logout', (req, res) => {
 
 app.get('/token', (req, res) => {
   const identity = req.session.passport.user.profile.displayName;
-
   // Create access token, signed and returned to client containing grant
   const token = new AccessToken(
     process.env.TWILIO_ACCOUNT_SID || require('../config').TWILIO_ACCOUNT_SID,

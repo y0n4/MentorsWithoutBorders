@@ -67,7 +67,7 @@ class Chat extends Component {
 
   render() {
     const { classes } = this.props;
-
+    const { test } = this.state;
     return (
       <div>
         <div className={classes.root}>
@@ -86,8 +86,8 @@ class Chat extends Component {
                     </h1>
                   </div>
                   <div className="messagesArea">
-                    {this.props.messages.map(message => (
-                      <div className="aMessage">
+                    {this.props.messages.map((message, i) => (
+                      <div key={i} className="aMessage">
                         {message.message}
                       </div>
                     ))}
@@ -101,9 +101,13 @@ class Chat extends Component {
             </Grid>
           </Grid>
         </div>
-        <button onClick={() => this.onListenClick()} />
-        <button className="stop" />
-        {this.state.test}
+        <button type="button" onClick={() => this.onListenClick()}>
+          Listen
+        </button>
+        <button type="button" className="stop">
+          Stop
+        </button>
+        {test}
       </div>
     );
   }

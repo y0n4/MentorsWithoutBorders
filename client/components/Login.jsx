@@ -1,39 +1,39 @@
-import React, { Component } from "react";
-// import $ from 'jquery'; //for request
+import React from 'react';
 import axios from 'axios';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: '' //?not needed atm?
     };
     this.findUserInfo = this.findUserInfo.bind(this);
   }
 
   componentDidMount() {
-    console.log(1, 'mounted', this.props);
     this.findUserInfo();
   }
 
   findUserInfo() {
+    const { setIsUserOn } = this.props;
     axios.get('/home')
-    .then(res => {
-      if(res.data.status === 'cookie') {
-        this.props.setUser(res.data);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+      .then((res) => {
+        if (res.data.status === 'cookie') {
+          setIsUserOn(res.data);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   render() {
     return (
       <div>
-        <a href="/auth/google"><button className="login-btn">
-          Sign in
-        </button></a>
+        <a href="/auth/google">
+          <button value="Sign In" type="button" className="login-btn">
+            Sign In
+          </button>
+        </a>
       </div>
     );
   }
