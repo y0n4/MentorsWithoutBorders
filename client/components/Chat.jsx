@@ -21,25 +21,34 @@ class Chat extends Component {
   constructor({ name, socket }) {
     super({ name, socket });
     this.state = {
+      name: '',
+      message: '',
       messages: [],
       msgHistory: '',
-      name: '',
       test: '',
     };
     this.translate = this.translate.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.onEnterPress = this.onEnterPress.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
     this.socket = socket;
     socket.on('results', (data) => {
       const results = JSON.parse(data);
-      const { messages, name } = this.state;
+      const { messages } = this.state;
       messages.push({
         name,
         message: results.translations[0].translation,
         time: new Date(),
       });
       this.setState({ messages });
+    });
+
+    socket.on('new message', (data) => {
+      console.log('new message rec', data);
+      const temp = this.state.messages;
+      temp.push(data);
+      this.setState({ messages: temp });
     });
   }
 
@@ -49,11 +58,11 @@ class Chat extends Component {
     this.socket.emit('userJoin', { name });
   }
 
-  // componentDidMount() {
-  //   this.socket.on('oldMessages', (msgHistory) => {
-  //     this.setState({ msgHistory });
-  //   });
-  // }
+  componentDidMount() {
+    this.socket.on('msghistory', (msgHistory) => {
+      this.setState({ msgHistory });
+    });
+  }
 
   onListenClick() {
     fetch('/api/speech-to-text/token')
@@ -80,28 +89,37 @@ class Chat extends Component {
       });
   }
 
+  onEnterPress(e) {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      e.preventDefault();
+      this.sendMessage(e);
+    }
+  }
+
+  handleChange(e) {
+    this.setState({
+      message: e.target.value,
+    });
+  }
+
+  sendMessage(e) {
+    e.preventDefault();
+    const time = new Date();
+    const { name, message } = this.state;
+    const newMessage = { name, message, time };
+
+    this.socket.emit('new message', newMessage);
+    this.setState({ message: '' });
+  }
+
   translate() {
     const { test } = this.state;
     this.socket.emit('translationJob', test);
   }
 
-  sendMessage(message) {
-    message.preventDefault();
-    this.props.socket.emit('new message', this.state.message);
-  }
-
-  handleChange(event) {
-    const { currentState } = this.state;
-    event.target.value;
-
-    this.setState({
-      message: event.target.value,
-    });
-  }
-
   render() {
     const { classes } = this.props;
-    const { test, messages } = this.state;
+    const { test, messages, message } = this.state;
     return (
       <div>
         <div className={classes.root}>
@@ -130,7 +148,7 @@ class Chat extends Component {
                     ))}
                   </div>
                   <div className="enterMessage">
-                    <textarea className="typeMessage" value={this.state.message} onChange={this.handleChange} />
+                    <textarea className="typeMessage" onKeyDown={this.onEnterPress} value={message} onChange={this.handleChange} />
                     <input type="submit" value="Submit" />
                   </div>
                 </form>
