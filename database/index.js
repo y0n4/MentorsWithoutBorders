@@ -11,6 +11,13 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
+/* note:
+to start your database running locally please make sure you are running your database on port 8080 while server is running on 3000
+
+download postgres and psequel app to connect it to port 8080
+i will later hook it up on cloud based service l8r on
+*/
+
 // model represents a table in database
 const User = sequelize.define('user', {
   id: {
@@ -41,7 +48,7 @@ const User = sequelize.define('user', {
 // future plans: import all model definitions from another file
 
 // sync model to database
-User.sync({ force: true }).then(() => {
+User.sync({ force: false }).then(() => {
   // Table created
   console.log('model is synced');
 }).catch((err) => {
@@ -53,7 +60,7 @@ const findUser = (googleId, callback) => {
   User.findOne({
     where: {googleId: googleId}
   }).then((user) => {
-    console.log('user', user.dataValues);
+    // console.log('user', user);
     callback(user);
   }).catch((err) => {
     console.log(err, 'ERROR');
@@ -64,7 +71,7 @@ const findUser = (googleId, callback) => {
 const saveUser = (query) => {
   // .create() combines .build() and .save()
   User.create(query).then((user) => {
-    console.log(user.get({ plain: true }));
+    console.log(query.fullName, 'is saved to db');
   }).catch((err) => {
     console.log('not saved to database');
   });
