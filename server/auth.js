@@ -1,6 +1,7 @@
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const GOOGLE_ID = process.env.GOOGLE_ID || require('../config').GOOGLE_ID;
-const GOOGLE_SECRET = process.env.GOOGLE_SECRET || require('../config').GOOGLE_SECRET;
+
+const GOOGLE_ID = process.env.GOOGLE_ID;
+const GOOGLE_SECRET = process.env.GOOGLE_SECRET;
 
 const callbackURL = '/auth/google/callback';
 
