@@ -43,7 +43,7 @@ const User = sequelize.define('user', {
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
-},   {timestamps: false});
+}, { timestamps: false });
 // can also write getterMethods and setterMethods, useful?(http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
 // future plans: import all model definitions from another file
 
@@ -58,7 +58,7 @@ User.sync({ force: false }).then(() => {
 // confirm if user exists in database
 const findUser = (googleId, callback) => {
   User.findOne({
-    where: {googleId: googleId}
+    where: { googleId },
   }).then((user) => {
     // console.log('user', user);
     callback(user);

@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
+import PropTypes from 'prop-types';
 import VideoComponent from './VideoComponent';
 
 const styles = theme => ({
@@ -17,8 +18,8 @@ const styles = theme => ({
 });
 
 class Chat extends Component {
-  constructor(props) {
-    super(props);
+  constructor({ name, socket }) {
+    super({ name, socket });
     this.state = {
       messages: [],
       msgHistory: '',
@@ -29,31 +30,30 @@ class Chat extends Component {
     this.sendMessage = this.sendMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
-    this.socket = this.props.socket;
-    this.socket.on('results', (translation) => {
-      console.log('console.log --- ', JSON.parse(translation));
-      const newMessage = this.state.messages.slice();
-      newMessage.push({
-        name: 'Watson',
-        message: JSON.parse(translation.translations),
+    this.socket = socket;
+    socket.on('results', (data) => {
+      const results = JSON.parse(data);
+      const { messages, name } = this.state;
+      messages.push({
+        name,
+        message: results.translations[0].translation,
         time: new Date(),
       });
-      this.setState({ test: newMessage });
+      this.setState({ messages });
     });
   }
 
   componentWillMount() {
-    console.log('inside will mount');
     const { name } = this.props;
-    this.socket.emit('userJoin', { name });
     this.setState({ name });
+    this.socket.emit('userJoin', { name });
   }
 
-  componentDidMount() {
-    this.socket.on('oldMessages', (msgHistory) => {
-      this.setState({ msgHistory });
-    });
-  }
+  // componentDidMount() {
+  //   this.socket.on('oldMessages', (msgHistory) => {
+  //     this.setState({ msgHistory });
+  //   });
+  // }
 
   onListenClick() {
     fetch('/api/speech-to-text/token')
@@ -91,7 +91,7 @@ class Chat extends Component {
   }
 
   handleChange(event) {
-    const currentState = this.state;
+    const { currentState } = this.state;
     event.target.value;
 
     this.setState({
@@ -101,7 +101,7 @@ class Chat extends Component {
 
   render() {
     const { classes } = this.props;
-    const { test } = this.state;
+    const { test, messages } = this.state;
     return (
       <div>
         <div className={classes.root}>
@@ -120,10 +120,13 @@ class Chat extends Component {
                     </h1>
                   </div>
                   <div className="messagesArea">
-                    {this.state.messages.map((message, i) => (
-                      <div key={i} className="aMessage">
-                        {message}
-                      </div>
+                    {messages.map(line => (
+                      <p key={line.time} className="aMessage">
+                        {line.name}
+                        :
+                        {' '}
+                        {line.message}
+                      </p>
                     ))}
                   </div>
                   <div className="enterMessage">
@@ -146,5 +149,9 @@ class Chat extends Component {
     );
   }
 }
+
+Chat.propTypes = {
+  name: PropTypes.string,
+};
 
 export default withStyles(styles)(Chat);

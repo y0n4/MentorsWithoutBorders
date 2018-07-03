@@ -21,12 +21,6 @@ class App extends Component {
     };
     this.socket = io.connect();
     this.setIsUserOn = this.setIsUserOn.bind(this);
-
-    this.socket.on('get message', (data) => {
-      this.setState({
-        messages: data,
-      });
-    });
   }
 
   setIsUserOn(info) {

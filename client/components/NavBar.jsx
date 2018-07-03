@@ -68,7 +68,6 @@ class NavBar extends React.Component {
           onChange={this.handleChange}
           className={classes.app}
           style={styles.large}
-          showlabel=""
         >
           <BottomNavigationAction
             value=""
