@@ -48,22 +48,20 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // ------------google oauth------------//
 app.get('/home', (req, res) => {
   if (req.session.token) {
-    // console.log('it exists!');
+    console.log('user is already logged in');
     const googleId = req.session.passport.user.profile.id;
 
-    data.findUser(googleId, (err, results) => {
-      // if (err) console.log(err);
-      // else {
-      //   res.json({
-      //     status: 'cookie',
-      //     dbInfo: results[0],
-      //   });
-      // }
-      console.log(err);
+    data.findUser(googleId, (results) => {
+      // console.log(JSON.stringify(results.googleId));
+      res.json({
+        status: 'cookie',
+        dbInfo: results
+      });
     });
 
+
     res.cookie('token', req.session.token);
-    console.log('user logged in!');
+    // console.log('user logged in!');
   } else {
     console.log('user not yet logged in');
     res.cookie('token', '');
@@ -94,13 +92,11 @@ app.get(
       gender: req.user.profile.gender,
     };
 
-    console.log('node', info);
-
     // check if user exists
     data.findUser(info.googleId, (results) => {
       // console.log(results, 'this is from data.findUser');
       if (results === null) { // null is if user doesn't exist
-        data.saveUser(info);
+        data.saveUser(info); // save 2 database
       }
     });
 
