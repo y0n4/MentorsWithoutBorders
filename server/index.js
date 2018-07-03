@@ -1,29 +1,25 @@
+require('dotenv').load({ silent: true });
+
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const { AccessToken } = require('twilio').jwt;
-require('dotenv').load({ silent: true });
-
 const { VideoGrant } = AccessToken;
+const { speechToText, translate } = require('./watson');
 const cors = require('cors');
 
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
 
-
 // ⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const { speechToText, translate } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 // temp stuff
-speechToText(app);
-
-
 auth(passport);
 app.use(passport.initialize());
 app.use(
@@ -35,9 +31,10 @@ app.use(
 app.use(cookieParser());
 // ⬆⬆⬆ end ⬆⬆
 
+speechToText(app);
+
 const port = process.env.PORT || 3000;
 const data = require('../database');
-
 
 io.on('connection', (socket) => {
   console.log('New Socket Connection');
@@ -64,21 +61,18 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // ------------google oauth------------//
 app.get('/home', (req, res) => {
   if (req.session.token) {
-    console.log('it exists!');
+    console.log('user is already logged in');
     const googleId = req.session.passport.user.profile.id;
 
-    data.findUser(googleId, (err, results) => {
-      if (err) console.log(err);
-      else {
-        res.json({
-          status: 'cookie',
-          dbInfo: results[0],
-        });
-      }
+    data.findUser(googleId, (results) => {
+      // console.log(JSON.stringify(results.googleId));
+      res.json({
+        status: 'cookie',
+        dbInfo: results,
+      });
     });
 
     res.cookie('token', req.session.token);
-    console.log('user logged in!');
   } else {
     console.log('user not yet logged in');
     res.cookie('token', '');
@@ -100,28 +94,21 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    failureRedirect: '/',
-  }), // back 2 home
-  (req, res) => {
-    const info = { // info to save into database
+    failureRedirect: '/', // back to homepage
+  }), (req, res) => {
+    const info = { // info to save into db
       googleId: req.user.profile.id,
       fullName: `${req.user.profile.name.givenName} ${req.user.profile.name.familyName}`,
       gender: req.user.profile.gender,
     };
 
     // check if user exists
-    data.findUser(info.googleId, (err, results) => {
-      if (err) {
-        console.log(err);
-      } else if (!results.length) {
-        console.log('not in database yet, saving...');
-        data.saveUser(info, (err, results) => {
-          if (err) console.log('not saving correctly');
-          else console.log('saved');
-        });
-      } else console.log('it here hunni');
+    data.findUser(info.googleId, (results) => {
+      // console.log(results, 'this is from data.findUser');
+      if (results === null) { // null is if user doesn't exist
+        data.saveUser(info); // save 2 database
+      }
     });
-
     req.session.token = req.user.token; // set cookies
     res.redirect('/'); // back to homepage
   },
@@ -132,11 +119,11 @@ app.get('/logout', (req, res) => {
   req.session = null;
   res.redirect('/');
 });
-
 // ------------google oauth end------------//
 
 app.get('/token', (req, res) => {
   const identity = req.session.passport.user.profile.displayName;
+
   // Create access token, signed and returned to client containing grant
   const token = new AccessToken(
     process.env.TWILIO_ACCOUNT_SID || require('../config').TWILIO_ACCOUNT_SID,
