@@ -5,8 +5,8 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const { AccessToken } = require('twilio').jwt;
+
 const { VideoGrant } = AccessToken;
-const { speechToText, translate } = require('./watson');
 const cors = require('cors');
 
 const app = express();
@@ -17,6 +17,7 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const { speechToText, translate } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 // temp stuff
@@ -36,17 +37,18 @@ speechToText(app);
 const port = process.env.PORT || 3000;
 const data = require('../database');
 
+const users = {};
+
 io.on('connection', (socket) => {
-  console.log('New Socket Connection');
+  console.log('New Socket Connection from id', socket.id);
 
-  socket.emit('get message', exampleData);
+  // socket.emit('get message', exampleData);
+
   socket.on('new message', (message) => {
-    exampleData.push({
-      name: 'Kav',
-      message,
-    });
+    console.log('new message rec', message);
 
-    socket.broadcast.emit('get message', exampleData);
+    socket.broadcast.emit('new message', message);
+    io.to(socket.id).emit('new message', message);
   });
 
   socket.on('translationJob', (text) => {

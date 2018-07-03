@@ -36,7 +36,7 @@ module.exports.translate = (text, socket) => {
 
   const languageTranslator = new LanguageTranslatorV3({
     version: '2018-05-01',
-    iam_apikey: 'EoVCSa2DIAALYy59xF0N9IBG1gEcgtWUj9zGZBlsGQ5t',
+    iam_apikey: process.env.IAM_APIKEY_NAME,
   });
 
   const parameters = {
