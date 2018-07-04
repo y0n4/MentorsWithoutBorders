@@ -14,7 +14,7 @@ sequelize
 /* note:
 to start your database running locally please make sure you are running your database on port 8080 while server is running on 3000
 
-download postgres and psequel app to connect it to port 8080
+download postgres and psequel app to connect it to port 8080 and make sure the you labelled the database as globalmentors
 i will later hook it up on cloud based service l8r on
 */
 
@@ -43,6 +43,16 @@ const User = sequelize.define('user', {
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
+}, { timestamps: false });
+
+// category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
+const Category = sequelize.define('category', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  category: Sequelize.STRING,
 }, { timestamps: false });
 // can also write getterMethods and setterMethods, useful?(http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
 // future plans: import all model definitions from another file
