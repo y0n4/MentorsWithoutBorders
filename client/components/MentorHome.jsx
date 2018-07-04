@@ -46,7 +46,7 @@ class MentorHome extends React.Component {
                 <button>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
-                Help guide your mentee's with their questions!<br /><br />
+                Help guide your mentee's with tips that can help answer their worries/questions!<br /><br />
                 {this.renderMenteeQs()}
               </div>
             </Paper>
