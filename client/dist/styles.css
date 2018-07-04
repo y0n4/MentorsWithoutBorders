@@ -43,6 +43,15 @@
   border: 1px solid #77777769;
 }
 
+
+/*this is for mentor homepage and sub components*/
+.mentor-input {
+  height: 40px;
+  width: 70%;
+  font-size: 14px;
+  padding: 5px;
+}
+
 .mentee-qs {
   width: 80%;
   margin: auto;
@@ -63,3 +72,4 @@
   text-align: justify;
   border: 1px solid black;
 }
+/*end*/
