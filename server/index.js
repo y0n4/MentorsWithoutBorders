@@ -35,7 +35,7 @@ app.use(cookieParser());
 speechToText(app);
 
 const port = process.env.PORT || 3000;
-const data = require('../database');
+// const data = require('../database');
 
 const users = {};
 
@@ -66,15 +66,15 @@ app.get('/home', (req, res) => {
     console.log('user is already logged in');
     const googleId = req.session.passport.user.profile.id;
 
-    data.findUser(googleId, (results) => {
-      // console.log(JSON.stringify(results.googleId));
-      res.json({
-        status: 'cookie',
-        dbInfo: results,
-      });
-    });
+    // data.findUser(googleId, (results) => {
+    //   // console.log(JSON.stringify(results.googleId));
+    //   res.json({
+    //     status: 'cookie',
+    //     dbInfo: results,
+    //   });
+    // });
 
-    res.cookie('token', req.session.token);
+    // res.cookie('token', req.session.token);
   } else {
     console.log('user not yet logged in');
     res.cookie('token', '');
@@ -104,14 +104,14 @@ app.get(
       gender: req.user.profile.gender,
     };
 
-    // check if user exists
-    data.findUser(info.googleId, (results) => {
-      // console.log(results, 'this is from data.findUser');
-      if (results === null) { // null is if user doesn't exist
-        data.saveUser(info); // save 2 database
-      }
-    });
-    req.session.token = req.user.token; // set cookies
+    // // check if user exists
+    // data.findUser(info.googleId, (results) => {
+    //   // console.log(results, 'this is from data.findUser');
+    //   if (results === null) { // null is if user doesn't exist
+    //     data.saveUser(info); // save 2 database
+    //   }
+    // });
+    // req.session.token = req.user.token; // set cookies
     res.redirect('/'); // back to homepage
   },
 );
