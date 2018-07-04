@@ -50,12 +50,12 @@ class NavBar extends React.Component {
     });
   }
 
-  // renderMentor() {
-  //   const { mentor } = this.state;
-  //   if (mentor) {
-  //     return <Redirect to="/mentor" />;
-  //   } return <Redirect to="/mentee" />;
-  // }
+  renderMentor() {
+    const { mentor } = this.state;
+    if (mentor) {
+      return <Redirect to="/mentor" />;
+    } return <Redirect to="/mentee" />;
+  }
 
 
   render() {
@@ -91,9 +91,9 @@ class NavBar extends React.Component {
             <DropdownContent>
               <ul>
                 <FormControl component="fieldset">
-                  {/* <div>
+                  <div>
                     {this.renderMentor()}
-                  </div> */}
+                  </div>
                   <FormGroup>
                     <FormControlLabel
                       control={(

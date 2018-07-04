@@ -1,14 +1,67 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-const MentorHome = () => (
-  <div>
-    <h1>
-      haroooo
-    </h1>
-    <div>
-      {/* <Chat messages={this.state.messages} socket={this.state.socket} /> */}
+const styles = theme => ({
+  root: {
+    margin: '80px',
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: 'black',
+  },
+});
+
+function MentorHome(props) {
+  const { classes } = props;
+
+  console.log( {classes} );
+
+  // readily need 
+  // questions from mentees data
+  // list of online mentees (socket)
+  // mentor user data
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={24}>
+        <Grid item xs={8}>
+          <Paper className={classes.paper}>
+            <div className="mentor-quote">
+              Share with your mentees about what inspired you today?<br />
+              <input type="text" placeholder="" className="mentor-input"/>
+              <br />
+              <button>Submit</button><br /><br /><br />
+            </div>
+            <div className="mentee-question-feed">
+              Questions from your Mentees
+              <div>*past posts goes here*</div>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>
+            <div className="mentor-rating">
+              Your Mentor Rating
+              <div>⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews</div>
+            </div>
+            <br />
+            <div className="mentor-connect-mentee">
+              Online Mentees
+              <div>*list of online mentees here*</div>
+            </div>
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
-  </div>
-);
+  );
+}
 
-export default MentorHome;
+MentorHome.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(MentorHome);
