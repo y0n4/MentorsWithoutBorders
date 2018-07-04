@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import MentorFeed from './MentorHomeComponents/MentorFeed';
 
 const styles = theme => ({
   root: {
@@ -16,48 +17,57 @@ const styles = theme => ({
   },
 });
 
-function MentorHome(props) {
-  const { classes } = props;
-
-  console.log( {classes} );
+class MentorHome extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   // readily need 
   // questions from mentees data
   // list of online mentees (socket)
   // mentor user data
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={24}>
-        <Grid item xs={8}>
-          <Paper className={classes.paper}>
-            <div className="mentor-quote">
-              Share with your mentees about what inspired you today?<br />
-              <input type="text" placeholder="" className="mentor-input"/>
+  renderMenteeQs() {
+    return (
+      <MentorFeed />
+    )
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={8}>
+            <Paper className={classes.paper}>
+              <div className="mentor-quote">
+                Share with your mentees about what inspired you today?<br />
+                <input type="text" placeholder="" className="mentor-input" /><br />
+                <button>Submit</button><br /><br /><br />
+              </div>
+              <div className="mentee-question-feed">
+                Your latest mentee's questions, guide them!<br /><br />
+                {this.renderMenteeQs()}
+              </div>
+            </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper className={classes.paper}>
+              <div className="mentor-rating">
+                Your Mentor Rating
+                <div>⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews</div>
+              </div>
               <br />
-              <button>Submit</button><br /><br /><br />
-            </div>
-            <div className="mentee-question-feed">
-              Questions from your Mentees
-              <div>*past posts goes here*</div>
-            </div>
-          </Paper>
+              <div className="mentor-connect-mentee">
+                Online Mentees
+                <div>*list of online mentees here*</div>
+              </div>
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <div className="mentor-rating">
-              Your Mentor Rating
-              <div>⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews</div>
-            </div>
-            <br />
-            <div className="mentor-connect-mentee">
-              Online Mentees
-              <div>*list of online mentees here*</div>
-            </div>
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 MentorHome.propTypes = {
