@@ -41,12 +41,12 @@ class MentorHome extends React.Component {
           <Grid item xs={8}>
             <Paper className={classes.paper}>
               <div className="mentor-quote">
-                Share with your mentees about what inspired you today?<br />
-                <input type="text" placeholder="" className="mentor-input" /><br />
+                Share with your mentees about what inspired you today?<br /><br />
+                <textarea className="mentor-input" /><br />
                 <button>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
-                Your latest mentee's questions, guide them!<br /><br />
+                Help guide your mentee's with their questions!<br /><br />
                 {this.renderMenteeQs()}
               </div>
             </Paper>
