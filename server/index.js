@@ -106,7 +106,7 @@ app.get(
 
     // check if user exists
     data.findUser(info.googleId, (results) => {
-      // console.log(results, 'this is from data.findUser');
+      console.log(results, 'this is from data.findUser');
       if (results === null) { // null is if user doesn't exist
         data.saveUser(info); // save 2 database
       }

@@ -33,6 +33,7 @@ class Chat extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
     this.socket = socket;
+
     socket.on('results', (data) => {
       const results = JSON.parse(data);
       const { messages } = this.state;
@@ -139,12 +140,9 @@ class Chat extends Component {
                   </div>
                   <div className="messagesArea">
                     {messages.map(line => (
-                      <p key={line.time} className="aMessage">
-                        {line.name}
-                        :
-                        {' '}
-                        {line.message}
-                      </p>
+                      <div key={line.time} className="aMessage">
+                        {`${line.name}: ${line.message}`}
+                      </div>
                     ))}
                   </div>
                   <div className="enterMessage">
