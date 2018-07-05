@@ -1,6 +1,8 @@
+const pg = require('pg');
+pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://localhost:8080/globalmentors');
+const sequelize = new Sequelize('postgres://bacqnswhqmynpu:bbf8eee4e4be0a2a8ae69ee237e6388f70e3c0ba96f95205388f4685f50cf18c@ec2-54-83-203-198.compute-1.amazonaws.com:5432/d4tno7suns6d5q');
 
 sequelize
   .authenticate()
@@ -63,6 +65,14 @@ User.sync({ force: false }).then(() => {
   console.log('model is synced');
 }).catch((err) => {
   console.log('model is not synced');
+});
+
+Category.sync({force: true}).then(() => {
+  // Table created
+  return User.create({
+    firstName: 'John',
+    lastName: 'Hancock'
+  });
 });
 
 // confirm if user exists in database
