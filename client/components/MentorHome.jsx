@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import MentorFeed from './MentorHomeComponents/MentorFeed';
+import MentorFeedRight from './MentorHomeComponents/MentorFeedRight';
 
 const styles = theme => ({
   root: {
@@ -20,17 +21,33 @@ const styles = theme => ({
 class MentorHome extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      questions: '',
+    };
   }
 
-  // readily need 
-  // questions from mentees data
-  // list of online mentees (socket)
-  // mentor user data
+  componentDidMount() {
+    // get last 15 questions from connected mentees
+    // get current online mentees
+  }
+
+  // renders mentees questions on homepage
   renderMenteeQs() {
     return (
       <MentorFeed />
     );
+  }
+
+  // renders current online mentees on homepage
+  renderMenteeOnline() {
+    return (
+      <MentorFeedRight />
+    )
+  }
+
+  // when submit button is clicked, save quote to db
+  saveMentorQ() {
+
   }
 
   render() {
@@ -46,7 +63,8 @@ class MentorHome extends React.Component {
                 <button>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
-                Help guide your mentee's with tips that can help answer their worries/questions!<br /><br />
+                Help guide your mentee's with tips that can help answer their worries/questions!<br />
+                Simply visit their profile and chat with them!<br />
                 {this.renderMenteeQs()}
               </div>
             </Paper>
@@ -57,10 +75,10 @@ class MentorHome extends React.Component {
                 Your Mentor Rating
                 <div>⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews</div>
               </div>
-              <br />
+              <br /><br />
               <div className="mentor-connect-mentee">
-                Online Mentees
-                <div>*list of online mentees here*</div>
+                Current Mentees Online <br /><br />
+                {this.renderMenteeOnline()}
               </div>
             </Paper>
           </Grid>
