@@ -1,23 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: 'black',
-  },
-});
-
 
 function MentorFeed(props) {
-  const { classes } = props;
   return (
     <div>
     <div className="mentee-qs">
@@ -28,7 +11,7 @@ function MentorFeed(props) {
       </strong>
         <br />
         <br />
-I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
+        I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
       </div>
     </div>
 
@@ -40,7 +23,7 @@ I really want to start a mukbang channel, should I eat silently or have a full b
       </strong>
         <br />
         <br />
-Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
+        Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
       </div>
     </div>
 
@@ -52,23 +35,11 @@ Are people more satisfied if I eat junk food? I'm not trying to gain weight for 
       </strong>
         <br />
         <br />
-I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
+        I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
       </div>
     </div>
     </div>
   );
-} 
+}
 
-MentorFeed.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(MentorFeed);
-
-{/* <div className="mentee-qs">
-<img src="http://i64.tinypic.com/20uwyl0.jpg" width="50" height="50" className="feed-icon" />
-<div className="feed-post">
-<strong>Samantha Carlson</strong><br /><br />
-Is it a weird idea to film myself eating in silence at the park? I'm afraid what passerbys will think of me.
-</div>
-</div> */}
+export default MentorFeed;
