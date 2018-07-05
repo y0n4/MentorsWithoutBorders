@@ -1,24 +1,43 @@
 import React from 'react';
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} from 'react-google-maps';
+import { VectorMap } from 'react-jvectormap';
+import axios from 'axios';
 
+class Map extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
-const Map = withScriptjs(withGoogleMap(props => (
-  <GoogleMap
-    defaultZoom={1}
-    defaultCenter={{ lat: 39.828, lng: 98.579 }}
-  >
-    {props.locations.map((mentor, i) => (
-      <Marker
-        key={i}
-        position={{ lat: mentor.lat, lng: mentor.lng }}
+    }
+    this.addData = this.addData.bind(this);
+  }
+  componentDidMount() {
+    // this.addData();
+    // axios.get('/mentor-count')
+    //   .then(({data}) => {
+    //     this.refs.map.getMapObject().regionsData = data.mapData
+      // })
+  }
+
+  addData() {
+    // console.log(this.refs.map.getMapObject())
+    // console.log(this.refs.map.getMapObject().scale = ['#C8EEFF', '#0071A4']);
+  }
+
+  render() {
+    return (
+      <VectorMap
+        map="world_mill"
+        className="world-map"
+        ref="map"
+        backgroundColor="clear"
+        containerStyle={{
+          width: '100%',
+          height: '100%',
+        }}
+        containerClassName="map"
       />
-    ))}
-  </GoogleMap>
-)));
+    );
+  }
+}
 
 export default Map;

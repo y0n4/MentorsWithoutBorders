@@ -43,7 +43,7 @@ class App extends Component {
         </div>
         {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         <div className="routes">
-          <Route exact path="/" component={Home} />
+          <Route path="/" component={Home} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
           <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
