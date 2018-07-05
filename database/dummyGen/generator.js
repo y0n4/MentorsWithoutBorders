@@ -9,8 +9,9 @@ module.exports.addDataToHeroku = (qty = 100) => {
         const info = {
           fullName: `${user.name.first} ${user.name.last}`,
           gender: user.gender,
-          isMentor: random.boolean(),
+          photo: user.picture.thumbnail,
           locale: random.locale(),
+          isMentor: random.boolean(),
         };
         user.name && saveUser(info);
       });
