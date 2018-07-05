@@ -102,6 +102,8 @@ app.get(
       googleId: req.user.profile.id,
       fullName: `${req.user.profile.name.givenName} ${req.user.profile.name.familyName}`,
       gender: req.user.profile.gender,
+      photo: req.user.profile['_json'].image.url,
+      locale: req.user.profile['_json'].language,
     };
 
     // check if user exists
