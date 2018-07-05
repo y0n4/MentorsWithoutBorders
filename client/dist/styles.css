@@ -72,4 +72,13 @@
   text-align: justify;
   border: 1px solid black;
 }
+
+.world-map {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  height: 450px;
+}
+
 /*end*/
