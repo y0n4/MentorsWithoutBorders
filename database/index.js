@@ -2,7 +2,7 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://bacqnswhqmynpu:bbf8eee4e4be0a2a8ae69ee237e6388f70e3c0ba96f95205388f4685f50cf18c@ec2-54-83-203-198.compute-1.amazonaws.com:5432/d4tno7suns6d5q');
+const sequelize = new Sequelize(process.env.POSTGRES_URI);
 
 sequelize
   .authenticate()
@@ -12,13 +12,6 @@ sequelize
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
-
-/* note:
-to start your database running locally please make sure you are running your database on port 8080 while server is running on 3000
-
-download postgres and psequel app to connect it to port 8080 and make sure the you labelled the database as globalmentors
-i will later hook it up on cloud based service l8r on
-*/
 
 // model represents a table in database
 const User = sequelize.define('user', {
@@ -58,7 +51,7 @@ const Category = sequelize.define('category', {
 // future plans: import all model definitions from another file
 
 // sync model to database
-User.sync({ force: false }).then(() => { // set true if overwite existing database
+User.sync({ force: true }).then(() => { // set true if overwite existing database
   // Table created
   console.log('model is synced');
 }).catch((err) => {
@@ -67,7 +60,7 @@ User.sync({ force: false }).then(() => { // set true if overwite existing databa
 
 Category.sync({ force: true }).then(() => {
   // Table created
-  return User.create({
+  return Category.create({
     firstName: 'John',
     lastName: 'Hancock'
   });
