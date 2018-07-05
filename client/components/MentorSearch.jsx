@@ -58,13 +58,14 @@ class MentorSearch extends Component {
       open: false,
       startAge: '',
       endAge: '',
+      language: '',
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
 
     this.handleChange = name => event => {
-      this.setState({ [name]: Number(event.target.value) })
+      this.setState({ [name]: event.target.value })
     }
   }
 
@@ -106,27 +107,27 @@ class MentorSearch extends Component {
                       <DialogContent>
                         <form className={classes.container}>
                           <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-simple">Age</InputLabel>
+                            <InputLabel htmlFor='age-native-simple'>Min Age</InputLabel>
                             <Select
                               native
                               value={this.state.startAge}
                               onChange={this.handleChange('startAge')}
-                              input={<Input id="age-native-simple" />}
+                              input={<Input id='age-native-simple' />}
                             >
-                              <option value="" />
+                              <option value='' />
                               <option value={10}>Ten</option>
                               <option value={20}>Twenty</option>
                               <option value={30}>Thirty</option>
                             </Select>
                           </FormControl>
                           <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="age-simple">Age</InputLabel>
+                            <InputLabel htmlFor='age-simple'>Max Age</InputLabel>
                             <Select
                               value={this.state.endAge}
                               onChange={this.handleChange('endAge')}
-                              input={<Input id="age-simple" />}
+                              input={<Input id='age-simple' />}
                             >
-                              <MenuItem value="">
+                              <MenuItem value=''>
                                 <em>None</em>
                               </MenuItem>
                               <MenuItem value={10}>Ten</MenuItem>
@@ -137,14 +138,29 @@ class MentorSearch extends Component {
                         </form>
                       </DialogContent>
                       <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleClose} color='primary'>
                           Cancel
                         </Button>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleClose} color='primary'>
                           Ok
                         </Button>
                       </DialogActions>
                     </Dialog>
+                  </div>
+                  <div className='language'>
+                    <InputLabel htmlFor='language-simple'>Language</InputLabel>
+                    <Select
+                      native
+                      value={this.state.language}
+                      onChange={this.handleChange('language')}
+                      input={<Input id='language-simple' />}
+                    >
+                      <option value='' />
+                      <option value={'english'}>English</option>
+                      <option value={'chinese'}>Chinese</option>
+                      <option value={'japanese'}>Japanese</option>
+                      <option value={'korean'}>Korean</option>
+                    </Select>
                   </div>
                 </CardContent>
               </Card>
