@@ -60,14 +60,14 @@ const Category = sequelize.define('category', {
 // future plans: import all model definitions from another file
 
 // sync model to database
-User.sync({ force: false }).then(() => {
+User.sync({ force: false }).then(() => { // set true if overwite existing database
   // Table created
   console.log('model is synced');
 }).catch((err) => {
   console.log('model is not synced');
 });
 
-Category.sync({force: true}).then(() => {
+Category.sync({ force: true }).then(() => {
   // Table created
   return User.create({
     firstName: 'John',
