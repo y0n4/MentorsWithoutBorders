@@ -47,7 +47,10 @@ class MentorHome extends React.Component {
 
   // when submit button is clicked, save quote to db
   saveMentorQ() {
-
+    console.log('oui');
+    // save textarea input as value
+    // delete textarea input
+    // do post req to save to db
   }
 
   render() {
@@ -60,7 +63,7 @@ class MentorHome extends React.Component {
               <div className="mentor-quote">
                 Share with your mentees about what inspired you today?<br /><br />
                 <textarea className="mentor-input" /><br />
-                <button>Submit</button><br /><br /><br />
+                <button onClick={this.saveMentorQ}>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
                 Help guide your mentee's with tips that can help answer their worries/questions!<br />
