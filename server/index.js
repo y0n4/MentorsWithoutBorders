@@ -5,7 +5,6 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const { AccessToken } = require('twilio').jwt;
-const { addDataToHeroku } = require('../database/dummyGen/generator')
 const { VideoGrant } = AccessToken;
 const cors = require('cors');
 
@@ -17,6 +16,7 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const { addDataToHeroku } = require('../database/dummyGen/generator')
 const { speechToText, translate } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
@@ -151,7 +151,7 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
-// addDataToHeroku(1000) # of random users to add to DB
+// addDataToHeroku(1000)
 
 server.listen(port, () => {
   console.log(`Listening on port: ${port}`);
