@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import axios from 'axios';
 import io from 'socket.io-client';
 import VideoChatRoom from './VideoChatRoom';
+import MentorSearch from './MentorSearch';
 import MentorHome from './MentorHome';
 import MenteeHome from './MenteeHome/MenteeHome';
 import NavBar from './NavBar';
@@ -61,8 +62,8 @@ class App extends Component {
           <Route path="/user-profile" component={UserProfile} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
-          {/* <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} /> */}
-          <Route path="/chat" component={() => <VideoChatRoom name={name} socket={this.socket} />} />
+          <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
+          <Route path='/searchResults' component={MentorSearch} />
         </div>
         {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
       </div>
