@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-
-function MentorFeed(props) {
-=======
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -22,7 +18,6 @@ const styles = theme => ({
 
 function MentorFeed(props) {
   const { classes } = props;
->>>>>>> added userprofile, mentee home
   return (
     <div>
     <div className="mentee-qs">
@@ -33,11 +28,7 @@ function MentorFeed(props) {
       </strong>
         <br />
         <br />
-<<<<<<< HEAD
-        I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
-=======
 I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
->>>>>>> added userprofile, mentee home
       </div>
     </div>
 
@@ -49,11 +40,7 @@ I really want to start a mukbang channel, should I eat silently or have a full b
       </strong>
         <br />
         <br />
-<<<<<<< HEAD
-        Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
-=======
 Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
->>>>>>> added userprofile, mentee home
       </div>
     </div>
 
@@ -65,20 +52,11 @@ Are people more satisfied if I eat junk food? I'm not trying to gain weight for 
       </strong>
         <br />
         <br />
-<<<<<<< HEAD
-        I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
-=======
 I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
->>>>>>> added userprofile, mentee home
       </div>
     </div>
     </div>
   );
-<<<<<<< HEAD
-}
-
-export default MentorFeed;
-=======
 } 
 
 MentorFeed.propTypes = {
@@ -94,4 +72,3 @@ export default withStyles(styles)(MentorFeed);
 Is it a weird idea to film myself eating in silence at the park? I'm afraid what passerbys will think of me.
 </div>
 </div> */}
->>>>>>> added userprofile, mentee home

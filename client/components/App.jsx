@@ -9,6 +9,10 @@ import NavBar from './NavBar';
 import Login from './Login';
 import Chat from './Chat';
 import Home from './Home';
+<<<<<<< HEAD
+=======
+import UserProfile from './UserProfile';
+>>>>>>> added userprofile, mentee home
 import '../dist/styles.css';
 
 class App extends Component {
@@ -28,11 +32,18 @@ class App extends Component {
       isUserOn: true,
       name: info.dbInfo.fullName,
     });
+<<<<<<< HEAD
   }
 
   handleLinkClick() {
     this.refs.dropdown.hide();
+=======
+>>>>>>> added userprofile, mentee home
   }
+
+  // handleLinkClick() {
+  //   this.refs.dropdown.hide();
+  // }
 
   render() {
     const { isUserOn, messages, name } = this.state;
@@ -43,9 +54,16 @@ class App extends Component {
         </div>
         {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         <div className="routes">
+<<<<<<< HEAD
           <Route path="/" component={Home} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
+=======
+          <Route exact path="/" component={Home} />
+          <Route path="/mentor" component={MentorHome} />
+          <Route path="/mentee" component={MenteeHome} />
+          <Route path="/userprofile" component={UserProfile} />
+>>>>>>> added userprofile, mentee home
           <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
         </div>
       </div>

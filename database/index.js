@@ -1,8 +1,9 @@
 const pg = require('pg');
+
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize(process.env.POSTGRES_URI);
+const sequelize = new Sequelize('postgres://bacqnswhqmynpu:bbf8eee4e4be0a2a8ae69ee237e6388f70e3c0ba96f95205388f4685f50cf18c@ec2-54-83-203-198.compute-1.amazonaws.com:5432/d4tno7suns6d5q');
 
 sequelize
   .authenticate()
@@ -13,6 +14,13 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
+/* note:
+to start your database running locally please make sure you are running your database on port 8080 while server is running on 3000
+
+download postgres and psequel app to connect it to port 8080 and make sure the you labelled the database as globalmentors
+i will later hook it up on cloud based service l8r on
+*/
+
 // model represents a table in database
 const User = sequelize.define('user', {
   id: {
@@ -22,7 +30,6 @@ const User = sequelize.define('user', {
   },
   googleId: Sequelize.STRING,
   fullName: Sequelize.STRING,
-  photo: Sequelize.STRING,
   gender: Sequelize.STRING,
   ratings: Sequelize.INTEGER,
   totalRatings: Sequelize.INTEGER,
@@ -31,11 +38,14 @@ const User = sequelize.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  isMentee: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   mentors: Sequelize.ARRAY(Sequelize.TEXT),
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
-  locale: Sequelize.STRING,
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
@@ -58,13 +68,13 @@ User.sync({ force: false }).then(() => { // set true if overwite existing databa
   console.log('model is not synced');
 });
 
-Category.sync({ force: true }).then(() => {
+Category.sync({ force: true }).then(() => 
   // Table created
-  return Category.create({
+   User.create({
     firstName: 'John',
     lastName: 'Hancock'
-  });
-});
+  })
+);
 
 // confirm if user exists in database
 const findUser = (googleId, callback) => {

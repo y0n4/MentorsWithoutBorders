@@ -1,3 +1,4 @@
+
   body, html{
     height:100%;
     background-image: url('https://i1.wp.com/www.dargadgetz.com/wp-content/uploads/2016/10/Lake-Minimal-Wallpaper-DarGadgetZ.png?w%5Cx3d1200');
@@ -73,6 +74,7 @@
   border: 1px solid black;
 }
 
+<<<<<<< HEAD
 .world-map {
   /* display: block; */
   margin-left: auto;
@@ -85,4 +87,90 @@
   display: inline-block;
 }
 
+=======
+.UserProfile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Roboto';
+  display: flex; }
+  .UserProfile .Profile {
+    width: 50vw;
+    padding: 5vw 10vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    color: #2C2C54; }
+
+    .UserProfile .Profile .Name {
+      font-size: 6vw;
+      font-family: 'Abril Fatface';
+      margin-bottom: 4vw; }
+    .UserProfile .Profile .Bio {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 3vw;
+      opacity: .4; }
+    .UserProfile .Profile .Quote {
+      margin-top: auto; }
+      .UserProfile .Profile .Quote blockquote {
+        font-size: 36px;
+        font-family: 'Abril Fatface';
+        font-style: italic;
+        line-height: 1.4;
+        margin-bottom: .6em; }
+      .UserProfile .Profile .Quote .byline {
+        font-family: 'Times', serif;
+        text-align: right;
+        font-size: 22px;
+        font-style: italic;
+        opacity: .25; }.UserProfile {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          font-family: 'Roboto';
+          display: flex; }
+          .UserProfile .Profile {
+            width: 50vw;
+            padding: 5vw 10vw;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            color: #2C2C54; }
+            @media screen and (max-width: 980px) {
+              .UserProfile .Profile {
+                width: 100vw;
+                height: 30vh; } }
+            .UserProfile .Profile .Name {
+              font-size: 6vw;
+              font-family: 'Abril Fatface';
+              margin-bottom: 4vw; }
+            .UserProfile .Profile .Bio {
+              font-size: 15px;
+              line-height: 1.8;
+              margin-bottom: 3vw;
+              opacity: .4; }
+            .UserProfile .Profile .Quote {
+              margin-top: auto; }
+              .UserProfile .Profile .Quote blockquote {
+                font-size: 36px;
+                font-family: 'Abril Fatface';
+                font-style: italic;
+                line-height: 1.4;
+                margin-bottom: .6em; }
+              .UserProfile .Profile .Quote .byline {
+                font-family: 'Times', serif;
+                text-align: right;
+                font-size: 22px;
+                font-style: italic;
+                opacity: .25; }
+.mentor-list {
+  color: blue;
+  font-size: 20px;
+}
+>>>>>>> added userprofile, mentee home
 /*end*/

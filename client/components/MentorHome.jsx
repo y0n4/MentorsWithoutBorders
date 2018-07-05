@@ -4,7 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import MentorFeed from './MentorHomeComponents/MentorFeed';
+<<<<<<< HEAD
 import MentorFeedRight from './MentorHomeComponents/MentorFeedRight';
+=======
+>>>>>>> added userprofile, mentee home
 
 const styles = theme => ({
   root: {
@@ -21,6 +24,7 @@ const styles = theme => ({
 class MentorHome extends React.Component {
   constructor(props) {
     super(props);
+<<<<<<< HEAD
     this.state = {
       questions: '',
     };
@@ -32,12 +36,22 @@ class MentorHome extends React.Component {
   }
 
   // renders mentees questions on homepage
+=======
+    this.state = {};
+  }
+
+  // readily need 
+  // questions from mentees data
+  // list of online mentees (socket)
+  // mentor user data
+>>>>>>> added userprofile, mentee home
   renderMenteeQs() {
     return (
       <MentorFeed />
     );
   }
 
+<<<<<<< HEAD
   // renders current online mentees on homepage
   renderMenteeOnline() {
     return (
@@ -53,6 +67,8 @@ class MentorHome extends React.Component {
     // do post req to save to db
   }
 
+=======
+>>>>>>> added userprofile, mentee home
   render() {
     const { classes } = this.props;
     return (
@@ -63,11 +79,18 @@ class MentorHome extends React.Component {
               <div className="mentor-quote">
                 Share with your mentees about what inspired you today?<br /><br />
                 <textarea className="mentor-input" /><br />
+<<<<<<< HEAD
                 <button onClick={this.saveMentorQ}>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
                 Help guide your mentee's with tips that can help answer their worries/questions!<br />
                 Simply visit their profile and chat with them!<br />
+=======
+                <button>Submit</button><br /><br /><br />
+              </div>
+              <div className="mentee-question-feed">
+                Help guide your mentee's with tips that can help answer their worries/questions!<br /><br />
+>>>>>>> added userprofile, mentee home
                 {this.renderMenteeQs()}
               </div>
             </Paper>
@@ -78,10 +101,17 @@ class MentorHome extends React.Component {
                 Your Mentor Rating
                 <div>⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews</div>
               </div>
+<<<<<<< HEAD
               <br /><br />
               <div className="mentor-connect-mentee">
                 Current Mentees Online <br /><br />
                 {this.renderMenteeOnline()}
+=======
+              <br />
+              <div className="mentor-connect-mentee">
+                Online Mentees
+                <div>*list of online mentees here*</div>
+>>>>>>> added userprofile, mentee home
               </div>
             </Paper>
           </Grid>

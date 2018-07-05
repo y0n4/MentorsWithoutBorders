@@ -5,6 +5,10 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const { AccessToken } = require('twilio').jwt;
+<<<<<<< HEAD
+=======
+
+>>>>>>> added userprofile, mentee home
 const { VideoGrant } = AccessToken;
 const cors = require('cors');
 
@@ -16,7 +20,10 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+<<<<<<< HEAD
 const { addDataToHeroku } = require('../database/dummyGen/generator')
+=======
+>>>>>>> added userprofile, mentee home
 const { speechToText, translate } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
@@ -108,7 +115,11 @@ app.get(
 
     // check if user exists
     data.findUser(info.googleId, (results) => {
+<<<<<<< HEAD
       console.log(results, 'this is from data.findUser');
+=======
+      // console.log(results, 'this is from data.findUser');
+>>>>>>> added userprofile, mentee home
       if (results === null) { // null is if user doesn't exist
         data.saveUser(info); // save 2 database
       }
