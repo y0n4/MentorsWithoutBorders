@@ -153,7 +153,7 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
-// addDataToHeroku(1000)
+// addDataToHeroku(300)
 
 server.listen(port, () => {
   console.log(`Listening on port: ${port}`);
