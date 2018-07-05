@@ -55,6 +55,7 @@ class MentorSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      online: false,
       open: false,
       startAge: '',
       endAge: '',
@@ -65,7 +66,11 @@ class MentorSearch extends Component {
     this.handleClickOpen = this.handleClickOpen.bind(this);
 
     this.handleChange = name => event => {
-      this.setState({ [name]: event.target.value })
+      if (name === 'online') {
+        this.setState({ [name]: !this.state.online });
+      } else {
+        this.setState({ [name]: event.target.value });
+      }
     }
   }
 
@@ -95,6 +100,19 @@ class MentorSearch extends Component {
             <Grid item xs={2}>
               <Card className={classes.card}>
                 <CardContent>
+                  <div className='onlineStatus'>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.checkedB}
+                          onChange={this.handleChange('online')}
+                          value="online"
+                          color="primary"
+                        />
+                      }
+                      label="Online Now"
+                    />
+                  </div>
                   <div className='ageSelector'>
                     <Button onClick={this.handleClickOpen}>Select an age range</Button>
                     <Dialog
