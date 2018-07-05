@@ -45,6 +45,7 @@ const User = sequelize.define('user', {
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
+  locale: Sequelize.STRING,
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))

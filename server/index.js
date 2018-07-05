@@ -5,7 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const { AccessToken } = require('twilio').jwt;
-
+const { addDataToHeroku } = require('../database/dummyGen/generator')
 const { VideoGrant } = AccessToken;
 const cors = require('cors');
 
@@ -150,6 +150,8 @@ app.get('/*', (req, res) => {
   // console.log(req.session);
   res.redirect('/');
 });
+
+// addDataToHeroku(1000) # of random users to add to DB
 
 server.listen(port, () => {
   console.log(`Listening on port: ${port}`);
