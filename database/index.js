@@ -29,15 +29,12 @@ const User = sequelize.define('user', {
   },
   googleId: Sequelize.STRING,
   fullName: Sequelize.STRING,
+  photo: Sequelize.STRING,
   gender: Sequelize.STRING,
   ratings: Sequelize.INTEGER,
   totalRatings: Sequelize.INTEGER,
   bio: Sequelize.STRING,
   isMentor: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-  isMentee: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
