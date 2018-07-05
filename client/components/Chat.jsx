@@ -147,7 +147,7 @@ class Chat extends Component {
                   </div>
                   <div className="enterMessage">
                     <textarea className="typeMessage" onKeyDown={this.onEnterPress} value={message} onChange={this.handleChange} />
-                    <input type="submit" value="Submit" />
+                    {/* <input type="submit" value="Submit" /> */}
                   </div>
                 </form>
               </Paper>
