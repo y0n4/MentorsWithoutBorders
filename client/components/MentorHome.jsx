@@ -30,7 +30,7 @@ class MentorHome extends React.Component {
   renderMenteeQs() {
     return (
       <MentorFeed />
-    )
+    );
   }
 
   render() {
