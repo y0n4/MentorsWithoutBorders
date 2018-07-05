@@ -34,9 +34,13 @@ class Chat extends Component {
     this.onListenClick = this.onListenClick.bind(this);
     this.socket = socket;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> added userprofile, mentee home
+=======
+
+>>>>>>> merge
     socket.on('results', (data) => {
       const results = JSON.parse(data);
       const { messages } = this.state;
@@ -155,6 +159,7 @@ class Chat extends Component {
                   <div className="messagesArea">
                     {messages.map(line => (
 <<<<<<< HEAD
+<<<<<<< HEAD
                       <div key={line.time} className="aMessage">
                         {`${line.name}: ${line.message}`}
                       </div>
@@ -166,6 +171,11 @@ class Chat extends Component {
                         {line.message}
                       </p>
 >>>>>>> added userprofile, mentee home
+=======
+                      <div key={line.time} className="aMessage">
+                        {`${line.name}: ${line.message}`}
+                      </div>
+>>>>>>> merge
                     ))}
                   </div>
                   <div className="enterMessage">

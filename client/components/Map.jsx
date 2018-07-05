@@ -1,5 +1,6 @@
 import React from 'react';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { VectorMap } from 'react-jvectormap';
 import axios from 'axios';
 =======
@@ -10,6 +11,10 @@ import {
   Marker,
 } from 'react-google-maps';
 >>>>>>> added userprofile, mentee home
+=======
+import { VectorMap } from 'react-jvectormap';
+import axios from 'axios';
+>>>>>>> merge
 
 class Map extends React.Component {
   constructor(props) {
@@ -17,6 +22,9 @@ class Map extends React.Component {
     this.state = {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> merge
     }
     this.addData = this.addData.bind(this);
   }
@@ -45,6 +53,7 @@ class Map extends React.Component {
           height: '100%',
         }}
         containerClassName="map"
+<<<<<<< HEAD
       />
     );
   }
@@ -64,5 +73,11 @@ const Map = withScriptjs(withGoogleMap(props => (
   </GoogleMap>
 )));
 >>>>>>> added userprofile, mentee home
+=======
+      />
+    );
+  }
+}
+>>>>>>> merge
 
 export default Map;

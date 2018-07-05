@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function MentorFeed(props) {
 =======
@@ -23,6 +24,10 @@ const styles = theme => ({
 function MentorFeed(props) {
   const { classes } = props;
 >>>>>>> added userprofile, mentee home
+=======
+
+function MentorFeed(props) {
+>>>>>>> merge
   return (
     <div>
     <div className="mentee-qs">
@@ -34,10 +39,14 @@ function MentorFeed(props) {
         <br />
         <br />
 <<<<<<< HEAD
+<<<<<<< HEAD
         I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
 =======
 I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
 >>>>>>> added userprofile, mentee home
+=======
+        I really want to start a mukbang channel, should I eat silently or have a full blown conversation?
+>>>>>>> merge
       </div>
     </div>
 
@@ -50,10 +59,14 @@ I really want to start a mukbang channel, should I eat silently or have a full b
         <br />
         <br />
 <<<<<<< HEAD
+<<<<<<< HEAD
         Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
 =======
 Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
 >>>>>>> added userprofile, mentee home
+=======
+        Are people more satisfied if I eat junk food? I'm not trying to gain weight for the expense of pleasing others (unless the number of views are worth it).
+>>>>>>> merge
       </div>
     </div>
 
@@ -66,14 +79,19 @@ Are people more satisfied if I eat junk food? I'm not trying to gain weight for 
         <br />
         <br />
 <<<<<<< HEAD
+<<<<<<< HEAD
         I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
 =======
 I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
 >>>>>>> added userprofile, mentee home
+=======
+        I want to film myself eating out in restuarants so that my viewers can relate to me and not feel lonely when eating alone but I'm afraid that passerbys will think weirdly of me
+>>>>>>> merge
       </div>
     </div>
     </div>
   );
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -95,3 +113,8 @@ Is it a weird idea to film myself eating in silence at the park? I'm afraid what
 </div>
 </div> */}
 >>>>>>> added userprofile, mentee home
+=======
+}
+
+export default MentorFeed;
+>>>>>>> merge

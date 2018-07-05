@@ -170,10 +170,14 @@ export default class VideoComponent extends Component {
     */
     const showLocalTrack = this.state.localMediaAvailable ? (
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="flex-item" ref="localMedia" style={{display: 'inline-block'}}/>
 =======
       <div className="flex-item" ref="localMedia" />
 >>>>>>> added userprofile, mentee home
+=======
+      <div className="flex-item" ref="localMedia" style={{display: 'inline-block'}}/>
+>>>>>>> merge
     ) : '';
 
     /*
@@ -195,15 +199,20 @@ export default class VideoComponent extends Component {
     return (
       <div className="videoArea">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div className="flex-container" >
 =======
         <div className="flex-container">
 >>>>>>> added userprofile, mentee home
+=======
+        <div className="flex-container" >
+>>>>>>> merge
           {showLocalTrack}
           <div className="flex-item otherVid" ref="remoteMedia" id="remote-media" style={{display: 'inline-block'}}/>
         </div>
         <div className="roomName">
           <input type="text" onChange={this.handleRoomNameChange} />
+<<<<<<< HEAD
 <<<<<<< HEAD
           {joinOrLeaveRoomButton}
         </div>
@@ -213,6 +222,10 @@ export default class VideoComponent extends Component {
         </div>
         <div className="otherVid" ref="remoteMedia" id="remote-media" />
 >>>>>>> added userprofile, mentee home
+=======
+          {joinOrLeaveRoomButton}
+        </div>
+>>>>>>> merge
       </div>
     );
   }
