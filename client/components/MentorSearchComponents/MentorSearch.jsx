@@ -65,11 +65,15 @@ class MentorSearch extends Component {
       language: '',
       allMentors: [],
       selectedMentors: [],
+      page: 0,
+      rowsPerPage: 5
     };
 
     this.handleClose = this.handleClose.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.mentorsPagination = this.mentorsPagination.bind(this);
+    this.selectMentors = this.selectMentors.bind(this);
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
 
     this.handleChange = name => event => {
       if (name === 'online') {
@@ -87,19 +91,33 @@ class MentorSearch extends Component {
         allMentors: res.data
       });
 
-      this.mentorsPagination(1);
+      this.selectMentors(0, 5);
     });
   }
 
-  mentorsPagination(pgNum) {
-    let endNum = pgNum * 10;
-    let startNum = endNum - 10;
+  selectMentors(pgNum, rows) {
+    pgNum = pgNum + 1;
+
+    let endNum = pgNum * rows;
+    let startNum = endNum - rows;
     let selectedMentors = this.state.allMentors.slice(startNum, endNum);
+
+    console.log('Start num', startNum, 'endNum', endNum)
     
     this.setState({
       selectedMentors: selectedMentors
     });
   }
+
+  handleChangePage(event, page) {
+    this.selectMentors(page, this.state.rowsPerPage);
+    this.setState({ page });
+  };
+
+  handleChangeRowsPerPage(event) {
+    this.setState({ rowsPerPage: event.target.value });
+    this.selectMentors(this.state.page, event.target.value)
+  };
 
   handleClickOpen() {
     this.setState({ open: true });
@@ -129,9 +147,9 @@ class MentorSearch extends Component {
               </Card>
               <TablePagination
                 component="div"
-                // count={data.length}
-                // rowsPerPage={rowsPerPage}
-                // page={page}
+                count={this.state.allMentors.length}
+                rowsPerPage={this.state.rowsPerPage}
+                page={this.state.page}
                 backIconButtonProps={{
                   'aria-label': 'Previous Page',
                 }}
