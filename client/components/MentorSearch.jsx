@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -20,6 +21,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -60,6 +62,7 @@ class MentorSearch extends Component {
       startAge: '',
       endAge: '',
       language: '',
+      mentors: []
     };
 
     this.handleClose = this.handleClose.bind(this);
@@ -72,6 +75,15 @@ class MentorSearch extends Component {
         this.setState({ [name]: event.target.value });
       }
     }
+  }
+
+  componentDidMount() {
+    axios.get('/allMentors')
+    .then((res) => {
+      this.setState({
+        mentors: res.data
+      });
+    });
   }
 
   handleClickOpen() {
