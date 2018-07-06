@@ -11,7 +11,10 @@ module.exports.addDataToHeroku = (qty = 100) => {
           gender: user.gender,
           photo: user.picture.thumbnail,
           isMentor: random.boolean(),
-          location: `${user.location.city}, ${user.location.state}`,
+          location: {
+            latLng: [Number(user.location.coordinates.latitude), Number(user.location.coordinates.longitude)],
+            name: user.location.city
+          },
           locale: random.locale(),
         };
         user.name && saveUser(info);
