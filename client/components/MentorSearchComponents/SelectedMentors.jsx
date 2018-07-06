@@ -66,7 +66,7 @@ class SelectedMentors extends Component {
         {/* {console.log(this.props.mentor)} */}
       </div>
     );
-  } 
+  }
 };
 
 SelectedMentors.propTypes = {
