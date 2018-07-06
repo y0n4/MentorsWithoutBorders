@@ -17,7 +17,7 @@ export default class SelectedMentors extends Component {
 
   render() {
     let mentor = this.props.mentor;
-  
+
     return (
       <div className='eachMentor'>
         <ListItem>
