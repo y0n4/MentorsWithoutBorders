@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import {
+  Link, Switch, Route, BrowserRouter,
+} from 'react-router-dom';
 import { withRouter } from 'react-router';
 import io from 'socket.io-client';
 import VideoChatRoom from './VideoChatRoom';
-import MentorSearch from './MentorSearchComponents/MentorSearch';
-import MentorHome from './MentorHome';
-import MenteeHome from './MenteeHome/MenteeHome';
 import NavBar from './NavBar';
 import Login from './Login';
 import Chat from './Chat';
 import Home from './Home';
 import UserProfile from './UserProfile';
+import MentorHome from './MentorHome';
+import MenteeHome from './MenteeHome/MenteeHome';
+
 import '../dist/styles.css';
 
 class App extends Component {
@@ -39,15 +41,17 @@ class App extends Component {
         <div className="nav">
           <NavBar messages={messages} socket={this.socket} isUserOn={isUserOn} />
         </div>
-        <div className="routes">
-          <Route exact path="/" component={Home} />
+        {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+        <Route exact path="/" component={Home} />
+        <Switch>
           <Route path="/user-profile" component={UserProfile} />
           <Route path="/mentor" component={MentorHome} />
-          <Route path="/mentee" component={MenteeHome} />
-          <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
-          <Route path='/searchResults' component={MentorSearch} />
-        </div>
-        {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+          {/* <Route path="/user-profile" render={() => <UserProfile />} /> */}
+          {/* <Route path="/mentee" component={MenteeHome } /> */}
+          <Route path="/mentee" render={() => <MenteeHome isUserOn={isUserOn} />} />
+          <Route path="/chat" render={() => <Chat name={name} socket={this.socket} />} />
+        </Switch>
+
       </div>
     );
   }
@@ -55,3 +59,4 @@ class App extends Component {
 
 const AppWithRouter = withRouter(App);
 export default AppWithRouter;
+// export default App;
