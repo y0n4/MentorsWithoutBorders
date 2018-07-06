@@ -4,11 +4,12 @@ import { withRouter } from 'react-router';
 import io from 'socket.io-client';
 import VideoChatRoom from './VideoChatRoom';
 import MentorHome from './MentorHome';
-import MenteeHome from './MenteeHome';
+import MenteeHome from './MenteeHome/MenteeHome';
 import NavBar from './NavBar';
 import Login from './Login';
 import Chat from './Chat';
 import Home from './Home';
+import UserProfile from './UserProfile';
 import '../dist/styles.css';
 
 class App extends Component {
@@ -30,20 +31,17 @@ class App extends Component {
     });
   }
 
-  handleLinkClick() {
-    this.refs.dropdown.hide();
-  }
-
   render() {
     const { isUserOn, messages, name } = this.state;
     return (
       <div className="container">
         <div className="nav">
-          <NavBar messages={messages} socket={this.socket} />
+          <NavBar messages={messages} socket={this.socket} isUserOn={isUserOn} />
         </div>
         {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         <div className="routes">
-          <Route path="/" component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route path="/user-profile" component={UserProfile} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
           <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
