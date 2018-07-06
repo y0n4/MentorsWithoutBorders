@@ -114,7 +114,7 @@ app.get(
       }
     });
     req.session.token = req.user.token; // set cookies
-    res.redirect('/'); // back to homepage
+    res.redirect('/user-profile'); // back to homepage
   },
 );
 
@@ -145,6 +145,13 @@ app.get('/token', (req, res) => {
   res.send({
     identity,
     token: token.toJwt(),
+  });
+});
+
+// retreives all location from db
+app.get('/map', (req, res) => {
+  data.allLocation((results) => {
+    res.send(results);
   });
 });
 
