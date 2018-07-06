@@ -45,4 +45,4 @@ export default class SelectedMentors extends Component {
       </div>
     );
   }
-};
+}; 
