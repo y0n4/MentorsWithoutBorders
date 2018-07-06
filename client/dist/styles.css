@@ -11,6 +11,29 @@
   text-align: center;
 }
 
+.eachMentor {
+  border-style: outset;
+}
+
+.theAvatar {
+  height: 100px !important;
+  width: 100px !important;
+}
+
+.theName {
+  position: absolute;
+  top: 14px;
+  left: 140px;
+  font-family: 'Rokkitt', serif;
+  font-size: 1.2em;
+}
+
+.state {
+  position: absolute;
+  top: 46px;
+  left: 140px;
+}
+
 .messagesArea {
   border: 2px solid black;
   height: 300px;
