@@ -35,7 +35,7 @@ const User = sequelize.define('user', {
   mentors: Sequelize.ARRAY(Sequelize.TEXT),
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
-  location: Sequelize.JSON,
+  location: Sequelize.STRING,
   locale: Sequelize.STRING,
 }, { timestamps: false });
 
