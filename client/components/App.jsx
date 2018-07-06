@@ -38,7 +38,6 @@ class App extends Component {
         <div className="nav">
           <NavBar messages={messages} socket={this.socket} isUserOn={isUserOn} />
         </div>
-        {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         <div className="routes">
           <Route exact path="/" component={Home} />
           <Route path="/user-profile" component={UserProfile} />
@@ -46,6 +45,7 @@ class App extends Component {
           <Route path="/mentee" component={MenteeHome} />
           <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
         </div>
+        {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
       </div>
     );
   }

@@ -7,6 +7,10 @@
     background-attachment: fixed;
   }
 
+.container {
+  text-align: center;
+}
+
 .messagesArea {
   border: 2px solid black;
   height: 300px;
@@ -43,6 +47,21 @@
   border: 1px solid #77777769;
 }
 
+.login-btn {
+  width: 120px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #FE5353;
+  color: white;
+}
+
+.login-descrip {
+  color: white;
+  text-align: justify;
+  margin: auto;
+  width: 20%;
+}
 
 /*this is for mentor homepage and sub components*/
 .mentor-input {
