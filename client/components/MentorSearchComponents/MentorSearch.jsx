@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import SelectedMentors from './SelectedMentors';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,6 +10,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import TablePagination from '@material-ui/core/TablePagination';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
@@ -86,7 +87,7 @@ class MentorSearch extends Component {
         allMentors: res.data
       });
 
-      this.mentorsPagination(2);
+      this.mentorsPagination(1);
     });
   }
 
@@ -113,15 +114,33 @@ class MentorSearch extends Component {
     const spacing = 16;
 
     return (
-      <div>
+      <div className='mentorsArea'>
         <Paper className={classes.root} elevation={1}>
           <Grid container className={classes.root} spacing={16}>
             <Grid item xs={10}>
               <Card className={classes.card}>
-                <CardContent>
-                  Blah Blah
+                <CardContent> 
+                  {this.state.selectedMentors.map((mentor, idx) => {
+                    return (
+                      <SelectedMentors mentor={mentor} key={idx} />
+                    );
+                  })}
                 </CardContent>
               </Card>
+              <TablePagination
+                component="div"
+                // count={data.length}
+                // rowsPerPage={rowsPerPage}
+                // page={page}
+                backIconButtonProps={{
+                  'aria-label': 'Previous Page',
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next Page',
+                }}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
             </Grid>
             <Grid item xs={2}>
               <Card className={classes.card}>
