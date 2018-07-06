@@ -37,15 +37,25 @@ class Map extends React.Component {
     this.addData = this.addData.bind(this);
   }
   componentDidMount() {
-    this.addData();
+    // this.addData();
     // axios.get('/mentor-count')
     //   .then(({data}) => {
     //     this.refs.map.getMapObject().regionsData = data.mapData
       // })
+
+    console.log('oi')
+    axios.get('/map')
+      .then((res) => {
+        this.setState({userLocation: res.data});
+        console.log(this.state.userLocation);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   addData() {
-    console.log(this.refs.map.getMapObject())
+    // console.log(this.refs.map.getMapObject())
     // console.log(this.refs.map.getMapObject().scale = ['#C8EEFF', '#0071A4']);
   }
 
@@ -60,8 +70,8 @@ class Map extends React.Component {
           width: '100%',
           height: '100%',
         }}
-        markers={this.state.userLocation}
         containerClassName="map"
+        markers={this.state.userLocation}
       />
     );
   }
