@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import axios from 'axios';
 import io from 'socket.io-client';
 import VideoChatRoom from './VideoChatRoom';
-import MentorSearch from './MentorSearch';
+import MentorSearch from './MentorSearchComponents/MentorSearch';
 import MentorHome from './MentorHome';
 import MenteeHome from './MenteeHome/MenteeHome';
 import NavBar from './NavBar';
