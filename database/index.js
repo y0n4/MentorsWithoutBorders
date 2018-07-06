@@ -1,4 +1,5 @@
 const pg = require('pg');
+
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
@@ -34,7 +35,7 @@ const User = sequelize.define('user', {
   mentors: Sequelize.ARRAY(Sequelize.TEXT),
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
-  location: Sequelize.STRING,
+  location: Sequelize.JSON,
   locale: Sequelize.STRING,
 }, { timestamps: false });
 
@@ -88,7 +89,20 @@ const saveUser = (query) => {
   });
 };
 
+// get location information from users
+const allLocation = (callback) => {
+  User.findAll({ attributes: ['location'] })
+    .then((locations) => {
+      const location = locations.map(loc => loc.dataValues.location);
+
+      callback(location);
+    }).catch((err) => {
+      console.log('incorrectly finding data');
+    });
+};
+
 module.exports = {
   findUser,
   saveUser,
+  allLocation,
 };
