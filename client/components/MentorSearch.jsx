@@ -62,11 +62,13 @@ class MentorSearch extends Component {
       startAge: '',
       endAge: '',
       language: '',
-      mentors: []
+      allMentors: [],
+      selectedMentors: [],
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.mentorsPagination = this.mentorsPagination.bind(this);
 
     this.handleChange = name => event => {
       if (name === 'online') {
@@ -81,8 +83,20 @@ class MentorSearch extends Component {
     axios.get('/allMentors')
     .then((res) => {
       this.setState({
-        mentors: res.data
+        allMentors: res.data
       });
+
+      this.mentorsPagination(2);
+    });
+  }
+
+  mentorsPagination(pgNum) {
+    let endNum = pgNum * 10;
+    let startNum = endNum - 10;
+    let selectedMentors = this.state.allMentors.slice(startNum, endNum);
+    
+    this.setState({
+      selectedMentors: selectedMentors
     });
   }
 
