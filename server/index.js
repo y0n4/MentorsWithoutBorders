@@ -36,7 +36,7 @@ app.use(cookieParser());
 speechToText(app);
 
 const port = process.env.PORT || 3000;
-const data = require('../database');
+// const data = require('../database');
 
 const users = {};
 
