@@ -70,10 +70,10 @@ class NavBar extends React.Component {
           style={styles.large}
         >
           <BottomNavigationAction
-            value=""
+            value="home"
             icon={<HomeIcon />}
             component={Link}
-            to="/"
+            to="/user-profile"
           />
           <BottomNavigationAction
             value="chat"
@@ -98,7 +98,6 @@ class NavBar extends React.Component {
                     <FormControlLabel
                       control={(
                         <Switch
-                          checked={this.state.mentor}
                           onChange={this.switchMode}
                           value="mentor"
                         />
@@ -107,14 +106,6 @@ class NavBar extends React.Component {
                     />
                   </FormGroup>
                 </FormControl>
-<<<<<<< HEAD
-=======
-              </ul>
-              <ul>
-                <Link to="/userprofile" onClick={this.handleLinkClick}>
-                  User Profile
-                </Link>
->>>>>>> added userprofile, mentee home
               </ul>
               <ul>
                 <Link to="/logout" onClick={this.handleLinkClick}>

@@ -1,5 +1,4 @@
 const pg = require('pg');
-
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
@@ -59,13 +58,13 @@ User.sync({ force: false }).then(() => { // set true if overwite existing databa
   console.log('model is not synced');
 });
 
-Category.sync({ force: true }).then(() => 
+Category.sync({ force: true }).then(() => {
   // Table created
   return Category.create({
     firstName: 'John',
     lastName: 'Hancock'
-  })
-);
+  });
+});
 
 // confirm if user exists in database
 const findUser = (googleId, callback) => {

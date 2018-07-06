@@ -33,14 +33,7 @@ class Chat extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onListenClick = this.onListenClick.bind(this);
     this.socket = socket;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> added userprofile, mentee home
-=======
-
->>>>>>> merge
     socket.on('results', (data) => {
       const results = JSON.parse(data);
       const { messages } = this.state;
@@ -58,7 +51,6 @@ class Chat extends Component {
       temp.push(data);
       this.setState({ messages: temp });
     });
-<<<<<<< HEAD
   }
 
   componentWillMount() {
@@ -67,16 +59,6 @@ class Chat extends Component {
     this.socket.emit('userJoin', { name });
   }
 
-=======
-  }
-
-  componentWillMount() {
-    const { name } = this.props;
-    this.setState({ name });
-    this.socket.emit('userJoin', { name });
-  }
-
->>>>>>> added userprofile, mentee home
   componentDidMount() {
     this.socket.on('msghistory', (msgHistory) => {
       this.setState({ msgHistory });
@@ -158,24 +140,9 @@ class Chat extends Component {
                   </div>
                   <div className="messagesArea">
                     {messages.map(line => (
-<<<<<<< HEAD
-<<<<<<< HEAD
                       <div key={line.time} className="aMessage">
                         {`${line.name}: ${line.message}`}
                       </div>
-=======
-                      <p key={line.time} className="aMessage">
-                        {line.name}
-                        :
-                        {' '}
-                        {line.message}
-                      </p>
->>>>>>> added userprofile, mentee home
-=======
-                      <div key={line.time} className="aMessage">
-                        {`${line.name}: ${line.message}`}
-                      </div>
->>>>>>> merge
                     ))}
                   </div>
                   <div className="enterMessage">
