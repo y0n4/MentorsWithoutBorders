@@ -5,7 +5,6 @@ export default class SelectedMentors extends Component {
     return (
       <div className='eachMentor'>
         <img src={this.props.mentor.picture.thumbnail} />
-        {console.log(this.props.mentor.picture.thumbnail)}
       </div>
     );
   }
