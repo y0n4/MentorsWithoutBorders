@@ -11,16 +11,16 @@ class Home extends React.Component {
 
   // func to get users location using api call
   componentDidMount() {
-    console.log('oi');
-    // then save to db
-    axios({
-      method:'get',
-      url:'https://geoip-db.com/jsonp',
-      responseType:'json'
-    })
-    .then(function(response) {
-      console.log('geolocation', response);
-    });
+    // console.log('oi');
+    // // then save to db
+    // axios({
+    //   method:'get',
+    //   url:'https://geoip-db.com/jsonp',
+    //   responseType:'json'
+    // })
+    // .then(function(response) {
+    //   console.log('geolocation', response);
+    // });
   }
 
   render() {
