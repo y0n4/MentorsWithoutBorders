@@ -25,7 +25,9 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Map />
+    <div className="world-map">
+      {/* <Map /> */}
+    </div>
     );
   }
 }
