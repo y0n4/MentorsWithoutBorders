@@ -25,10 +25,10 @@ class Home extends React.Component {
 
   render() {
     return (
-
       <div>
-            HI
+        Map hurrr
       </div>
+
     );
   }
 }
