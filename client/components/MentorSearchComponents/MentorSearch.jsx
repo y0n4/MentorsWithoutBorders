@@ -287,7 +287,7 @@ class MentorSearch extends Component {
                     <option value={'english'}>English</option>
                     <option value={'chinese'}>Chinese</option>
                     <option value={'japanese'}>Japanese</option>
-                    <option value={'korean'}>Korean</option>
+                    <option value={'korean'}>Korean</option> 
                   </Select>
                 </div>
               </CardContent>
