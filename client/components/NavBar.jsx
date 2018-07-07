@@ -15,8 +15,7 @@ import Dropdown, {
   DropdownTrigger,
   DropdownContent,
 } from 'react-simple-dropdown';
-import MentorHome from './MentorHome';
-import MenteeHome from './MenteeHome/MenteeHome';
+
 
 const styles = {
   root: {
@@ -44,15 +43,6 @@ class NavBar extends React.Component {
   //   this.setState({ value });
   // }
 
-  // switchMode() {
-  //   const { mentor } = this.state;
-  //   this.setState((prevState) => ({
-  //     mentor: prevState.mentor,
-  //   })
-  // )
-  // }
-
-
   switchMode() {
     const { mentor } = this.state;
     this.setState({
@@ -60,39 +50,27 @@ class NavBar extends React.Component {
     });
   }
 
-  // renderMentor() {
-  //   const { mentor } = this.state;
-  //   // const { isUserOn } = this.props;
-  //   // if (!isUserOn) {
-  //   //   return <Redirect to="/" />;
-  //   // }
-  //   if (this.state.home) {
-  //     return <Redirect to="/chat" />;
-  //   } if (!mentor) {
-  //     return <Redirect to="/mentee" />;
-  //   } if (mentor) {
-  //     return <Redirect to="mentor" />;
-  //   }
-  //   return <Redirect to="/" />;
-  // }
+  renderMentor() {
+    const { mentor } = this.state;
+    console.log(this.props.isUserOn);
+    const { isUserOn } = this.props;
+    if (isUserOn) {
+      if (!mentor) {
+        return <Redirect to="/mentee" />;
+      } return <Redirect to="/mentor" />;
+    }
+  }
 
-  // renderMentor() {
-  //   const { mentor } = this.state;
-
-
-  //   }
-  // }
-
+  logsOff() {
+    return !this.props.isUserOn;
+  }
 
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    const { mentor } = this.state;
     return (
       <div className="navContainer">
-        {/* {this.renderMentor()} */}
         {/* <Redirect to={`/${value}`} /> */}
-        {mentor ? (<MentorHome />) : (<MenteeHome />)}
         <BottomNavigation
           onChange={this.handleChange}
           className={classes.app}
@@ -120,7 +98,9 @@ class NavBar extends React.Component {
             <DropdownContent>
               <ul>
                 <FormControl component="fieldset">
-                  <div />
+                  <div>
+                    {this.renderMentor()}
+                  </div>
                   <FormGroup>
                     <FormControlLabel
                       control={(
@@ -135,7 +115,7 @@ class NavBar extends React.Component {
                 </FormControl>
               </ul>
               <ul>
-                <Link to="/logout" onClick={this.handleLinkClick}>
+                <Link to="/logout" onClick={this.logsOff}>
                   Log Out
                 </Link>
                 <br />
@@ -146,9 +126,7 @@ class NavBar extends React.Component {
             </DropdownContent>
           </Dropdown>
         </BottomNavigation>
-
       </div>
-
     );
   }
 }
