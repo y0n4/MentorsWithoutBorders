@@ -2,7 +2,6 @@
   Getting a users word count {
     - Track when a user logs in/logs out
     - When user logs out run the functions
-
     - Gather messages user has entered between login and logout
     - Grab the current wordCount object from user database
     - Split messages, delimited by spaces
@@ -14,10 +13,8 @@
     - Else
       - Add the word to wordCount setting it equal to 1
     - Return wordCount object
-
     - Store the wordCount object back into user database
   }
-
   Getting match score {
     - Takes in first20 array and currentUser's wordCount
     
@@ -30,15 +27,12 @@
     
     - Return total score
   }
-
   Providing recommendation based on wordCount {
     - Takes in an array of users
     - Takes in the current users's wordCount
-
     - Turn current user's wordCount into an array of objects
     - Sort array from most used to least
     - Grab first 20 if length greater
-
     - Create a new array recommendedMentors
     - Iterate through each user
       - Pass first20 array and currentUser's wordCount
@@ -49,34 +43,37 @@
   }
 */
 
-let userWordCounts = (wordCounts, messages) => {
-  let words = messages.split(' ');
+let userWordCounts = (user, messages) => {
+  let joinMessages = messages.join(' ');
+  let words = joinMessages.split(' ');
+  let wordCounts = JSON.parse(JSON.stringify(user.wordCount)) || {};
   let cussWords = [];
 
-  let userWordCount = words.reduce((wordCount, word) => {
+  let updatedWordCount = words.reduce((wordCount, word) => {
+    word = word.toLowerCase();
+
     if (cussWords.indexOf(word) > -1) {
       wordCounts.cussCount++;
     } else if (wordCounts[word]) {
       wordCounts[word]++; 
     } else {
-    	wordCounts[word] = 1
+    	wordCounts[word] = 1;
     }
 
     return wordCount;
   }, wordCounts);
 
-  user.wordCount = userWordCount;
+
+  return updatedWordCount;
 };
 
 /*
   Providing recommendation based on wordCount {
     - Takes in an array of users
     - Takes in the current users's wordCount
-
     - Turn current user's wordCount into an array of objects
     - Sort array from most used to least
     - Grab first 20 if length greater
-
     - Create a new array recommendedMentors
     - Iterate through each user
       - Pass first20 array and currentUser's wordCount
@@ -114,7 +111,7 @@ let getWordCountScore = (mentorWordCount, userWordCount) => {
   return score;
 };
 
-let wordCountScore = (mentors) => {
+let wordCountScore = (user, mentors) => {
   let userWordCount = user.wordCount;
 
   mentors.forEach((mentor) => {
