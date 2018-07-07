@@ -52,18 +52,26 @@ class NavBar extends React.Component {
 
   renderMentor() {
     const { mentor } = this.state;
-    if (mentor && this.prop.isUserOn) {
-      return <Redirect to="/mentor" />;
-    } return <Redirect to="/mentee" />;
+    console.log(this.props.isUserOn);
+    const { isUserOn } = this.props;
+    if (isUserOn) {
+      if (!mentor) {
+        return <Redirect to="/mentee" />;
+      } return <Redirect to="/mentor" />;
+    }
   }
 
+  logsOff() {
+    return !this.props.isUserOn;
+  }
 
   render() {
     const { classes } = this.props;
     const { value } = this.state;
     return (
       <div className="navContainer">
-        <Redirect to={`/${value}`} />
+        {/* <Redirect to={`/${value}`} /> */}
+        {/* {mentor ? (<MentorHome />) : (<MenteeHome />)} */}
         <BottomNavigation
           onChange={this.handleChange}
           className={classes.app}
@@ -92,7 +100,7 @@ class NavBar extends React.Component {
               <ul>
                 <FormControl component="fieldset">
                   <div>
-                    {/* {this.renderMentor()} */}
+                    {this.renderMentor()}
                   </div>
                   <FormGroup>
                     <FormControlLabel
@@ -108,7 +116,7 @@ class NavBar extends React.Component {
                 </FormControl>
               </ul>
               <ul>
-                <Link to="/logout" onClick={this.handleLinkClick}>
+                <Link to="/logout" onClick={this.logsOff}>
                   Log Out
                 </Link>
                 <br />

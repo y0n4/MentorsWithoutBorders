@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Map from './Map';
 import axios from 'axios';
+import Map from './Map';
 
 class Home extends React.Component {
   constructor(props) {
@@ -9,23 +9,26 @@ class Home extends React.Component {
     };
   }
 
-  // func to get users location using api call
-  componentDidMount() {
-    console.log('oi');
-    // then save to db
-    axios({
-      method:'get',
-      url:'https://geoip-db.com/jsonp',
-      responseType:'json'
-    })
-    .then(function(response) {
-      console.log('geolocation', response);
-    });
-  }
+  // // func to get users location using api call
+  // componentDidMount() {
+  //   console.log('oi');
+  //   // then save to db
+  //   axios({
+  //     method: 'get',
+  //     url: 'https://geoip-db.com/jsonp',
+  //     responseType: 'json',
+  //   })
+  //     .then((response) => {
+  //       console.log('geolocation', response);
+  //     });
+  // }
 
   render() {
     return (
-        <Map />
+
+      <div>
+            HI
+      </div>
     );
   }
 }

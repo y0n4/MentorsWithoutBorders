@@ -1,10 +1,14 @@
+
 require('dotenv').load({ silent: true });
 
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
+const path = require('path');
+
 const { AccessToken } = require('twilio').jwt;
+
 const { VideoGrant } = AccessToken;
 const cors = require('cors');
 
@@ -16,7 +20,7 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const { addDataToHeroku } = require('../database/dummyGen/generator')
+const { addDataToHeroku } = require('../database/dummyGen/generator');
 const { speechToText, translate } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
@@ -60,6 +64,7 @@ io.on('connection', (socket) => {
 app.use(cors());
 app.use(express.static(`${__dirname}/../client/dist`));
 
+
 // ------------google oauth------------//
 app.get('/home', (req, res) => {
   if (req.session.token) {
@@ -102,8 +107,8 @@ app.get(
       googleId: req.user.profile.id,
       fullName: `${req.user.profile.name.givenName} ${req.user.profile.name.familyName}`,
       gender: req.user.profile.gender,
-      photo: req.user.profile['_json'].image.url,
-      locale: req.user.profile['_json'].language,
+      photo: req.user.profile._json.image.url,
+      locale: req.user.profile._json.language,
     };
 
     // check if user exists
@@ -156,11 +161,16 @@ app.get('/token', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  // console.log(req.session);
-  res.redirect('/');
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+  // res.sendFile(`${__dirname}/../client/dist/index.html`);
 });
 
-// addDataToHeroku(300)  
+// app.get('/*', (req, res) => {
+//   // console.log(req.session);s
+//   res.redirect('/');
+// });
+
+// addDataToHeroku(300)
 
 server.listen(port, () => {
   console.log(`Listening on port: ${port}`);

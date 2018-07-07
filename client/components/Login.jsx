@@ -36,7 +36,9 @@ class Login extends React.Component {
         </a>
         <br />
         <br />
-        <div className="login-descrip">Sign up and join to become a mentor/mentee and meet amazing people over the world who love to share their knowledge in our growing community!</div>
+        <div className="login-descrip">
+Sign up and join to become a mentor/mentee and meet amazing people over the world who love to share their knowledge in our growing community!
+        </div>
       </div>
     );
   }
