@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Video from 'twilio-video';
 import axios from 'axios';
 
+import Grid from '@material-ui/core/Grid';
+
 export default class VideoComponent extends Component {
   constructor(props) {
     super(props);
@@ -194,10 +196,10 @@ export default class VideoComponent extends Component {
           {showLocalTrack}
           <div className="flex-item otherVid" ref="remoteMedia" id="remote-media" style={{display: 'inline-block'}}/>
         </div>
-        <div className="roomName">
+        {/* <div className="roomName">
           <input type="text" onChange={this.handleRoomNameChange} />
           {joinOrLeaveRoomButton}
-        </div>
+        </div> */}
       </div>
     );
   }

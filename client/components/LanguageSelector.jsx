@@ -9,8 +9,8 @@ import Divider from '@material-ui/core/Divider';
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    maxWidth: 340,
+    backgroundColor: 'transparent',
   },
 });
 
@@ -26,32 +26,25 @@ const languages = [
   { Arabic: 'ar-AR_BroadbandModel' },
 ];
 
-class LanguageSelector extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      default: 'English',
-    };
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <List>
-          {languages.map((language, i) => (
-            <div>
-              <ListItem button>
-                <Avatar src={`../../images/${Object.keys(language)[0]}.png`} className={classes.avatar} />
-                <ListItemText primary={`${Object.keys(language)[0]}`} />
-              </ListItem>
-              {i < languages.length - 1 && <Divider inset component="li" />}
-            </div>
-          ))}
-        </List>
-      </div>
-    );
-  }
-}
+const LanguageSelector = ({ classes, handleLanguageSelect }) => (
+    <div className={classes.root}>
+      <List>
+        {languages.map((language, i) => (
+          <div>
+            <ListItem
+              button
+              onClick={() => handleLanguageSelect(language)}>
+              <Avatar
+                src={`../../images/${Object.keys(language)[0]}.png`}
+                className={classes.avatar} />
+              <ListItemText
+                primary={`${Object.keys(language)[0]}`} />
+            </ListItem>
+            {i < languages.length - 1 && <Divider inset component="li" />}
+          </div>
+        ))}
+      </List>
+    </div>
+  );
 
 export default withStyles(styles)(LanguageSelector);

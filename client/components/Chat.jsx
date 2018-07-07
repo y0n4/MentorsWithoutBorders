@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Input from '@material-ui/core/Input';
+import FormControl from '@material-ui/core/FormControl';
+
 import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
 import PropTypes from 'prop-types';
 import VideoComponent from './VideoComponent';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
+ container: {
+    display: 'flex',
+    flexWrap: 'wrap',
   },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+
+  formControl: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -122,22 +125,12 @@ class Chat extends Component {
     const { classes } = this.props;
     const { test, messages, message } = this.state;
     return (
-      <div>
-        <div className={classes.root}>
-          <Grid container spacing={8}>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <VideoComponent />
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <form onSubmit={this.sendMessage}>
-                  <div className="chatTitle">
-                    <h1>
-                      TheChatArea
-                    </h1>
-                  </div>
+      <React.Fragment>
+       {/* <div>
+        <div className={classes.container}> */}
+          <Grid container justify="center" spacing={8}>
+            <Grid item xs={8}>
+              {/* <Paper className={classes.paper}> */}
                   <div className="messagesArea">
                     {messages.map(line => (
                       <div key={line.time} className="aMessage">
@@ -145,23 +138,27 @@ class Chat extends Component {
                       </div>
                     ))}
                   </div>
-                  <div className="enterMessage">
-                    <textarea className="typeMessage" onKeyDown={this.onEnterPress} value={message} onChange={this.handleChange} />
+              </Grid>
+              <Grid item xs={8}>
+                <FormControl fullWidth className={classes.formControl} onSubmit={this.sendMessage}>
+                  {/* <div className="enterMessage"> */}
+                      <Input className="typeMessage" onKeyDown={this.onEnterPress} value={message} onChange={this.handleChange} />
                     {/* <input type="submit" value="Submit" /> */}
-                  </div>
-                </form>
-              </Paper>
+                  {/* </div> */}
+                </FormControl>
+              {/* </Paper> */}
             </Grid>
           </Grid>
-        </div>
+        <div>
         <button type="button" onClick={() => this.onListenClick()}>
           Listen
         </button>
         <button type="button" className="stop" onClick={() => this.translate()}>
           Stop
         </button>
+        </div>
         {test}
-      </div>
+      </React.Fragment>
     );
   }
 }

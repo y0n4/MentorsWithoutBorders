@@ -2,18 +2,22 @@ const watson = require('watson-developer-cloud');
 const vcapServices = require('vcap_services');
 const LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
 
+const sttAuthService = new watson.AuthorizationV1(
+  Object.assign(
+    {
+      username: process.env.SPEECH_TO_TEXT_USERNAME,
+      password: process.env.SPEECH_TO_TEXT_PASSWORD,
+    },
+    vcapServices.getCredentials('speech_to_text'),
+  ),
+);
+
+const languageTranslator = new LanguageTranslatorV3({
+  version: '2018-05-01',
+  iam_apikey: process.env.IAM_APIKEY_NAME,
+});
 
 module.exports.speechToText = (app) => {
-  const sttAuthService = new watson.AuthorizationV1(
-    Object.assign(
-      {
-        username: process.env.SPEECH_TO_TEXT_USERNAME,
-        password: process.env.SPEECH_TO_TEXT_PASSWORD,
-      },
-      vcapServices.getCredentials('speech_to_text'),
-    ),
-  );
-
   app.use('/api/speech-to-text/token', (req, res) => {
     sttAuthService.getToken(
       {
@@ -34,11 +38,6 @@ module.exports.speechToText = (app) => {
 module.exports.translate = (text, socket) => {
   let result = '';
 
-  const languageTranslator = new LanguageTranslatorV3({
-    version: '2018-05-01',
-    iam_apikey: process.env.IAM_APIKEY_NAME,
-  });
-
   const parameters = {
     text,
     model_id: 'en-es',
@@ -52,6 +51,19 @@ module.exports.translate = (text, socket) => {
       result = JSON.stringify(response, null, 2);
       // console.log(socket);
       socket.emit('results', result);
+    },
+  );
+};
+
+module.exports.languageSupportList = () => {
+  languageTranslator.listIdentifiableLanguages(
+    {},
+    (error, response) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(JSON.stringify(response, null, 2));
+      }
     },
   );
 };
