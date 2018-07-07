@@ -39,6 +39,7 @@ const User = sequelize.define('user', {
   locale: Sequelize.STRING,
 }, { timestamps: false });
 
+
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
 const Category = sequelize.define('category', {
   id: {
@@ -51,21 +52,63 @@ const Category = sequelize.define('category', {
 // can also write getterMethods and setterMethods, useful?(http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
 // future plans: import all model definitions from another file
 
+
+const Message = sequelize.define('message', {
+  message: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const Room = sequelize.define('room', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
+});
+
+Room.hasMany(Message);
+Message.belongsTo(User);
+
+const MyMentors = sequelize.define('myMentors', {
+  status: { 
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+});
+
+const MyMentees = sequelize.define('myMentees', {
+  status: { 
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+});
+
+User.hasMany(User, { as: 'mentor_user_id', through: 'MyMentors' });
+User.hasMany(User, { as: 'mentee_user_id', through: 'MyMentees' });
+
+
 // sync model to database
 User.sync({ force: false }).then(() => { // set true if overwite existing database
   // Table created
-  console.log('model is synced');
+  console.log('User is synced');
 }).catch((err) => {
-  console.log('model is not synced');
+  console.log('User is not synced');
 });
 
-Category.sync({ force: true }).then(() => {
-  // Table created
-  return Category.create({
+Category.sync({ force: true }).then(() => Category.create({
     firstName: 'John',
-    lastName: 'Hancock'
-  });
+    lastName: 'Hancock',
+  }),);
+
+Chat.sync({ force: false }).then(() => {
+  console.log('Chat is synced');
+}).catch((err) => {
+  console.log('Chat is not synced', err);
 });
+
+const Mentee = this.sequelize.define('');
 
 // confirm if user exists in database
 const findUser = (googleId, callback) => {
