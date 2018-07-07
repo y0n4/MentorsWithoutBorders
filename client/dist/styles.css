@@ -7,6 +7,10 @@
     background-attachment: fixed;
   }
 
+.main {
+  text-align: center;
+}
+
 .container {
   text-align: center;
 }
