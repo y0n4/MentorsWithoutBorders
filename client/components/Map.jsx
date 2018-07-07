@@ -21,14 +21,12 @@ class Map extends React.Component {
   componentDidMount() {
     axios.get('/map')
       .then((res) => {
-        console.log('got it', res.data);
         this.setState({point: res.data});
         // console.log(this.state.userLocation);
       })
       .catch((err) => {
         console.error(err);
       });
-    console.log(this.state.point);
   }
 
   renderMap(data) {

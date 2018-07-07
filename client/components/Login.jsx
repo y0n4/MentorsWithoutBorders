@@ -29,6 +29,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
+        <h2 className="login-pitch">Our mentors and mentees are located throughout the world!</h2>
         <a href="/auth/google">
           <button value="Sign In" type="button" className="login-btn">
             Sign In

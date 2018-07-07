@@ -3,6 +3,7 @@ require('dotenv').load({ silent: true });
 
 const express = require('express');
 const http = require('http');
+const axios = require('axios');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -116,7 +117,18 @@ app.get(
     data.findUser(info.googleId, (results) => {
       console.log(results, 'this is from data.findUser');
       if (results === null) { // null is if user doesn't exist
-        data.saveUser(info); // save 2 database
+        axios({ // get users approximate location
+          method: 'get',
+          url: 'https://geoip-db.com/json/',
+          responseType: 'json',
+        })
+          .then((response) => {
+            info.location = {
+              latLng: [response.data.latitude, response.data.longitude],
+              name: response.data.city,
+            };
+            data.saveUser(info);
+          });
       }
     });
     req.session.token = req.user.token; // set cookies
