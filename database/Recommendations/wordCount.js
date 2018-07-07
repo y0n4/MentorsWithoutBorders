@@ -127,8 +127,3 @@ module.exports = {
   getWordCountScore,
   wordCountScore
 };
-module.exports = {
-  userWordCounts,
-  getWordCountScore,
-  wordCountScore
-};
