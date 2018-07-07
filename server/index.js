@@ -114,7 +114,7 @@ app.get(
       }
     });
     req.session.token = req.user.token; // set cookies
-    res.redirect('/user-profile'); // back to homepage
+    res.redirect('/'); // back to homepage
   },
 );
 
@@ -124,6 +124,13 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 // ------------google oauth end------------//
+
+// retreives all location from db
+app.get('/map', (req, res) => {
+  data.allLocation((results) => {
+    res.send(results);
+  });
+});
 
 app.get('/token', (req, res) => {
   const identity = req.session.passport.user.profile.displayName;
@@ -145,13 +152,6 @@ app.get('/token', (req, res) => {
   res.send({
     identity,
     token: token.toJwt(),
-  });
-});
-
-// retreives all location from db
-app.get('/map', (req, res) => {
-  data.allLocation((results) => {
-    res.send(results);
   });
 });
 
