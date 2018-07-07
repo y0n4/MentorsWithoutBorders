@@ -11,6 +11,31 @@
   text-align: center;
 }
 
+.viewProfile {
+  position: absolute;
+  top: 49px;
+  right: 30px;
+}
+
+.addMentor {
+  position: absolute;
+  top: 46px;
+  right: 100px;
+}
+
+.aQuote {
+  position: absolute;
+  top: 30px;
+  left: 500px;
+  font-family: 'Satisfy', cursive;
+}
+
+.chatBubble {
+  position: absolute;
+  top: 49px;
+  right: 180px;
+}
+
 .eachMentor {
   border-style: outset;
 }
@@ -131,4 +156,4 @@
   border: 1px solid black;
   width: 300px;
 }
-/*end*/
+/*end*/ 
