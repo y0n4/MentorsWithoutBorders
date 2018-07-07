@@ -92,10 +92,9 @@ const saveUser = (query) => {
 // get location information from users
 const allLocation = (callback) => {
   User.findAll({ attributes: ['location'] })
-    .then((locations) => {
-      const location = locations.map(loc => loc.dataValues.location);
-
-      callback(location);
+    .then((userData) => {
+      const locations = userData.map(user => user.dataValues.location).filter(user => user !== null);
+      callback(locations);
     }).catch((err) => {
       console.log('incorrectly finding data');
     });

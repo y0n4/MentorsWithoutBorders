@@ -7,6 +7,10 @@
     background-attachment: fixed;
   }
 
+.main {
+  text-align: center;
+}
+
 .container {
   text-align: center;
 }
@@ -57,6 +61,8 @@
   position: absolute;
   top: 46px;
   left: 140px;
+}
+
 .video-chatroom {
   margin-top: 2%;
 }
