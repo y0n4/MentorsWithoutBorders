@@ -71,6 +71,7 @@ class NavBar extends React.Component {
     return (
       <div className="navContainer">
         {/* <Redirect to={`/${value}`} /> */}
+        {/* {mentor ? (<MentorHome />) : (<MenteeHome />)} */}
         <BottomNavigation
           onChange={this.handleChange}
           className={classes.app}
