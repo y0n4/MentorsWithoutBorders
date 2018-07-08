@@ -39,6 +39,10 @@ const User = sequelize.define('user', {
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
   locale: Sequelize.STRING,
+  online: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 }, { timestamps: false });
 
 
@@ -54,13 +58,13 @@ const Category = sequelize.define('category', {
 // can also write getterMethods and setterMethods, useful?(http://docs.sequelizejs.com/manual/tutorial/models-definition.html#getters-setters)
 // future plans: import all model definitions from another file
 
-
 const Message = sequelize.define('message', {
   message: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-});
+  date: Sequelize.DATE,
+}, { timestamps: false });
 
 const Room = sequelize.define('room', {
   name: {
@@ -68,23 +72,9 @@ const Room = sequelize.define('room', {
     allowNull: false,
     unique: true,
   },
-});
+}, { timestamps: false });
 
-const OnlineMentor = sequelize.define('onlineMentor', {
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-  },
-  online: {
-    type: Sequelize.BOOLEAN,
-    default: false,
-  },
-});
-
-const MyMentors = sequelize.define('myMentors', {
-
-});
+const MyMentor = sequelize.define('myMentor', null, { timestamps: false });
 
 // const MyMentees = sequelize.define('myMentees', {
 //   status: {
@@ -92,10 +82,11 @@ const MyMentors = sequelize.define('myMentors', {
 //     defaultValue: false,
 //   },
 // });
-OnlineMentor.belongsTo(User, { foreignKey: 'userId' });
-User.belongsToMany(User, { as: 'Mentors', through: 'myMentors' });
+
+User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
 Message.belongsTo(User);
 Room.hasMany(Message);
+
 // sync model to database
 User.sync({ force: false }).then(() => { // set true if overwite existing database
   // Table created
@@ -121,22 +112,11 @@ Room.sync({ force: false }).then(() => {
   console.log('Room is not synced', err);
 });
 // User.belongsToMany(User, { as: 'Mentees', through: 'MyMentees' });
-MyMentors.sync({ force: false }).then(() => {
-  console.log('MyMentors is synced');
+MyMentor.sync({ force: false }).then(() => {
+  console.log('MyMentor is synced');
 }).catch((err) => {
-  console.log('MyMentors is not synced', err);
+  console.log('MyMentor is not synced', err);
 });
-
-OnlineMentor.sync({ force: false }).then(() => {
-  console.log('OnlineMentor is synced');
-}).catch((err) => {
-  console.log('OnlineMentor is not synced', err);
-});
-// MyMentees.sync({ force: true }).then(() => {
-//   console.log('MyMentees is synced');
-// }).catch((err) => {
-//   console.log('MyMentees is not synced', err);
-// });
 
 // confirm if user exists in database
 const findUser = (googleId, callback) => {
@@ -172,30 +152,33 @@ const allLocation = (callback) => {
 };
 
 const addMyMentor = (userId, MentorId) => {
-  MyMentors.create({ userId, MentorId })
+  MyMentor.create({ userId, MentorId })
     .then((myMentor) => {
-      console.log('myMentor', myMentor);
+      console.log(myMentor);
     });
 };
 
-const mentorLogin = (userId) => {
-  OnlineMentor.create({
-    userId,
-    online: true,
+const updateUserOnline = (userId) => {
+  User.findById(userId).then((user) => {
+    const status = !user.online;
+    user.update({ online: status });
   });
 };
+
+
 
 const addRandomMessages = () => {
   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
   const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     coolKids.forEach((awesomeDood) => {
       axios.get(`http://api.icndb.com/jokes/random?escape=javascript&firstName=${awesomeDood}&lastName=`)
         .then(({ data }) => {
           Message.create({
             userId: getRandomArbitrary(315, 319),
+            date: new Date(),
             message: data.value.joke,
-            roomId: 2,
+            roomId: getRandomArbitrary(1, 5),
           });
         });
     });
@@ -212,6 +195,6 @@ module.exports = {
   saveUser,
   allLocation,
   addMyMentor,
-  mentorLogin,
+  updateUserOnline,
   addMessage,
 };
