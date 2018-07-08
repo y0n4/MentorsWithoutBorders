@@ -62,33 +62,37 @@ const Message = sequelize.define('message', {
 
 const Room = sequelize.define('room', {
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     unique: true,
   },
 });
-
-Room.hasMany(Message);
-Message.belongsTo(User);
+// const Mentors = sequelize.define('mentors', {
+//   name: {
+//     type: Sequelize.INTEGER,
+//     allowNull: false,
+//     unique: true,
+//   },
+// });
 
 const MyMentors = sequelize.define('myMentors', {
-  status: { 
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-});
-
-const MyMentees = sequelize.define('myMentees', {
-  status: { 
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-});
-
-User.hasMany(User, { as: 'mentor_user_id', through: 'MyMentors' });
-User.hasMany(User, { as: 'mentee_user_id', through: 'MyMentees' });
-
-
+  status: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+  });
+  
+  // const MyMentees = sequelize.define('myMentees', {
+    //   status: {
+      //     type: Sequelize.BOOLEAN,
+      //     defaultValue: false,
+      //   },
+      // });
+      
+      
+User.belongsToMany(User, { as: 'Mentors', through: 'myMentors' });
+Message.belongsTo(User);
+Room.hasMany(Message);
 // sync model to database
 User.sync({ force: false }).then(() => { // set true if overwite existing database
   // Table created
@@ -98,17 +102,34 @@ User.sync({ force: false }).then(() => { // set true if overwite existing databa
 });
 
 Category.sync({ force: true }).then(() => Category.create({
-    firstName: 'John',
-    lastName: 'Hancock',
-  }),);
+  firstName: 'John',
+  lastName: 'Hancock',
+}));
 
-Chat.sync({ force: false }).then(() => {
-  console.log('Chat is synced');
+Message.sync({ force: false }).then(() => {
+  console.log('Message is synced');
 }).catch((err) => {
-  console.log('Chat is not synced', err);
+  console.log('Message is not synced', err);
 });
 
-const Mentee = this.sequelize.define('');
+Room.sync({ force: false }).then(() => {
+  console.log('Room is synced');
+}).catch((err) => {
+  console.log('Room is not synced', err);
+});
+// User.belongsToMany(User, { as: 'Mentees', through: 'MyMentees' });
+MyMentors.sync({ force: false }).then(() => {
+  console.log('MyMentors is synced');
+}).catch((err) => {
+  console.log('MyMentors is not synced', err);
+});
+
+
+// MyMentees.sync({ force: true }).then(() => {
+//   console.log('MyMentees is synced');
+// }).catch((err) => {
+//   console.log('MyMentees is not synced', err);
+// });
 
 // confirm if user exists in database
 const findUser = (googleId, callback) => {
@@ -141,6 +162,12 @@ const allLocation = (callback) => {
     }).catch((err) => {
       console.log('incorrectly finding data');
     });
+};
+
+const newMessage = (data) => {
+  Message.create({
+
+  });
 };
 
 module.exports = {

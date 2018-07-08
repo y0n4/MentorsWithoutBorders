@@ -61,6 +61,15 @@ io.on('connection', (socket) => {
     console.log('text', text);
     translate(text, socket);
   });
+
+  socket.on('userLoggedIn', (user) => {
+    console.log(user.name, 'logged on socket');
+    users[user.userId] = {
+      name: user.name,
+      photo: user.photo,
+    };
+  });
+
 });
 
 app.use(cors());
@@ -189,6 +198,9 @@ app.get('/*', (req, res) => {
 // });
 
 // addDataToHeroku(300)
+
+
+
 
 server.listen(port, () => {
   console.log(`Listening on port: ${port}`);
