@@ -25,17 +25,17 @@ class VideoChatRoom extends Component {
     const { language } = this.state;
     console.log(socket)
     return (
-      
+
       <Grid className="video-chatroom" container justify="center" >
-        { language ? (
+        {language ? (
           <React.Fragment>
-          {/* <Grid item component={() => <VideoComponent name={name} socket={socket} />} /> */}
-          <Grid item xs={8} component={() => <Chat name={name} socket={socket} />} />
+            <Grid item component={() => <VideoComponent name={name} socket={socket} />} />
+            <Grid item xs={8} component={() => <Chat name={name} socket={socket} />} />
           </React.Fragment>
-          
+
         ) : (
-          <Grid item component={() => <LanguageSelector handleLanguageSelect={this.handleLanguageSelect}/>} />
-        )}
+            <Grid item component={() => <LanguageSelector handleLanguageSelect={this.handleLanguageSelect} />} />
+          )}
       </Grid>
     );
   }

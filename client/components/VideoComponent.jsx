@@ -196,10 +196,10 @@ export default class VideoComponent extends Component {
           {showLocalTrack}
           <div className="flex-item otherVid" ref="remoteMedia" id="remote-media" style={{display: 'inline-block'}}/>
         </div>
-        {/* <div className="roomName">
+        <div className="roomName">
           <input type="text" onChange={this.handleRoomNameChange} />
           {joinOrLeaveRoomButton}
-        </div> */}
+        </div>
       </div>
     );
   }

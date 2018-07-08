@@ -8,7 +8,7 @@ class Map extends React.Component {
     this.state = {
       point: [],
       ready: '',
-    }
+    };
     this.addData = this.addData.bind(this);
     this.renderMap = this.renderMap.bind(this);
   }
@@ -48,9 +48,11 @@ class Map extends React.Component {
   render() {
     return (
       <div className="world-map">
-      {this.state.point.length < 1 ? <div>Nada</div> : this.renderMap(this.state.point)}
+        {this.state.point.length < 1 ? <div>
+Nada
+</div> : this.renderMap(this.state.point)}
       </div>
-    )
+    );
   }
 }
 

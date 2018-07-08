@@ -22,6 +22,7 @@ class App extends Component {
       messages: [],
       isUserOn: false,
       name: '',
+      userId: '',
     };
     this.socket = io.connect();
     this.setIsUserOn = this.setIsUserOn.bind(this);
@@ -42,12 +43,20 @@ class App extends Component {
 
 
   setIsUserOn(info) {
+    const { isUserOn } = this.state;
     console.log(info);
     this.setState({
       isUserOn: true,
       name: info.dbInfo.fullName,
+      photo: info.dbInfo.photo,
+      userId: info.dbInfo.id,
     });
-    console.log(this.state.isUserOn);
+    console.log(isUserOn);
+    this.socket.emit('userLoggedIn', {
+      name: info.dbInfo.fullName,
+      photo: info.dbInfo.photo,
+      userId: info.dbInfo.id,
+    });
   }
 
   render() {
