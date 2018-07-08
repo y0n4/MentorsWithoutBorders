@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const pg = require('pg');
 
 pg.defaults.ssl = true;
@@ -67,29 +69,30 @@ const Room = sequelize.define('room', {
     unique: true,
   },
 });
-// const Mentors = sequelize.define('mentors', {
-//   name: {
-//     type: Sequelize.INTEGER,
-//     allowNull: false,
-//     unique: true,
-//   },
-// });
+
+const OnlineMentor = sequelize.define('onlineMentor', {
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
+  online: {
+    type: Sequelize.BOOLEAN,
+    default: false,
+  },
+});
 
 const MyMentors = sequelize.define('myMentors', {
-  status: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
-    },
-  });
-  
-  // const MyMentees = sequelize.define('myMentees', {
-    //   status: {
-      //     type: Sequelize.BOOLEAN,
-      //     defaultValue: false,
-      //   },
-      // });
-      
-      
+
+});
+
+// const MyMentees = sequelize.define('myMentees', {
+//   status: {
+//     type: Sequelize.BOOLEAN,
+//     defaultValue: false,
+//   },
+// });
+OnlineMentor.belongsTo(User, { foreignKey: 'userId' });
 User.belongsToMany(User, { as: 'Mentors', through: 'myMentors' });
 Message.belongsTo(User);
 Room.hasMany(Message);
@@ -124,7 +127,11 @@ MyMentors.sync({ force: false }).then(() => {
   console.log('MyMentors is not synced', err);
 });
 
-
+OnlineMentor.sync({ force: false }).then(() => {
+  console.log('OnlineMentor is synced');
+}).catch((err) => {
+  console.log('OnlineMentor is not synced', err);
+});
 // MyMentees.sync({ force: true }).then(() => {
 //   console.log('MyMentees is synced');
 // }).catch((err) => {
@@ -164,14 +171,47 @@ const allLocation = (callback) => {
     });
 };
 
-const newMessage = (data) => {
-  Message.create({
+const addMyMentor = (userId, MentorId) => {
+  MyMentors.create({ userId, MentorId })
+    .then((myMentor) => {
+      console.log('myMentor', myMentor);
+    });
+};
 
+const mentorLogin = (userId) => {
+  OnlineMentor.create({
+    userId,
+    online: true,
   });
+};
+
+const addRandomMessages = () => {
+  const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
+  const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
+  for (let i = 0; i < 100; i++) {
+    coolKids.forEach((awesomeDood) => {
+      axios.get(`http://api.icndb.com/jokes/random?escape=javascript&firstName=${awesomeDood}&lastName=`)
+        .then(({ data }) => {
+          Message.create({
+            userId: getRandomArbitrary(315, 319),
+            message: data.value.joke,
+            roomId: 2,
+          });
+        });
+    });
+  }
+};
+// addRandomMessages();
+
+const addMessage = (userId, message, roomId) => {
+  Message.create({ userId, message, roomId });
 };
 
 module.exports = {
   findUser,
   saveUser,
   allLocation,
+  addMyMentor,
+  mentorLogin,
+  addMessage,
 };
