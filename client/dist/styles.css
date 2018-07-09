@@ -161,8 +161,23 @@
   display: inline-block;
 }
 
-.online-memberContainer {
-  border: 1px solid black;
-  width: 300px;
+.onlineContainer {
+  /* float: right; */
+  width: 100%;
+  color: white;
 }
-/*end*/  
+
+.form-control {
+ height: 25px;
+ width: 150px;
+ text-align: center;
+
+}
+.mentor-quote {
+  font-weight: bold,
+}
+
+/* .searchContainer {
+  height: 60px
+} */
+/*end*/ 

@@ -22,16 +22,16 @@ export default class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit} className="input-group">
+      <form onSubmit={this.onFormSubmit} className="searchContainer">
         <input
-          placeholder="search for mentor"
+          placeholder="search new mentors"
           className="form-control"
           value={this.state.input}
           onChange={this.onInputChange}
         />
-        <span className="input-group-btn">
+        <span className="submitButton">
           <Button type="submit" className="btn btn-secondary">
-Submit
+Go!
           </Button>
         </span>
       </form>
