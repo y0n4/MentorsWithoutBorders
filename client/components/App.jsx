@@ -24,7 +24,7 @@ class App extends Component {
       name: '',
       userId: '',
     };
-    this.socket = io.connect();
+    this.socket = null;
     this.setIsUserOn = this.setIsUserOn.bind(this);
   }
 
@@ -44,6 +44,7 @@ class App extends Component {
 
   setIsUserOn(info) {
     const { isUserOn } = this.state;
+    this.socket = io.connect();
     console.log(info);
     this.setState({
       isUserOn: true,
@@ -53,9 +54,9 @@ class App extends Component {
     });
     console.log(isUserOn);
     this.socket.emit('userLoggedIn', {
+      userId: info.dbInfo.id,
       name: info.dbInfo.fullName,
       photo: info.dbInfo.photo,
-      userId: info.dbInfo.id,
     });
   }
 
@@ -74,8 +75,11 @@ class App extends Component {
           <Route path="/mentee" component={MenteeHome} />
           <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
           <Route path="/searchResults" component={MentorSearch} />
+<<<<<<< HEAD
 
           {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+=======
+>>>>>>> Create db helper functions
         </div>
       </div>
     );

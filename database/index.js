@@ -37,21 +37,8 @@ const User = sequelize.define('user', {
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
   locale: Sequelize.STRING,
-  online: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-},
-{
-  getterMethods: {
-    status: () => this.getDataValue('online'),
-  },
-  setterMethods: {
-    signIn: () => this.setDataValue('online', true),
-    logOut: () => this.setDataValue('online', false),
-  },
-  timestamps: false,
-});
+  socket: Sequelize.STRING,
+}, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
 const Category = sequelize.define('category', {
@@ -79,13 +66,18 @@ const Room = sequelize.define('room', {
     allowNull: false,
     unique: true,
   },
-}, { timestamps: false });
+}, { timestamps: true, updatedAt: false });
+
+const RoomMembers = sequelize.define('roomMembers', {}, { timestamps: false });
 
 const MyMentor = sequelize.define('myMentor', {}, { timestamps: false });
 
-User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
-Message.belongsTo(User);
 Room.hasMany(Message);
+Message.belongsTo(User);
+User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
+Room.belongsToMany(User, { through: RoomMembers });
+User.belongsToMany(Room, { through: RoomMembers });
+
 
 // sync model to database
 User.sync({ force: false }).then(() => { // set true if overwite existing database
@@ -100,7 +92,7 @@ Category.sync({ force: true }).then(() => Category.create({
   lastName: 'Hancock',
 }));
 
-const tableSync = [Message, Room, MyMentor];
+const tableSync = [Message, Room, MyMentor, RoomMembers];
 tableSync.forEach((table) => {
   table.sync({ force: false }).catch((err) => {
     console.log(`> > > ${table.name} SYNC ERROR < < <`, err);
@@ -158,11 +150,62 @@ const setMessage = (userId, message, roomId) => {
   Message.create({ userId, message, roomId });
 };
 
+const loginUser = (userId, socket) => {
+  User.findById(userId)
+    .then((user) => {
+      user.update({ socket });
+    });
+};
+
+const logoutUser = (userId) => {
+  User.findById(userId)
+    .then((user) => {
+      console.log(user);
+      user.update('socket', 'null');
+    });
+};
+
+const setRoom = (userId, mentorId) => {
+  const roomName = Number(userId.toString() + mentorId.toString());
+
+  Room.create({ name: roomName })
+    .then(room => room.addUsers([userId, mentorId]))
+    .catch(err => console.log(err));
+};
+
+const getRoomMessages = (roomId) => {
+  Message.findAll({ where: { roomId } });
+}
+
+// const addRandomMessages = (qty = 25) => {
+//   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
+//   const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
+
+//   for (let i = 0; i < qty; i++) {
+//     coolKids.forEach((awesomeDood) => {
+//       axios.get(`http://api.icndb.com/jokes/random?escape=javascript&firstName=${awesomeDood}&lastName=`)
+//         .then(({ data }) => {
+//           Message.create({
+//             userId: getRandomArbitrary(315, 319),
+//             date: new Date(),
+//             message: data.value.joke,
+//             roomId: getRandomArbitrary(1, 5),
+//           });
+//         });
+//     });
+//   }
+// };
+// // addRandomMessages()
+
 module.exports = {
   findUser,
   saveUser,
   allLocation,
+  getMyMentors,
   setMyMentor,
   setMessage,
-  getMyMentors,
+  loginUser,
+  logoutUser,
+  setRoom,
+  getRoomMessages,
 };

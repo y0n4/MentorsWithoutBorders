@@ -28,7 +28,8 @@ module.exports.addDataToHeroku = (qty = 100) => {
 module.exports.addRandomMessages = (qty = 25) => {
   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
   const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
-  const addMessage = () => {
+
+  for (let i = 0; i < qty; i++) {
     coolKids.forEach((awesomeDood) => {
       axios.get(`http://api.icndb.com/jokes/random?escape=javascript&firstName=${awesomeDood}&lastName=`)
         .then(({ data }) => {
@@ -40,9 +41,6 @@ module.exports.addRandomMessages = (qty = 25) => {
           });
         });
     });
-  };
-
-  for (let i = 0; i < qty; i += 1) {
-    addMessage();
   }
 };
+
