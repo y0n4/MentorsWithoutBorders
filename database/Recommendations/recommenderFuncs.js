@@ -71,11 +71,11 @@ let scoreByTopic = (currentUser, allMentors) => {
     let mentorTopics = mentor.topics;
     let mentorScore = topicScore(userTopics, mentorTopics);
 
-    mentor.mentorScore = mentorScore;
+    mentor.score = mentorScore;
   });
 };
 
-let scoreByAge = (allMentors, ageRestrict = 5) => {
+let filterByAge = (allMentors, ageRestrict = 5) => {
   let userAge = currentUser.age;
 
   let ageFiltered = allMentors.filter((mentor) => {
@@ -86,4 +86,22 @@ let scoreByAge = (allMentors, ageRestrict = 5) => {
   });
 
   return ageFiltered;
+};
+
+let avgActiveTime = (mentors) => {
+  let userAvgActiveTime = currentUser.activeTime;
+
+  let activeTimeFiltered = mentors.filter((mentor) => {
+    let mentorAvgActiveTime = mentor.avgActiveTime;
+    let avgTimeDiff = Math.abs(userAvgActiveTime - mentorAvgActiveTime);
+    let score = 0;
+    
+    if (avgTimeDiff <= 12) {
+      score = 12 - avgTimeDiff;
+    }
+
+    mentor.score += score;
+  });
+
+  return activeTimeFiltered;
 };
