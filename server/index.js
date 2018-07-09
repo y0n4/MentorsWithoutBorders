@@ -132,7 +132,6 @@ app.get(
 
     // check if user exists
     data.findUser(info.googleId, (results) => {
-      // console.log(results, 'this is from data.findUser');
       if (results === null) { // null is if user doesn't exist
         axios({ // get users approximate location
           method: 'get',
