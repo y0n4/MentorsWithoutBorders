@@ -51,3 +51,26 @@
     - Return array
   }
 */
+
+let topicScore = (userTopics, mentorTopics) => {
+  let score = 0;
+  // Can refactor to a constant time userTopic by creating object
+  userTopics.forEach((topic) => {
+    if (mentorTopics.indexOf(topic) > -1) {
+      score += 1;
+    }
+  });
+
+  return score;
+};
+
+let scoreByTopic = (currentUser, allMentors) => {
+  let userTopics = currentUser.topics;
+  
+  allMentors.forEach((mentor) => {
+    let mentorTopics = mentor.topics;
+    let mentorScore = topicScore(userTopics, mentorTopics);
+
+    mentor.mentorScore = mentorScore;
+  });
+};
