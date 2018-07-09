@@ -74,3 +74,16 @@ let scoreByTopic = (currentUser, allMentors) => {
     mentor.mentorScore = mentorScore;
   });
 };
+
+let scoreByAge = (allMentors, ageRestrict = 5) => {
+  let userAge = currentUser.age;
+
+  let ageFiltered = allMentors.filter((mentor) => {
+    let minAge = userAge - ageRestrict;
+    let maxAge = userAge + ageRestrict;
+    
+    return mentor.age <= maxAge && mentor.age >= minAge; 
+  });
+
+  return ageFiltered;
+};
