@@ -1,6 +1,6 @@
 /*
   Getting a users word count {
-    - Track when a user logs/logs out
+    - Track when a user logs in/logs out
     - When user logs out run the functions
 
     - Gather messages user has entered between login and logout
@@ -21,7 +21,6 @@
   Getting match score {
     - Takes in first20 array and currentUser's wordCount
     
-    - Create var to track total score
     - Iterate through first20 
       - If currentWord can be found in wordCount obj
         - Get absolute val of difference
@@ -46,6 +45,6 @@
         to matchScore function
       - Push result to recommendedMentors
     
-    - Sort the array from best match to least
+    - Return recommendedMentors
   }
 */
