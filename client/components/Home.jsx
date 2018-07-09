@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Map from './Map';
 import axios from 'axios';
+import Map from './Map';
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,9 +15,9 @@ class Home extends React.Component {
 
   render() {
     return (
-    <div className="world-map">
-      {/* <Map /> */}
-    </div>
+      <div className="world-map">
+        <Map />
+      </div>
     );
   }
 }

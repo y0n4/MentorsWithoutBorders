@@ -40,11 +40,6 @@ Our mentors and mentees are located throughout the world!
         <br />
         <br />
         <div className="login-descrip">
-          <a href="/auth/google">
-            <button value="Sign In" type="button" className="login-btn">
-            Sign In
-            </button>
-          </a>
           <br />
           <br />
 
