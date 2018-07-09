@@ -92,7 +92,7 @@ let avgActiveTime = (mentors) => {
   let userAvgActiveTime = currentUser.activeTime;
 
   let activeTimeFiltered = mentors.filter((mentor) => {
-    let mentorAvgActiveTime = mentor.avgActiveTime;
+    let mentorAvgActiveTime = mentor.activeTime;
     let avgTimeDiff = Math.abs(userAvgActiveTime - mentorAvgActiveTime);
     let score = 0;
     
@@ -101,7 +101,29 @@ let avgActiveTime = (mentors) => {
     }
 
     mentor.score += score;
+
+    return mentor;
   });
 
   return activeTimeFiltered;
+};
+
+let avgConvoTime = (mentors) => {
+  let userAvgConvoTime = currentUser.convoTime;
+
+  let convoTimeFiltered = mentors.filter((mentor) => {
+    let mentorAvgConvoTime = mentor.avgActiveTime;
+    let avgConvoDiff = Math.abs(userAvgConvoTime - mentorAvgConvoTime);
+    let score = 0;
+
+    if (avgConvoDiff <= 60) {
+      score = 60 - avgConvoDiff;
+    }
+
+    mentor.score += score;
+
+    return mentor;
+  });
+
+  return convoTimeFiltered;
 };
