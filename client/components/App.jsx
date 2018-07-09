@@ -62,19 +62,21 @@ class App extends Component {
   render() {
     const { isUserOn, messages, name } = this.state;
     return (
-      <div className="main">
-        <div className="nav">
-          <Nav name={name} isUserOn={isUserOn} />
-        </div>
-        <div className="routes">
+
+      <div className="nav">
+        <Nav name={name} isUserOn={isUserOn} />
+
+        <div className="main">
+
           <Route exact path="/" component={Home} />
           <Route path="/user-profile" component={UserProfile} />
           <Route path="/mentor" component={MentorHome} />
           <Route path="/mentee" component={MenteeHome} />
           <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
-          <Route path='/searchResults' component={MentorSearch} />
+          <Route path="/searchResults" component={MentorSearch} />
+
+          {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         </div>
-        {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
       </div>
     );
   }
