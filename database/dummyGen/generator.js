@@ -1,6 +1,7 @@
-const { saveUser } = require('../index')
 const { random } = require('faker');
 const axios = require('axios');
+const { saveUser } = require('../index');
+const { Message } = require('../index');
 
 module.exports.addDataToHeroku = (qty = 100) => {
   axios.get(`https://randomuser.me/api/?results=${qty}`)
@@ -13,12 +14,33 @@ module.exports.addDataToHeroku = (qty = 100) => {
           isMentor: random.boolean(),
           location: {
             latLng: [Number(user.location.coordinates.latitude), Number(user.location.coordinates.longitude)],
-            name: user.location.city
+            name: user.location.city,
           },
           locale: random.locale(),
         };
         user.name && saveUser(info);
       });
     })
-    .catch(err => console.log(err))
-}
+    .catch(err => console.log(err));
+};
+
+
+module.exports.addRandomMessages = (qty = 25) => {
+  const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
+  const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
+
+  for (let i = 0; i < qty; i++) {
+    coolKids.forEach((awesomeDood) => {
+      axios.get(`http://api.icndb.com/jokes/random?escape=javascript&firstName=${awesomeDood}&lastName=`)
+        .then(({ data }) => {
+          Message.create({
+            userId: getRandomArbitrary(315, 319),
+            date: new Date(),
+            message: data.value.joke,
+            roomId: getRandomArbitrary(1, 5),
+          });
+        });
+    });
+  }
+};
+

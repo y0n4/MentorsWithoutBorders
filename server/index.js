@@ -46,13 +46,21 @@ const data = require('../database');
 const users = {};
 
 io.on('connection', (socket) => {
-  console.log('New Socket Connection from id', socket.id);
+  console.log('✅  Socket Connection from id:', socket.id);
+  users[socket.id] = {};
 
-  // socket.emit('get message', exampleData);
+  socket.on('userLoggedIn', (client) => {
+    console.log('🔑 ', client.name, 'Logged In');
+    users[socket.id] = {
+      userId: client.userId,
+      name: client.name,
+      photo: client.photo,
+    };
+    data.loginUser(client.userId, socket.id);
+  });
 
   socket.on('new message', (message) => {
-    console.log('new message rec', message);
-
+    console.log('✉️ socket.new message', message);
     socket.broadcast.emit('new message', message);
     io.to(socket.id).emit('new message', message);
   });
@@ -62,13 +70,13 @@ io.on('connection', (socket) => {
     translate(text, socket);
   });
 
-  socket.on('userLoggedIn', (user) => {
-    console.log(user.name, 'logged on socket');
-    users[user.userId] = {
-      name: user.name,
-      photo: user.photo,
-    };
+  socket.on('disconnect', () => {
+    console.log('⛔ ', users[socket.id], 'Disconnected from socket');
+    io.emit('userDisconnect', socket.id);
+    data.logoutUser(users[socket.id].userId);
+    delete users[socket.id];
   });
+
 
 });
 
@@ -124,7 +132,7 @@ app.get(
 
     // check if user exists
     data.findUser(info.googleId, (results) => {
-      console.log(results, 'this is from data.findUser');
+      // console.log(results, 'this is from data.findUser');
       if (results === null) { // null is if user doesn't exist
         axios({ // get users approximate location
           method: 'get',
@@ -184,7 +192,7 @@ app.get('/token', (req, res) => {
 
 // Send the user data to MentorSearch component
 app.get('/allMentors', (req, res) => {
-  res.send(userData)
+  res.send(userData);
 });
 
 app.get('/*', (req, res) => {
@@ -196,10 +204,6 @@ app.get('/*', (req, res) => {
 //   // console.log(req.session);s
 //   res.redirect('/');
 // });
-
-// addDataToHeroku(300)
-
-
 
 
 server.listen(port, () => {
