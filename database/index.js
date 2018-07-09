@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 const pg = require('pg');
 
 pg.defaults.ssl = true;
@@ -43,8 +41,17 @@ const User = sequelize.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-}, { timestamps: false });
-
+},
+{
+  getterMethods: {
+    status: () => this.getDataValue('online'),
+  },
+  setterMethods: {
+    signIn: () => this.setDataValue('online', true),
+    logOut: () => this.setDataValue('online', false),
+  },
+  timestamps: false,
+});
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
 const Category = sequelize.define('category', {
@@ -74,14 +81,7 @@ const Room = sequelize.define('room', {
   },
 }, { timestamps: false });
 
-const MyMentor = sequelize.define('myMentor', null, { timestamps: false });
-
-// const MyMentees = sequelize.define('myMentees', {
-//   status: {
-//     type: Sequelize.BOOLEAN,
-//     defaultValue: false,
-//   },
-// });
+const MyMentor = sequelize.define('myMentor', {}, { timestamps: false });
 
 User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
 Message.belongsTo(User);
@@ -100,22 +100,11 @@ Category.sync({ force: true }).then(() => Category.create({
   lastName: 'Hancock',
 }));
 
-Message.sync({ force: false }).then(() => {
-  console.log('Message is synced');
-}).catch((err) => {
-  console.log('Message is not synced', err);
-});
-
-Room.sync({ force: false }).then(() => {
-  console.log('Room is synced');
-}).catch((err) => {
-  console.log('Room is not synced', err);
-});
-// User.belongsToMany(User, { as: 'Mentees', through: 'MyMentees' });
-MyMentor.sync({ force: false }).then(() => {
-  console.log('MyMentor is synced');
-}).catch((err) => {
-  console.log('MyMentor is not synced', err);
+const tableSync = [Message, Room, MyMentor];
+tableSync.forEach((table) => {
+  table.sync({ force: false }).catch((err) => {
+    console.log(`> > > ${table.name} SYNC ERROR < < <`, err);
+  });
 });
 
 // confirm if user exists in database
@@ -151,42 +140,21 @@ const allLocation = (callback) => {
     });
 };
 
-const addMyMentor = (userId, MentorId) => {
-  MyMentor.create({ userId, MentorId })
-    .then((myMentor) => {
-      console.log(myMentor);
+const getMyMentors = (userId, cb) => {
+  MyMentor.findAll({ where: { userId } })
+    .then((data) => {
+      data.forEach(({ dataValues: { mentorId: id } }) => {
+        User.findAll({ where: { id } })
+          .then(users => cb(users));
+      });
     });
 };
 
-const updateUserOnline = (userId) => {
-  User.findById(userId).then((user) => {
-    const status = !user.online;
-    user.update({ online: status });
-  });
+const setMyMentor = (userId, mentorId) => {
+  MyMentor.create({ userId, mentorId });
 };
 
-
-
-const addRandomMessages = () => {
-  const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
-  const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
-  for (let i = 0; i < 10; i++) {
-    coolKids.forEach((awesomeDood) => {
-      axios.get(`http://api.icndb.com/jokes/random?escape=javascript&firstName=${awesomeDood}&lastName=`)
-        .then(({ data }) => {
-          Message.create({
-            userId: getRandomArbitrary(315, 319),
-            date: new Date(),
-            message: data.value.joke,
-            roomId: getRandomArbitrary(1, 5),
-          });
-        });
-    });
-  }
-};
-// addRandomMessages();
-
-const addMessage = (userId, message, roomId) => {
+const setMessage = (userId, message, roomId) => {
   Message.create({ userId, message, roomId });
 };
 
@@ -194,7 +162,7 @@ module.exports = {
   findUser,
   saveUser,
   allLocation,
-  addMyMentor,
-  updateUserOnline,
-  addMessage,
+  setMyMentor,
+  setMessage,
+  getMyMentors,
 };
