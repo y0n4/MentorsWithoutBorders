@@ -37,7 +37,7 @@ class MenteeHome extends Component {
     if (time < 12) {
       return 'Good Morning! 😄 ';
     } if (time < 18) {
-      return 'Good Afternoog!😄';
+      return 'Good Afternoon! 😄';
     }
     return 'Good Evening 🙂';
   }

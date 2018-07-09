@@ -66,20 +66,14 @@ class App extends Component {
 
       <div className="nav">
         <Nav name={name} isUserOn={isUserOn} />
-
+        <Route exact path="/" component={Home} />
+        <Route path="/user-profile" component={UserProfile} />
+        <Route path="/mentor" component={MentorHome} />
+        <Route path="/mentee" component={MenteeHome} />
+        <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
+        <Route path="/searchResults" component={MentorSearch} />
         <div className="main">
-
-          <Route exact path="/" component={Home} />
-          <Route path="/user-profile" component={UserProfile} />
-          <Route path="/mentor" component={MentorHome} />
-          <Route path="/mentee" component={MenteeHome} />
-          <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
-          <Route path="/searchResults" component={MentorSearch} />
-<<<<<<< HEAD
-
           {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
-=======
->>>>>>> Create db helper functions
         </div>
       </div>
     );
