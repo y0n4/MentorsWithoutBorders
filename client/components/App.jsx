@@ -7,7 +7,7 @@ import VideoChatRoom from './VideoChatRoom';
 import MentorSearch from './MentorSearchComponents/MentorSearch';
 import MentorHome from './MentorHome';
 import MenteeHome from './MenteeHome/MenteeHome';
-import NavBar from './NavBar';
+import Nav from './Nav';
 import Login from './Login';
 import Chat from './Chat';
 import Home from './Home';
@@ -64,7 +64,7 @@ class App extends Component {
     return (
       <div className="main">
         <div className="nav">
-          <NavBar messages={messages} socket={this.socket} isUserOn={isUserOn} />
+          <Nav name={name} isUserOn={isUserOn} />
         </div>
         <div className="routes">
           <Route exact path="/" component={Home} />

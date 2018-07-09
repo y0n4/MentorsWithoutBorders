@@ -29,7 +29,9 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <h2 className="login-pitch">Our mentors and mentees are located throughout the world!</h2>
+        <h2 className="login-pitch">
+Our mentors and mentees are located throughout the world!
+        </h2>
         <a href="/auth/google">
           <button value="Sign In" type="button" className="login-btn">
             Sign In
@@ -38,6 +40,14 @@ class Login extends React.Component {
         <br />
         <br />
         <div className="login-descrip">
+          <a href="/auth/google">
+            <button value="Sign In" type="button" className="login-btn">
+            Sign In
+            </button>
+          </a>
+          <br />
+          <br />
+
 Sign up and join to become a mentor/mentee and meet amazing people over the world who love to share their knowledge in our growing community!
         </div>
       </div>
