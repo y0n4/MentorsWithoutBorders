@@ -106,7 +106,7 @@ let getWordCountScore = (mentorWordCount, userWordCount) => {
         score += 2; 
       }
     }
-  }
+  } 
 
   return score;
 };
