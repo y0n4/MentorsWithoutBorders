@@ -61,7 +61,8 @@ const Message = sequelize.define('message', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-}, { timestamps: true, updatedAt: false });
+  date: Sequelize.DATE,
+}, { timestamps: false });
 
 const Room = sequelize.define('room', {
   name: {
@@ -142,18 +143,12 @@ const allLocation = (callback) => {
 };
 
 const getMyMentors = (userId, cb) => {
-  console.log(userId, 'getmymentors');
   MyMentor.findAll({ where: { userId } })
     .then((data) => {
-      // console.log(data, '********');
-      const users = data.map(({ dataValues: { mentorId: id } }) => id);
-      User.findAll({
-        where: {
-          id: {
-            [Op.or]: users,
-          },
-        },
-      }).then(mentors => cb(mentors));
+      data.forEach(({ dataValues: { mentorId: id } }) => {
+        User.findAll({ where: { id } })
+          .then(users => cb(users));
+      });
     });
 };
 
@@ -184,7 +179,6 @@ const setMessage = (userId, message, roomId) => {
 };
 
 const loginUser = (userId, socket) => {
-  console.log('login');
   User.findById(userId)
     .then((user) => {
       user.update({ socket });
@@ -222,14 +216,7 @@ const setRoom = (userId, mentorId) => {
 
 const getRoomMessages = (roomId) => {
   Message.findAll({ where: { roomId } });
-};
-
-const getSocketId = (userId, cb) => {
-  User.findById(userId)
-    .then((user) => {
-      cb(user.dataValues);
-    });
-};
+}
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
