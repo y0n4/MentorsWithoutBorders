@@ -28,7 +28,7 @@ class MenteeHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMentor: this.props.props.isMentor,
+      isMentor: this.props.isMentor,
     };
   }
 
@@ -44,7 +44,7 @@ class MenteeHome extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, userId } = this.props;
 
     return (
       <div className={classes.root}>
@@ -115,7 +115,7 @@ class MenteeHome extends Component {
                     </Link>
                     </button> : <div></div>}
                   <SearchBar />
-                  <MembersOnline />
+                  <MembersOnline userId={userId} socket={this.props.socket} />
                 </div>
               </Paper>
             </Grid>
