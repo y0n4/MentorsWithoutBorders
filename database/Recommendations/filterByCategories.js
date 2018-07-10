@@ -57,7 +57,7 @@ let topicScore = (userTopics, mentorTopics) => {
   // Can refactor to a constant time userTopic by creating object
   userTopics.forEach((topic) => {
     if (mentorTopics.indexOf(topic) > -1) {
-      score += 1;
+      score += 4;
     }
   });
 
@@ -67,25 +67,29 @@ let topicScore = (userTopics, mentorTopics) => {
 let scoreByTopic = (currentUser, allMentors) => {
   let userTopics = currentUser.topics;
   
-  allMentors.forEach((mentor) => {
+  let filtered = allMentors.filter((mentor) => {
     let mentorTopics = mentor.topics;
     let mentorScore = topicScore(userTopics, mentorTopics);
 
-    mentor.score = mentorScore;
+    if (mentorScore !== 0) {
+      return mentor
+    }
   });
+
+  return filtered;
 };
 
-let filterByAge = (allMentors, ageRestrict = 5) => {
+let scoreByAge = (mentors, ageRestrict = 5) => {
   let userAge = currentUser.age;
 
-  let ageFiltered = allMentors.filter((mentor) => {
+  mentors.forEach((mentor) => {
     let minAge = userAge - ageRestrict;
     let maxAge = userAge + ageRestrict;
     
-    return mentor.age <= maxAge && mentor.age >= minAge; 
+    if (mentor.age <= maxAge && mentor.age >= minAge) {
+      mentor.score += 7;
+    }
   });
-
-  return ageFiltered;
 };
 
 let avgActiveTime = (mentors) => {
@@ -111,7 +115,7 @@ let avgActiveTime = (mentors) => {
 let avgConvoTime = (mentors) => {
   let userAvgConvoTime = currentUser.convoTime;
 
-  let convoTimeFiltered = mentors.filter((mentor) => {
+  mentors.forEach((mentor) => {
     let mentorAvgConvoTime = mentor.avgActiveTime;
     let avgConvoDiff = Math.abs(userAvgConvoTime - mentorAvgConvoTime);
     let score = 0;
@@ -121,9 +125,13 @@ let avgConvoTime = (mentors) => {
     }
 
     mentor.score += score;
-
-    return mentor;
   });
+};
 
-  return convoTimeFiltered;
+module.exports = {
+  topicScore,
+  scoreByTopic,
+  scoreByAge,
+  avgActiveTime,
+  avgConvoTime
 };
