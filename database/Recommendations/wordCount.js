@@ -121,7 +121,7 @@ let wordCountScore = (user, mentors) => {
     mentor.score += score;
   });
 };
-
+ 
 module.exports = {
   userWordCounts,
   getWordCountScore,
