@@ -54,34 +54,11 @@ class App extends Component {
         });
     }
 
-<<<<<<< HEAD
-    render() {
-        const { isUserOn, messages, userId } = this.state;
-        const appState = this.state;
-        return (
-
-            <div className="nav">
-                <Nav name={name} isUserOn={isUserOn} />
-
-                <div className="main">
-
-                    <Route exact path="/" component={Home} />
-                    <Route path="/user-profile" component={UserProfile} />
-                    <Route path="/mentor" component={MentorHome} />
-                    <Route path="/mentee" component={() => <MenteeHome userId={userId} socket={this.socket} />} />
-                    <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
-                    <Route path="/searchResults" component={MentorSearch} />
-
-                    {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
-                </div>
-            </div>
-        );
-    }
-=======
   render() {
     const { isUserOn, messages, name, isMentor } = this.state;
-    return (
+    const appState = this.state;
 
+    return (
       <div className="nav">
         <Nav name={name} isUserOn={isUserOn} />
         <Route exact path="/" component={Home} />
@@ -97,7 +74,6 @@ class App extends Component {
       </div>
     );
   }
->>>>>>> Deconstruct isMentor to pass down to child component
 }
 
 const AppWithRouter = withRouter(App);

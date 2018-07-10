@@ -43,15 +43,10 @@ class MenteeHome extends Component {
     return 'Good Evening 🙂';
   }
 
-  mentorSignUp() {
-    console.log('oui');
-  }
-
   render() {
-    const { classes, userId } = this.props;
+    const { classes } = this.props;
+
     return (
-
-
       <div className={classes.root}>
         <div style={{ padding: 150 }}>
           <div className="checkTime" style={{ fontSize: 45, color: 'white', fontFamily: 'Chela One' }}>
@@ -64,46 +59,46 @@ class MenteeHome extends Component {
                   Quote feed here
                 </div>
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
+                Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                {' '}
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
+                Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 {' '}
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
+                Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 {' '}
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
+                Somone is sitting in the shade today because someone planted a tree a long time ago
+                  <bold style={{ color: 'blue' }}>
+                    {' -  Warren Buffet'}
+                  </bold>
+                </div>
+                {' '}
+                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
+                Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
+                Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                  Somone is sitting in the shade today because someone planted a tree a long time ago
+                Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
@@ -113,14 +108,14 @@ class MenteeHome extends Component {
             <Grid item xs={4} style={{ paddingLeft: 90, height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
-                  {!this.state.isMentor ?
-                    <button onClick={this.mentorSignUp}>
-                      <Link to="/mentor-sign-up">
-                        Become a Mentor
+                  {!this.state.isMentor ? 
+                    <button>
+                    <Link to="/mentor-sign-up">
+                      Become a Mentor
                     </Link>
                     </button> : <div></div>}
                   <SearchBar />
-                  <MembersOnline userId={userId} socket={this.props.socket} />
+                  <MembersOnline />
                 </div>
               </Paper>
             </Grid>
@@ -138,7 +133,7 @@ class MenteeHome extends Component {
                     color: 'white', lineHeight: 5, fontSize: 20,
                   }}
                 >
-                  Here are the recent questions you've posted!
+                Here are the recent questions you've posted!
                 </div>
                 <br />
                 <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
