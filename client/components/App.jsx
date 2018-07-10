@@ -55,7 +55,7 @@ class App extends Component {
     }
 
   render() {
-    const { isUserOn, messages, name, isMentor } = this.state;
+    const { isUserOn, messages, name, isMentor, userId } = this.state;
     const appState = this.state;
 
     return (
@@ -64,7 +64,7 @@ class App extends Component {
         <Route exact path="/" component={Home} />
         <Route path="/user-profile" component={UserProfile} />
         <Route path="/mentor" component={MentorHome} />
-        <Route path="/mentee" component={() => <MenteeHome props={this.state} />} />
+        <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
         <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
         <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} />} />
