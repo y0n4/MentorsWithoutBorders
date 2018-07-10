@@ -1,7 +1,3 @@
-// require('dotenv').load({ silent: true });
-// const { getCurrentUserCategories } = require('../index');
-const { getCategoryIds } = require('../../server/extractingInfo');
-
 /*
   Mentors mentoring in specific topics {
     - Takes in all mentors as array
@@ -13,6 +9,7 @@ const { getCategoryIds } = require('../../server/extractingInfo');
       - Push current mentor into filtered array
     - Return filtered array
   }
+
   Mentors that are within a certain age {
     - Takes in array passed from above function
     - Takes in number to restrict age gap, defaults to 5
@@ -25,6 +22,7 @@ const { getCategoryIds } = require('../../server/extractingInfo');
     
     - Return filtered array
   }
+
   Mentors active around same time {
     - Takes in array passed from above function
     
@@ -34,13 +32,17 @@ const { getCategoryIds } = require('../../server/extractingInfo');
     
     - Return array
   }
+
   Mentors with same avg length of convos {
     - Takes in array passed from above function
+
     - Filter array for mentors with same avg length of convos
     - Subtract currentUser's - currentMentor's avg length of convos
       - Add absolute value of subtraction to score
+
     - Return array
   }
+
   Sort based on score {
     - Takes in array of users
     
@@ -50,59 +52,47 @@ const { getCategoryIds } = require('../../server/extractingInfo');
   }
 */
 
-const topicScore = (userTopics, mentorTopics) => {
+let topicScore = (userTopics, mentorTopics) => {
   let score = 0;
   // Can refactor to a constant time userTopic by creating object
   userTopics.forEach((topic) => {
     if (mentorTopics.indexOf(topic) > -1) {
-      score += 4;
+      score += 1;
     }
   });
 
   return score;
 };
 
-const scoreByTopic = (currentUserTopics, allMentors) => {
-  let userTopics = currentUserTopics;
-  // console.log('This is all mentors', allMentors)
+let scoreByTopic = (currentUser, allMentors) => {
+  let userTopics = currentUser.topics;
   
-  let filtered = allMentors.filter((mentor) => {
-    let mentorId = mentor.id;
-    // let mentorCategoryData = getCurrentUserCategories(mentorId, (data) => {
-    //   let mentorCategories = getCategoryIds(data);
+  allMentors.forEach((mentor) => {
+    let mentorTopics = mentor.topics;
+    let mentorScore = topicScore(userTopics, mentorTopics);
 
-         
-    // });
-    let mentorScore = topicScore(userTopics, [4]);
-
-    if (mentorScore !== 0) {
-      mentor.score = mentorScore;
-
-      return mentor;
-    }
+    mentor.score = mentorScore;
   });
-
-  return filtered;
 };
 
-const scoreByAge = (currentUser, mentors, ageRestrict = 5) => {
+let filterByAge = (allMentors, ageRestrict = 5) => {
   let userAge = currentUser.age;
 
-  mentors.forEach((mentor) => {
+  let ageFiltered = allMentors.filter((mentor) => {
     let minAge = userAge - ageRestrict;
     let maxAge = userAge + ageRestrict;
     
-    if (mentor.age <= maxAge && mentor.age >= minAge) {
-      mentor.score += 7;
-    }
+    return mentor.age <= maxAge && mentor.age >= minAge; 
   });
+
+  return ageFiltered;
 };
 
-const avgActiveTime = (currentUser, mentors) => {
-  let userAvgActiveTime = currentUser.avgLoggedInTime;
+let avgActiveTime = (mentors) => {
+  let userAvgActiveTime = currentUser.activeTime;
 
   let activeTimeFiltered = mentors.filter((mentor) => {
-    let mentorAvgActiveTime = mentor.avgLoggedInTime;
+    let mentorAvgActiveTime = mentor.activeTime;
     let avgTimeDiff = Math.abs(userAvgActiveTime - mentorAvgActiveTime);
     let score = 0;
     
@@ -118,10 +108,10 @@ const avgActiveTime = (currentUser, mentors) => {
   return activeTimeFiltered;
 };
 
-const avgConvoTime = (currentUser, mentors) => {
+let avgConvoTime = (mentors) => {
   let userAvgConvoTime = currentUser.convoTime;
 
-  mentors.forEach((mentor) => {
+  let convoTimeFiltered = mentors.filter((mentor) => {
     let mentorAvgConvoTime = mentor.avgActiveTime;
     let avgConvoDiff = Math.abs(userAvgConvoTime - mentorAvgConvoTime);
     let score = 0;
@@ -131,13 +121,9 @@ const avgConvoTime = (currentUser, mentors) => {
     }
 
     mentor.score += score;
-  });
-};
 
-module.exports = {
-  topicScore,
-  scoreByTopic,
-  scoreByAge,
-  avgActiveTime,
-  avgConvoTime
+    return mentor;
+  });
+
+  return convoTimeFiltered;
 };
