@@ -30,18 +30,9 @@ class App extends Component {
         this.setIsUserOn = this.setIsUserOn.bind(this);
     }
 
-    // componentDidMount() {
-    //   axios.get('/home')
-    //     .then((res) => {
-    //       console.log(res.data, '!!!!');
-    //       if (res.data.status === 'cookie') {
-    //         this.setIsUserOn(res.data);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    // }
+  componentDidMount() {
+    console.log('app', this.state.isMentor);
+  }
 
 
     setIsUserOn(info) {
@@ -63,28 +54,26 @@ class App extends Component {
         });
     }
 
-    render() {
-        const { isUserOn, messages, userId } = this.state;
-        const appState = this.state;
-        return (
+  render() {
+    const { isUserOn, messages, name, isMentor, userId } = this.state;
+    const appState = this.state;
 
-            <div className="nav">
-                <Nav name={name} isUserOn={isUserOn} />
-
-                <div className="main">
-
-                    <Route exact path="/" component={Home} />
-                    <Route path="/user-profile" component={UserProfile} />
-                    <Route path="/mentor" component={MentorHome} />
-                    <Route path="/mentee" component={() => <MenteeHome userId={userId} socket={this.socket} />} />
-                    <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
-                    <Route path="/searchResults" component={MentorSearch} />
-
-                    {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div className="nav">
+        <Nav name={name} isUserOn={isUserOn} />
+        <Route exact path="/" component={Home} />
+        <Route path="/user-profile" component={UserProfile} />
+        <Route path="/mentor" component={MentorHome} />
+        <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
+        <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
+        <Route path="/searchResults" component={MentorSearch} />
+        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} />} />
+        <div className="main">
+          {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+        </div>
+      </div>
+    );
+  }
 }
 
 const AppWithRouter = withRouter(App);
