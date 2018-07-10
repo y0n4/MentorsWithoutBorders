@@ -165,6 +165,14 @@ const getAllMentors = (callback) => {
   });
 };
 
+const getCurrentUserCategories = (userId, callback) => {
+  UserCategory.findAll({
+    where: { userId: userId }
+  }).then((data) => {
+    callback(data);
+  })
+};
+
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
 };
@@ -241,4 +249,5 @@ module.exports = {
   setRoom,
   getRoomMessages,
   getSocketId,
+  getCurrentUserCategories
 };
