@@ -3,6 +3,7 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
+const { Op } = Sequelize;
 const sequelize = new Sequelize(process.env.POSTGRES_URI);
 
 sequelize
@@ -57,8 +58,7 @@ const Message = sequelize.define('message', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  date: Sequelize.DATE,
-}, { timestamps: false });
+}, { timestamps: true, updatedAt: false });
 
 const Room = sequelize.define('room', {
   name: {
@@ -133,14 +133,20 @@ const allLocation = (callback) => {
 };
 
 const getMyMentors = (userId, cb) => {
+  console.log(userId, 'getmymentors')
   MyMentor.findAll({ where: { userId } })
     .then((data) => {
-      data.forEach(({ dataValues: { mentorId: id } }) => {
-        User.findAll({ where: { id } })
-          .then(users => cb(users));
-      });
+      const users = data.map(({ dataValues: { mentorId: id } }) => id);
+      User.findAll({
+        where: {
+          id: {
+            [Op.or]: users,
+          },
+        },
+      }).then(mentors => cb(mentors));
     });
 };
+
 
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
@@ -160,8 +166,8 @@ const loginUser = (userId, socket) => {
 const logoutUser = (userId) => {
   User.findById(userId)
     .then((user) => {
-      console.log(user);
-      user.update('socket', 'null');
+      console.log(userId, 'logout in db');
+      user.update({ socket: null });
     });
 };
 
