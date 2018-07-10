@@ -106,7 +106,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('⛔ ', socket.id, 'Disconnected from socket');
+    // console.log('⛔ ', users[socket.id], 'Disconnected from socket');
     io.emit('userDisconnect', socket.id);
     console.log(users[socket.id].userId);
     data.logoutUser(users[socket.id].userId);
