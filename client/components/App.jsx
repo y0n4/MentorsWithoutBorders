@@ -17,42 +17,57 @@ import '../dist/styles.css';
 
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            messages: [],
-            isUserOn: false,
-            name: '',
-            userId: '',
-            isMentor: '',
-        };
-        this.socket = null;
-        this.setIsUserOn = this.setIsUserOn.bind(this);
-    }
+  constructor() {
+    super();
+    this.state = {
+      messages: [],
+      isUserOn: false,
+      name: '',
+      userId: '',
+      isMentor: '',
+    };
+    this.socket = null;
+    this.setIsUserOn = this.setIsUserOn.bind(this);
+  }
 
+<<<<<<< HEAD
   componentDidMount() {
     console.log('app', this.state.isMentor);
   }
+=======
+  // componentDidMount() {
+  //   axios.get('/home')
+  //     .then((res) => {
+  //       console.log(res.data, '!!!!');
+  //       if (res.data.status === 'cookie') {
+  //         this.setIsUserOn(res.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
+>>>>>>> Enable language selection for spech to text
 
 
-    setIsUserOn(info) {
-        const { isUserOn } = this.state;
-        this.socket = io.connect();
-        console.log(info);
-        this.setState({
-            isUserOn: true,
-            name: info.dbInfo.fullName,
-            photo: info.dbInfo.photo,
-            userId: info.dbInfo.id,
-            isMentor: info.dbInfo.isMentor,
-        });
-        console.log(isUserOn);
-        this.socket.emit('userLoggedIn', {
-            userId: info.dbInfo.id,
-            name: info.dbInfo.fullName,
-            photo: info.dbInfo.photo,
-        });
-    }
+  setIsUserOn(info) {
+    const { isUserOn } = this.state;
+    this.socket = io.connect();
+    console.log(info);
+    this.setState({
+      isUserOn: true,
+      name: info.dbInfo.fullName,
+      photo: info.dbInfo.photo,
+      userId: info.dbInfo.id,
+      isMentor: info.dbInfo.isMentor,
+    });
+    console.log(isUserOn);
+    this.socket.emit('userLoggedIn', {
+      userId: info.dbInfo.id,
+      name: info.dbInfo.fullName,
+      photo: info.dbInfo.photo,
+    });
+  }
 
   render() {
     const { isUserOn, messages, name, isMentor, userId } = this.state;
@@ -65,7 +80,7 @@ class App extends Component {
         <Route path="/user-profile" component={UserProfile} />
         <Route path="/mentor" component={MentorHome} />
         <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
-        <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
+        <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
         <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} />} />
         <div className="main">

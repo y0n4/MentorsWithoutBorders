@@ -27,24 +27,27 @@ const languages = [
 ];
 
 const LanguageSelector = ({ classes, handleLanguageSelect }) => (
-    <div className={classes.root}>
-      <List>
-        {languages.map((language, i) => (
-          <div>
-            <ListItem
-              button
-              onClick={() => handleLanguageSelect(language)}>
-              <Avatar
-                src={`../../images/${Object.keys(language)[0]}.png`}
-                className={classes.avatar} />
-              <ListItemText
-                primary={`${Object.keys(language)[0]}`} />
-            </ListItem>
-            {i < languages.length - 1 && <Divider inset component="li" />}
-          </div>
-        ))}
-      </List>
-    </div>
-  );
+  <div className={classes.root}>
+    <List>
+      {languages.map((language, i) => (
+        <div>
+          <ListItem
+            button
+            onClick={() => handleLanguageSelect(Object.values(language)[0])}
+          >
+            <Avatar
+              src={`../../images/${Object.keys(language)[0]}.png`}
+              className={classes.avatar}
+            />
+            <ListItemText
+              primary={`${Object.keys(language)[0]}`}
+            />
+          </ListItem>
+          {i < languages.length - 1 && <Divider inset component="li" />}
+        </div>
+      ))}
+    </List>
+  </div>
+);
 
 export default withStyles(styles)(LanguageSelector);

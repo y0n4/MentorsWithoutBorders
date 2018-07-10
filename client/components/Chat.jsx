@@ -69,11 +69,13 @@ class Chat extends Component {
   }
 
   onListenClick() {
+    const { language } = this.props;
     fetch('/api/speech-to-text/token')
       .then(response => response.text())
       .then((token) => {
         const stream = recognizeMic({
           token,
+          model: language,
           objectMode: true,
           extractResults: true,
           format: false,
@@ -151,10 +153,10 @@ class Chat extends Component {
         <div>
           <button type="button" onClick={() => this.onListenClick()}>
             Listen
-                    </button>
+          </button>
           <button type="button" className="stop" onClick={() => this.translate()}>
             Stop
-                    </button>
+          </button>
         </div>
         {test}
       </React.Fragment>
