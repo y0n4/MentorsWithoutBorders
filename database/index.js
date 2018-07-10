@@ -69,15 +69,22 @@ const Room = sequelize.define('room', {
   },
 }, { timestamps: true, updatedAt: false });
 
-const RoomMembers = sequelize.define('roomMembers', {}, { timestamps: false });
-
 const MyMentor = sequelize.define('myMentor', {}, { timestamps: false });
+const RoomMembers = sequelize.define('roomMembers', {}, { timestamps: false });
+const UserCategory = sequelize.define('userCategories', {}, { timestamps: false });
+const MentorCategory = sequelize.define('mentorCategories', {}, { timestamps: false });
 
 Room.hasMany(Message);
 Message.belongsTo(User);
 User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
 Room.belongsToMany(User, { through: RoomMembers });
 User.belongsToMany(Room, { through: RoomMembers });
+
+// Connect the categories to User
+User.belongsToMany(Category, { through: UserCategory });
+User.belongsToMany(Category, { through: MentorCategory });
+Category.belongsToMany(User, { through: UserCategory });
+Category.belongsToMany(User, { through: MentorCategory });
 
 
 // sync model to database
@@ -88,10 +95,9 @@ User.sync({ force: false }).then(() => { // set true if overwite existing databa
   console.log('User is not synced');
 });
 
-Category.sync({ force: true }).then(() => Category.create({
-  firstName: 'John',
-  lastName: 'Hancock',
-}));
+Category.sync({ force: false }).catch((err) => { throw err; });
+UserCategory.sync({ force: false }).catch((err) => { throw err; });
+MentorCategory.sync({ force: false }).catch((err) => { throw err; });
 
 const tableSync = [Message, Room, MyMentor, RoomMembers];
 tableSync.forEach((table) => {
