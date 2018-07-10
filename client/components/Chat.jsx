@@ -108,9 +108,8 @@ class Chat extends Component {
 
   sendMessage(e) {
     e.preventDefault();
-    const time = new Date();
     const { name, message } = this.state;
-    const newMessage = { name, message, time };
+    const newMessage = { name, message };
 
     this.socket.emit('new message', newMessage);
     this.setState({ message: '' });
@@ -125,40 +124,40 @@ class Chat extends Component {
     const { classes } = this.props;
     const { test, messages, message } = this.state;
     return (
-          <React.Fragment>
-              {/* <div>
+      <React.Fragment>
+        {/* <div>
         <div className={classes.container}> */}
-              <Grid container justify="center" spacing={8}>
-                  <Grid item xs={8}>
-                      {/* <Paper className={classes.paper}> */}
-                      <div className="messagesArea">
-                          {messages.map(line => (
-                              <div key={line.time} className="aMessage">
-                                  {`${line.name}: ${line.message}`}
-                                </div>
-                            ))}
-                        </div>
-                    </Grid>
-                  <Grid item xs={8}>
-                      <FormControl fullWidth className={classes.formControl} onSubmit={this.sendMessage}>
-                          {/* <div className="enterMessage"> */}
-                          <Input className="typeMessage" onKeyDown={this.onEnterPress} value={message} onChange={this.handleChange} />
-                          {/* <input type="submit" value="Submit" /> */}
-                          {/* </div> */}
-                        </FormControl>
-                      {/* </Paper> */}
-                    </Grid>
-                </Grid>
-              <div>
-                  <button type="button" onClick={() => this.onListenClick()}>
-                        Listen
-                    </button>
-                  <button type="button" className="stop" onClick={() => this.translate()}>
-                        Stop
-                    </button>
+        <Grid container justify="center" spacing={8}>
+          <Grid item xs={8}>
+            {/* <Paper className={classes.paper}> */}
+            <div className="messagesArea">
+              {messages.map(line => (
+                <div key={line.time} className="aMessage">
+                  {`${line.name}: ${line.message}`}
                 </div>
-              {test}
-            </React.Fragment>
+              ))}
+            </div>
+          </Grid>
+          <Grid item xs={8}>
+            <FormControl fullWidth className={classes.formControl} onSubmit={this.sendMessage}>
+              {/* <div className="enterMessage"> */}
+              <Input className="typeMessage" onKeyDown={this.onEnterPress} value={message} onChange={this.handleChange} />
+              {/* <input type="submit" value="Submit" /> */}
+              {/* </div> */}
+            </FormControl>
+            {/* </Paper> */}
+          </Grid>
+        </Grid>
+        <div>
+          <button type="button" onClick={() => this.onListenClick()}>
+            Listen
+                    </button>
+          <button type="button" className="stop" onClick={() => this.translate()}>
+            Stop
+                    </button>
+        </div>
+        {test}
+      </React.Fragment>
     );
   }
 }

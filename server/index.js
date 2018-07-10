@@ -50,14 +50,27 @@ io.on('connection', (socket) => {
   users[socket.id] = {};
 
   socket.on('userLoggedIn', (client) => {
-    console.log('🔑 ', client.name, 'Logged In');
+    console.log('🔑 ', client.name, 'Logged In', client);
     users[socket.id] = {
       userId: client.userId,
       name: client.name,
       photo: client.photo,
     };
+    console.log('✅✅✅getmy', users[socket.id].userId);
     data.loginUser(client.userId, socket.id);
+    data.getMyMentors(users[socket.id].userId, (mentors) => {
+      console.log('hey', mentors)
+      socket.emit('mentorsOnline', mentors);
+    });
   });
+
+  // socket.on('getMyMentors', () => {
+  //   console.log('✅✅✅✅✅getmymentors', users[socket.id].userId);
+  //   data.getMyMentors(users[socket.id].userId, (mentors) => {
+  //     socket.emit('mentorsOnline', mentors);
+  //   });
+  // });
+
 
   socket.on('new message', (message) => {
     console.log('✉️ socket.new message', message);
@@ -71,8 +84,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('⛔ ', users[socket.id], 'Disconnected from socket');
+    console.log('⛔ ', socket.id, 'Disconnected from socket');
     io.emit('userDisconnect', socket.id);
+    console.log(users[socket.id].userId)
     data.logoutUser(users[socket.id].userId);
     delete users[socket.id];
   });
