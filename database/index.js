@@ -39,6 +39,7 @@ const User = sequelize.define('user', {
   location: Sequelize.JSON,
   locale: Sequelize.STRING,
   socket: Sequelize.STRING,
+  wordCount: Sequelize.JSON,
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
@@ -148,6 +149,15 @@ const getMyMentors = (userId, cb) => {
     });
 };
 
+const getAllMentors = (callback) => {
+  User.findAll({
+    where: {
+      isMentor: true
+    }
+  }).then((data) => {
+    callback(data);
+  });
+};
 
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
@@ -217,6 +227,7 @@ module.exports = {
   saveUser,
   allLocation,
   getMyMentors,
+  getAllMentors,
   setMyMentor,
   setMessage,
   loginUser,
