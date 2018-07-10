@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import SearchBar from './SearchBar';
 import MembersOnline from './MembersOnline';
+import { Redirect, Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -27,13 +28,13 @@ class MenteeHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      isMentor: this.props.props.isMentor,
     };
   }
 
   checkTime() {
     const time = new Date().getHours();
-    console.log(time);
+    // console.log(time);
     if (time < 12) {
       return 'Good Morning! 😄 ';
     } if (time < 18) {
@@ -42,9 +43,13 @@ class MenteeHome extends Component {
     return 'Good Evening 🙂';
   }
 
+  mentorSignUp() {
+    console.log('oui');
+  }
 
   render() {
     const { classes } = this.props;
+    console.log(48, this.props.props.isMentor)
     return (
 
 
@@ -109,6 +114,12 @@ class MenteeHome extends Component {
             <Grid item xs={4} style={{ paddingLeft: 90, height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
+                  {!this.state.isMentor ? 
+                    <button onClick={this.mentorSignUp}>
+                    <Link to="/mentor-sign-up">
+                      Become a Mentor
+                    </Link>
+                    </button> : <div></div>}
                   <SearchBar />
                   <MembersOnline />
                 </div>
