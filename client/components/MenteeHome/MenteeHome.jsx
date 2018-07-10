@@ -43,10 +43,6 @@ class MenteeHome extends Component {
     return 'Good Evening 🙂';
   }
 
-  mentorSignUp() {
-    console.log('oui');
-  }
-
   render() {
     const { classes } = this.props;
     console.log(48, this.props.props.isMentor)
@@ -115,7 +111,7 @@ class MenteeHome extends Component {
               <Paper className={classes.paper}>
                 <div>
                   {!this.state.isMentor ? 
-                    <button onClick={this.mentorSignUp}>
+                    <button>
                     <Link to="/mentor-sign-up">
                       Become a Mentor
                     </Link>
