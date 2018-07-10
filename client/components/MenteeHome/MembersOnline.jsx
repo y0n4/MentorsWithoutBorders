@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
-import Typography from '@material-ui/core/Typography';
 
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 // import MobileTearSheet from '../../../MobileTearSheet';

@@ -21,6 +21,7 @@ const styles = theme => ({
     fontFamily: 'sans-serif',
     fontWeight: 'bold',
     boxShadow: 'none',
+    overflow: 'auto',
   },
 });
 
@@ -53,7 +54,7 @@ class MenteeHome extends Component {
             {this.checkTime()}
           </div>
           <Grid container spacing={24}>
-            <Grid item xs={8} style={{ height: 400, overflow: 'scroll' }}>
+            <Grid item xs={8} style={{ height: 400, overflow: 'auto' }}>
               <Paper className={classes.paper}>
                 <div className="mentor-quote" style={{ lineHeight: 5, color: 'white', fontSize: 20 }}>
                   Quote feed here
@@ -123,7 +124,7 @@ class MenteeHome extends Component {
               item
               xs={8}
               style={{
-                overflow: 'scroll', height: 500, maxWidth: '50%', marginLeft: '20%', marginTop: '5',
+                overflow: 'auto', height: 500, maxWidth: '50%', marginLeft: '20%', marginTop: '5',
               }}
             >
               <Paper className={classes.paper}>
