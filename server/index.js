@@ -28,6 +28,7 @@ const { speechToText, translate, languageSupportList } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 const userData = require('../database/dummyGen/users').userList.results;
+const { getCategoryIds } = require('./extractingInfo');
 // temp stuff
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -224,15 +225,22 @@ app.get('/token', (req, res) => {
 // Send the user data to MentorSearch component
 app.get('/recommendation', (req, res) => {
   let userId = req.session.passport.user.profile.id;
-  data.getAllMentors((results) => {
-    data.findUser(userId, (result) => {
-      res.send({
-        allMentors: results,
-        currentUser: result
+  
+  data.findUser(userId, (user) => {
+    let currentUserId = user.id;
+
+    data.getCurrentUserCategories(currentUserId, (data) => {
+      let categories = getCategoryIds(data);
+
+      data.getAllMentors((mentors) => {
+        res.send({
+          userCategories: categories,
+          allMentors: mentors,
+          currentUser: user
+        });
       });
     });
   });
-  // res.send('200')
 });
 
 app.get('/allMentors', (req, res) => {
