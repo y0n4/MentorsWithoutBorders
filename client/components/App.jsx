@@ -30,18 +30,9 @@ class App extends Component {
     this.setIsUserOn = this.setIsUserOn.bind(this);
   }
 
-  // componentDidMount() {
-  //   axios.get('/home')
-  //     .then((res) => {
-  //       console.log(res.data, '!!!!');
-  //       if (res.data.status === 'cookie') {
-  //         this.setIsUserOn(res.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }
+  componentDidMount() {
+    console.log('app', this.state.isMentor);
+  }
 
 
   setIsUserOn(info) {
@@ -64,7 +55,7 @@ class App extends Component {
   }
 
   render() {
-    const { isUserOn, messages, name } = this.state;
+    const { isUserOn, messages, name, isMentor } = this.state;
     return (
 
       <div className="nav">
@@ -72,10 +63,10 @@ class App extends Component {
         <Route exact path="/" component={Home} />
         <Route path="/user-profile" component={UserProfile} />
         <Route path="/mentor" component={MentorHome} />
-        <Route path="/mentee" component={() => <MenteeHome props={this.state}/>} />
+        <Route path="/mentee" component={() => <MenteeHome props={this.state} />} />
         <Route path="/chat" component={() => <Chat name={name} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
-        <Route path="/mentor-sign-up" component={MentorSignUp} />
+        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} />} />
         <div className="main">
           {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         </div>
