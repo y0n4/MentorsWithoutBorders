@@ -247,6 +247,11 @@ app.get('/token', (req, res) => {
   });
 });
 
+// send req for user to become mentor
+app.post('/mentorUpdate', (req, res) => {
+  data.mentorStatus(req.body.userId);
+});
+
 // Send the user data to MentorSearch component
 app.get('/recommendation', (req, res) => {
   let userId = req.session.passport.user.profile.id;
@@ -292,7 +297,6 @@ app.get('/allMentors', (req, res) => {
   res.send(userData);
 });
 
-
 app.post('/result', (req, res) => {
   console.log(req.body.twitterHandle, '🐣🐣🐣🐣🐣🐣');
   const handle = req.body.twitterHandle;
@@ -305,11 +309,6 @@ app.post('/result', (req, res) => {
         message: error.message,
       });
     });
-});
-
-
-app.post('/mentorUpdate', (req, res) => {
-  console.log('THIS REQ FROM SERVER', req);
 });
 
 app.get('/*', (req, res) => {
