@@ -75,7 +75,7 @@ class Nav extends Component {
         <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
           <Toolbar>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              Mentors Without Borders
+              Mentors Without Borders   @NotSillSmith
             </Typography>
             {isUserOn && (
             <Button
