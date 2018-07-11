@@ -48,6 +48,7 @@ const users = {};
 io.on('connection', (socket) => {
   console.log('✅  Socket Connection from id:', socket.id);
   users[socket.id] = {};
+  socket.emit('loginCheck');
 
   socket.on('userLoggedIn', (client) => {
     console.log('🔑🔑🔑 ', client.name, 'Logged In', client);
@@ -88,7 +89,7 @@ io.on('connection', (socket) => {
     data.getSocketId(client.toUserId, (user) => {
       const roomName = `${client.userId}${user.id}`;
       const reqPkg = {
-        from: socket.id,
+        from: user.id,
         roomName,
       };
       console.log(user.socket, '⛔⛔ UserSocket @ chatrequest 94');
