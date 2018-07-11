@@ -62,7 +62,7 @@ const Message = sequelize.define('message', {
     allowNull: false,
   },
   date: Sequelize.DATE,
-}, { timestamps: false });
+}, { timestamps: true, updatedAt: false });
 
 const Room = sequelize.define('room', {
   name: {
@@ -121,6 +121,19 @@ const findUser = (googleId, callback) => {
   });
 };
 
+const findUserById = (userId, callback) => {
+  if (userId) {
+    User.findById(userId)
+      .then((user) => {
+        callback(user);
+      })
+      .catch((err) => {
+        console.log('This is userId', userId)
+        console.log('Error finding user by id', err);
+      });
+  }
+};
+
 // saves user to database
 const saveUser = (query) => {
   // .create() combines .build() and .save()
@@ -175,7 +188,7 @@ const setMyMentor = (userId, mentorId) => {
 };
 
 const setMessage = (userId, message, roomId) => {
-  Message.create({ userId, message, roomId });
+  Message.create({ userId: userId, message: message, roomId: roomId });
 };
 
 const loginUser = (userId, socket) => {
@@ -199,11 +212,24 @@ const setAvgLoggedInTime = (userId, login, logout) => {
       let prevAvgLoggedInTime = user.avgLoggedInTime;
       let currentAvgLoggedInTime = ((login + logout) / 2);
       let avgLoggedInTime = ((prevAvgLoggedInTime + currentAvgLoggedInTime) / 2);
-      console.log('This is avg loggedInTime')
+      console.log('This is avg loggedInTime', avgLoggedInTime)
       
       user.update({ avgLoggedInTime });
       console.log('It got updated')
     });
+};
+
+const updateUserWordCount = (userId, wordCount, callback) => {
+  User.findById(userId)
+    .then((user) => {
+      user.update({ wordCount });
+    })
+    .then(() => {
+      callback()
+    })
+    .catch((err) => {
+      console.log('Error in updating userWordCount', err);
+    })
 };
 
 const setRoom = (userId, mentorId) => {
@@ -240,6 +266,7 @@ const getRoomMessages = (roomId) => {
 
 module.exports = {
   findUser,
+  findUserById,
   saveUser,
   allLocation,
   getMyMentors,
@@ -252,5 +279,6 @@ module.exports = {
   getRoomMessages,
   getSocketId,
   setAvgLoggedInTime,
+  updateUserWordCount,
   getCurrentUserCategories
 }; 
