@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { Redirect, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import MembersOnline from './MembersOnline';
-import { Redirect, Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -21,6 +21,7 @@ const styles = theme => ({
     fontFamily: 'sans-serif',
     fontWeight: 'bold',
     boxShadow: 'none',
+    overflow: 'auto',
   },
 });
 
@@ -28,7 +29,6 @@ class MenteeHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMentor: this.props.isMentor,
     };
   }
 
@@ -53,7 +53,7 @@ class MenteeHome extends Component {
             {this.checkTime()}
           </div>
           <Grid container spacing={24}>
-            <Grid item xs={8} style={{ height: 400, overflow: 'scroll' }}>
+            <Grid item xs={8} style={{ height: 400, overflow: 'auto' }}>
               <Paper className={classes.paper}>
                 <div className="mentor-quote" style={{ lineHeight: 5, color: 'white', fontSize: 20 }}>
                   Quote feed here
@@ -108,14 +108,8 @@ class MenteeHome extends Component {
             <Grid item xs={4} style={{ paddingLeft: 90, height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
-                  {!this.state.isMentor ? 
-                    <button>
-                    <Link to="/mentor-sign-up">
-                      Become a Mentor
-                    </Link>
-                    </button> : <div></div>}
                   <SearchBar />
-                  <MembersOnline userId={userId} socket={this.props.socket} />
+                  {/* <MembersOnline userId={userId} socket={this.props.socket} /> */}
                 </div>
               </Paper>
             </Grid>
@@ -123,7 +117,7 @@ class MenteeHome extends Component {
               item
               xs={8}
               style={{
-                overflow: 'scroll', height: 500, maxWidth: '50%', marginLeft: '20%', marginTop: '5',
+                overflow: 'auto', height: 500, maxWidth: '50%', marginLeft: '20%', marginTop: '5',
               }}
             >
               <Paper className={classes.paper}>

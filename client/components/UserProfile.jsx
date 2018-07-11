@@ -26,13 +26,13 @@ class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spacing: '0',
+
     };
   }
-  
+
   render() {
     const { classes } = this.props;
-    const { spacing } = this.state;
+
     return (
 
       <div className={classes.root} style={{ padding: 150, height: 824 }}>

@@ -21,12 +21,16 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const twitter = require('./fetchTweets');
 const { addDataToHeroku } = require('../database/dummyGen/generator');
 const { speechToText, translate, languageSupportList } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 const userData = require('../database/dummyGen/users').userList.results;
 // temp stuff
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 auth(passport);
 app.use(passport.initialize());
 app.use(
@@ -36,6 +40,7 @@ app.use(
   }),
 );
 app.use(cookieParser());
+
 // ⬆⬆⬆ end ⬆⬆
 
 speechToText(app);
@@ -219,6 +224,22 @@ app.get('/token', (req, res) => {
 app.get('/allMentors', (req, res) => {
   res.send(userData);
 });
+
+
+// app.post('/result', (req, res) => {
+//   console.log(req.body.twitterHandle, '🐣🐣🐣🐣🐣🐣');
+//   const handle = req.body.twitterHandle;
+//   twitter.getTwitterProfile(handle)
+//   .then
+// });
+
+app.get('/result', (req, res) => {
+  console.log(req.body, '🐣🐣🐣🐣🐣dfasdfsdfsdf🐣');
+
+  res.send(JSON.stringify(req.body), 'this is the body!!!');
+  res.end('testing');
+});
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

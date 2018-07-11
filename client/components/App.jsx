@@ -14,6 +14,7 @@ import Home from './Home';
 import UserProfile from './UserProfile';
 import MentorSignUp from './MentorSignUp';
 import '../dist/styles.css';
+import PersonalityAnalysis from './PersonalityAnalysis';
 
 
 class App extends Component {
@@ -25,21 +26,28 @@ class App extends Component {
       name: '',
       userId: '',
       isMentor: '',
-      videoChat: false,
-      roomName: '',
     };
-    this.socket = io();
+    this.socket = null;
     this.setIsUserOn = this.setIsUserOn.bind(this);
-    this.socket.on('request', (data) => {
-      this.setState({
-        videoChat: true,
-        roomName: data.roomName,
-      });
-    });
   }
+
+  // componentDidMount() {
+  //   axios.get('/home')
+  //     .then((res) => {
+  //       console.log(res.data, '!!!!');
+  //       if (res.data.status === 'cookie') {
+  //         this.setIsUserOn(res.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
+
 
   setIsUserOn(info) {
     const { isUserOn } = this.state;
+    this.socket = io.connect();
     console.log(info);
     this.setState({
       isUserOn: true,
@@ -48,7 +56,7 @@ class App extends Component {
       userId: info.dbInfo.id,
       isMentor: info.dbInfo.isMentor,
     });
-    console.log(isUserOn, 'User Logged In');
+    console.log(isUserOn);
     this.socket.emit('userLoggedIn', {
       userId: info.dbInfo.id,
       name: info.dbInfo.fullName,
@@ -57,19 +65,24 @@ class App extends Component {
   }
 
   render() {
-    const { isUserOn, messages, name, isMentor, userId, videoChat } = this.state;
+    const {
+      isUserOn, messages, userId, name,
+    } = this.state;
+    const appState = this.state;
     return (
+
       <div className="nav">
         <Nav name={name} isUserOn={isUserOn} />
+
+
         <Route exact path="/" component={Home} />
         <Route path="/user-profile" component={UserProfile} />
         <Route path="/mentor" component={MentorHome} />
-        <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
+        <Route path="/mentee" component={() => <MenteeHome userId={userId} socket={this.socket} />} />
         <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
-        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} />} />
+        <Route path="/personality-analysis" component={PersonalityAnalysis} />
         <div className="main">
-          {!videoChat && <Redirect to="/chat" />}
           {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         </div>
       </div>
