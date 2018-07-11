@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Modal from '@material-ui/core/Modal';
 
 class MentorSignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMentor: this.props.isMentor
+      isMentor: this.props.isMentor,
+      userId: this.props.userId,
     }
     this.isMentorNow = this.isMentorNow.bind(this);
   }
 
   isMentorNow() {
-    console.log('clicked', this.state.isMentor);
+    console.log('clicked', this.state.userId);
     this.setState({ isMentor: true });
-    // update to sequelize
+
+    axios.post('/mentorUpdate', {userId: this.state.userId})
+      .then((res) => {
+        console.log(res);
+      });
   }
 
   render() {
