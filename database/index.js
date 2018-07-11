@@ -185,7 +185,6 @@ const setRoom = (userId, mentorId) => {
 const getRoomMessages = (roomId) => {
   Message.findAll({ where: { roomId } });
 };
-<<<<<<< HEAD
 
 const getSocketId = (userId, cb) => {
   User.findById(userId)
@@ -193,8 +192,6 @@ const getSocketId = (userId, cb) => {
       cb(user.dataValues);
     });
 };
-=======
->>>>>>> added personality component
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
