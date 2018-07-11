@@ -40,6 +40,8 @@ const User = sequelize.define('user', {
   locale: Sequelize.STRING,
   socket: Sequelize.STRING,
   wordCount: Sequelize.JSON,
+  birthdate: Sequelize.DATEONLY,
+  avgLoggedInTime: Sequelize.INTEGER,
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
@@ -192,8 +194,21 @@ const loginUser = (userId, socket) => {
 const logoutUser = (userId) => {
   User.findById(userId)
     .then((user) => {
-      console.log(userId, 'logout in db');
+      console.log(user);
       user.update({ socket: null });
+    });
+};
+
+const setAvgLoggedInTime = (userId, login, logout) => {
+  User.findById(userId)
+    .then((user) => {
+      let prevAvgLoggedInTime = user.avgLoggedInTime;
+      let currentAvgLoggedInTime = ((login + logout) / 2);
+      let avgLoggedInTime = ((prevAvgLoggedInTime + currentAvgLoggedInTime) / 2);
+      console.log('This is avg loggedInTime')
+      
+      user.update({ avgLoggedInTime });
+      console.log('It got updated')
     });
 };
 
@@ -249,5 +264,6 @@ module.exports = {
   setRoom,
   getRoomMessages,
   getSocketId,
+  setAvgLoggedInTime,
   getCurrentUserCategories
 };
