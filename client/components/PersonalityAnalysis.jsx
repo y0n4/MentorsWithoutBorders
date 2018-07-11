@@ -44,18 +44,24 @@ class PersonalityAnalysis extends Component {
     return (
       <div>
         {/* {this.chart} */}
+
         <form onSubmit={this.onFormSubmit} className="searchContainer">
-          <input
-            placeholder="search new mentors"
-            className="form-control"
-            value={this.state.input}
-            onChange={this.onInputChange}
-          />
-          <span className="submitButton">
-            <Button type="submit" className="btn btn-secondary">
+          <div style={{ color: 'white', fontSize: 18 }}>
+@
+            {' '}
+
+            <input
+              placeholder="search new mentors"
+              className="form-control"
+              value={this.state.input}
+              onChange={this.onInputChange}
+            />
+            <span className="submitButton">
+              <Button type="submit" className="btn btn-secondary">
 Go!
-            </Button>
-          </span>
+              </Button>
+            </span>
+          </div>
         </form>
         {/* {bigFive !== null && (
         <Pie
@@ -67,7 +73,7 @@ Go!
           width={700}
         />
         )} */}
-        
+
         {bigFive !== null && bigFive.map(trait => (
           <div key={trait.percentile}>
 
