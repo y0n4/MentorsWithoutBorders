@@ -51,7 +51,7 @@ class PersonalityAnalysis extends Component {
             {' '}
 
             <input
-              placeholder="search new mentors"
+              placeholder="enter twitter handle"
               className="form-control"
               value={this.state.input}
               onChange={this.onInputChange}
