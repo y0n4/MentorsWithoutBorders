@@ -67,6 +67,17 @@ Go!
           width={700}
         />
         )} */}
+        
+        {bigFive !== null && bigFive.map(trait => (
+          <div key={trait.percentile}>
+
+            {trait.name}
+:
+            {' '}
+            {trait.percentile}
+
+          </div>
+        ))}
       </div>
     );
   }
