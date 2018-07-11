@@ -91,6 +91,7 @@ class App extends Component {
         <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
         <Route path="/personality-analysis" component={PersonalityAnalysis} />
+        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} />} />
         <div className="main">
           {!videoChat && (
           <Button
