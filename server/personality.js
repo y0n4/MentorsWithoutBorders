@@ -18,12 +18,12 @@ const v3EnglishTextSummaries = new PersonalityTextSummaries({
 });
 
 
-const rl = readline.createInterface({
+const searchTwitter = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-rl.question('Analyze me meowwww...', (handle) => {
+searchTwitter.question('Analyze me meowwww...', (handle) => {
   console.log('Your results should show up soon. Thank you.');
 
   fetchTweets(handle).then((tweets) => {
@@ -38,11 +38,13 @@ rl.question('Analyze me meowwww...', (handle) => {
       },
     };
     personality_insights.profile(params, (error, personalityProfile) => {
-      if (error && error.code == 400) {
+      if (error && error.code === 400) {
         reject(Error('Ouch! You either do not have sufficient tweets, or your language is not supported. Sorry.'));
       } else { console.log(JSON.stringify(personalityProfile, null, 2)); }
     });
 
-    rl.close();
+    searchTwitter.close();
   }).catch(err => console.error(err));
 });
+
+module.export = searchTwitter;

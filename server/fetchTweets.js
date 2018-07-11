@@ -1,6 +1,7 @@
 const Twitter = require('twitter');
 require('dotenv').config({ path: '../.env' });
 
+
 const client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -8,29 +9,25 @@ const client = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-
-const fetchTweets = username => new Promise((resolve, reject) => {
+const processTweets = username => new Promise((resolve, reject) => {
   const params = {
     screen_name: username,
     count: 200,
     include_rts: false,
     trim_user: true,
     exclude_replies: true,
-    tweet_mode: 'extended',
   };
-
   let tweets = [];
-
   const fetchTweets = (error, newTweets) => {
     if (error) {
-      reject(Error(error));
+      return reject(Error(error));
     }
     // Filter out tweets with only relevant info
     const filteredTweets = newTweets.map(tweet => ({
       id: tweet.id_str,
       language: tweet.lang,
       contenttype: 'text/plain',
-      content: tweet.full_text.replace('[^(\\x20-\\x7F)]*', ''),
+      content: tweet.text.replace('[^(\\x20-\\x7F)]*', ''),
       created: Date.parse(tweet.created_at),
       reply: tweet.in_reply_to_screen_name != null,
     }));
@@ -40,11 +37,28 @@ const fetchTweets = username => new Promise((resolve, reject) => {
       params.max_id = tweets[tweets.length - 1].id - 1;
       client.get('statuses/user_timeline', params, fetchTweets);
     } else {
-      // if there are no more tweets to retrieve, return already retrieved tweets
+      // if there are no more tweets to retrieve, just resolve already fetched tweets
       resolve(tweets);
     }
   };
   client.get('statuses/user_timeline', params, fetchTweets);
 });
 
-module.exports = fetchTweets;
+const getTwitterProfile = username => new Promise((resolve, reject) => {
+  const params = {
+    screen_name: username,
+    include_entities: false,
+  };
+
+  client.get('users/show', params, (error, user) => {
+    if (error) {
+      reject(Error('Uh-oh! There seems to be a problem with your Twitter handle.'));
+    }
+    resolve(user);
+  });
+});
+
+module.exports = {
+  processTweets,
+  getTwitterProfile,
+};
