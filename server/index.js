@@ -28,6 +28,8 @@ const { speechToText, translate, languageSupportList } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 const userData = require('../database/dummyGen/users').userList.results;
+const { getCategoryIds } = require('./extractingInfo');
+const { userWordCounts } = require('../database/Recommendations/wordCount');
 // temp stuff
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,11 +52,14 @@ const port = process.env.PORT || 3000;
 const data = require('../database');
 
 const users = {};
+let messages;
 
 io.on('connection', (socket) => {
   console.log('✅  Socket Connection from id:', socket.id);
   users[socket.id] = {};
   socket.emit('loginCheck');
+  let logInTime = new Date().getHours();
+  messages = [];
 
   socket.on('userLoggedIn', (client) => {
     console.log('🔑🔑🔑 ', client.name, 'Logged In', client);
@@ -63,6 +68,8 @@ io.on('connection', (socket) => {
       name: client.name,
       photo: client.photo,
     };
+
+    users.userId = client.userId;
     console.log('✅✅✅getmy', users[socket.id].userId);
     data.loginUser(client.userId, socket.id);
     data.getMyMentors(users[socket.id].userId, (mentors) => {
@@ -81,6 +88,10 @@ io.on('connection', (socket) => {
 
   socket.on('new message', (message) => {
     console.log('✉️ socket.new message', message);
+    // Save message to message database
+    data.setMessage(users[socket.id].userId, message.message, 1);
+
+    messages.push(message.message);
     socket.broadcast.emit('new message', message);
     io.to(socket.id).emit('new message', message);
   });
@@ -104,11 +115,26 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('⛔ ', socket.id, 'Disconnected from socket');
-    io.emit('userDisconnect', socket.id);
-    console.log(users[socket.id].userId);
-    data.logoutUser(users[socket.id].userId);
-    delete users[socket.id];
+    // console.log('⛔ ', users[socket.id], 'Disconnected from socket');
+    let logOutTime = new Date().getHours();
+    // let userId = users[socket.id].userId;
+    data.setAvgLoggedInTime(users.userId, logInTime, logOutTime);
+    data.findUserById(users.userId, (user) => {
+
+      if (messages.length !== 0) {
+        let updatedUserWordCount = userWordCounts(user, messages);
+        
+        data.updateUserWordCount(users.userId, updatedUserWordCount, () => {
+          io.emit('userDisconnect', socket.id);
+          data.logoutUser(users[socket.id].userId);
+          delete users[socket.id];
+        });
+      } else {
+        io.emit('userDisconnect', socket.id);
+        data.logoutUser(users[socket.id].userId);
+        delete users[socket.id];
+      }
+    });
   });
 });
 
@@ -222,6 +248,46 @@ app.get('/token', (req, res) => {
 });
 
 // Send the user data to MentorSearch component
+app.get('/recommendation', (req, res) => {
+  let userId = req.session.passport.user.profile.id;
+  
+  data.findUser(userId, (user) => {
+    let currentUserId = user.id;
+
+    data.getCurrentUserCategories(currentUserId, (datas) => {
+      let categories = getCategoryIds(datas);
+      
+      data.getAllMentors((mentors) => {
+        res.send({
+          userCategories: categories,
+          allMentors: mentors,
+          currentUser: user
+        });
+      });
+    });
+  });
+});
+
+// app.get('/generateMessages', (req, res) => {
+
+//   axios({
+//     method: 'get',
+//     url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies&count=10', 
+//     headers: {
+//     'X-Mashape-Key': 'czGDnXNx1gmshgfCx4vYASFY9Bnsp1ksXifjsnIGGtctpIGWtU'
+//     }
+//   }).then((results) => {
+//     results.data.forEach((quote) => {
+//       data.setMessage(2, quote.quote, 1);
+//     })
+    
+//     console.log('It ran')
+//     res.send('200')
+//   }).catch((err) => {
+//     console.log('Err from results', err);
+//   })
+// });
+
 app.get('/allMentors', (req, res) => {
   res.send(userData);
 });

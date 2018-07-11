@@ -39,6 +39,9 @@ const User = sequelize.define('user', {
   location: Sequelize.JSON,
   locale: Sequelize.STRING,
   socket: Sequelize.STRING,
+  wordCount: Sequelize.JSON,
+  birthdate: Sequelize.DATEONLY,
+  avgLoggedInTime: Sequelize.INTEGER,
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
@@ -58,6 +61,7 @@ const Message = sequelize.define('message', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  date: Sequelize.DATE,
 }, { timestamps: true, updatedAt: false });
 
 const Room = sequelize.define('room', {
@@ -68,15 +72,22 @@ const Room = sequelize.define('room', {
   },
 }, { timestamps: true, updatedAt: false });
 
-const RoomMembers = sequelize.define('roomMembers', {}, { timestamps: false });
-
 const MyMentor = sequelize.define('myMentor', {}, { timestamps: false });
+const RoomMembers = sequelize.define('roomMembers', {}, { timestamps: false });
+const UserCategory = sequelize.define('userCategories', {}, { timestamps: false });
+const MentorCategory = sequelize.define('mentorCategories', {}, { timestamps: false });
 
 Room.hasMany(Message);
 Message.belongsTo(User);
 User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
 Room.belongsToMany(User, { through: RoomMembers });
 User.belongsToMany(Room, { through: RoomMembers });
+
+// Connect the categories to User
+User.belongsToMany(Category, { through: UserCategory });
+User.belongsToMany(Category, { through: MentorCategory });
+Category.belongsToMany(User, { through: UserCategory });
+Category.belongsToMany(User, { through: MentorCategory });
 
 
 // sync model to database
@@ -87,10 +98,9 @@ User.sync({ force: false }).then(() => { // set true if overwite existing databa
   console.log('User is not synced');
 });
 
-Category.sync({ force: true }).then(() => Category.create({
-  firstName: 'John',
-  lastName: 'Hancock',
-}));
+Category.sync({ force: false }).catch((err) => { throw err; });
+UserCategory.sync({ force: false }).catch((err) => { throw err; });
+MentorCategory.sync({ force: false }).catch((err) => { throw err; });
 
 const tableSync = [Message, Room, MyMentor, RoomMembers];
 tableSync.forEach((table) => {
@@ -109,6 +119,19 @@ const findUser = (googleId, callback) => {
   }).catch((err) => {
     console.log(err, 'ERROR');
   });
+};
+
+const findUserById = (userId, callback) => {
+  if (userId) {
+    User.findById(userId)
+      .then((user) => {
+        callback(user);
+      })
+      .catch((err) => {
+        console.log('This is userId', userId)
+        console.log('Error finding user by id', err);
+      });
+  }
 };
 
 // saves user to database
@@ -133,32 +156,42 @@ const allLocation = (callback) => {
 };
 
 const getMyMentors = (userId, cb) => {
-  console.log(userId, 'getmymentors');
   MyMentor.findAll({ where: { userId } })
     .then((data) => {
-      // console.log(data, '********');
-      const users = data.map(({ dataValues: { mentorId: id } }) => id);
-      User.findAll({
-        where: {
-          id: {
-            [Op.or]: users,
-          },
-        },
-      }).then(mentors => cb(mentors));
+      data.forEach(({ dataValues: { mentorId: id } }) => {
+        User.findAll({ where: { id } })
+          .then(users => cb(users));
+      });
     });
 };
 
+const getAllMentors = (callback) => {
+  User.findAll({
+    where: {
+      isMentor: true
+    }
+  }).then((data) => {
+    callback(data);
+  });
+};
+
+const getCurrentUserCategories = (userId, callback) => {
+  UserCategory.findAll({
+    where: { userId: userId }
+  }).then((data) => {
+    callback(data);
+  })
+};
 
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
 };
 
 const setMessage = (userId, message, roomId) => {
-  Message.create({ userId, message, roomId });
+  Message.create({ userId: userId, message: message, roomId: roomId });
 };
 
 const loginUser = (userId, socket) => {
-  console.log('login');
   User.findById(userId)
     .then((user) => {
       user.update({ socket });
@@ -168,9 +201,35 @@ const loginUser = (userId, socket) => {
 const logoutUser = (userId) => {
   User.findById(userId)
     .then((user) => {
-      console.log(userId, 'logout in db');
+      console.log(user);
       user.update({ socket: null });
     });
+};
+
+const setAvgLoggedInTime = (userId, login, logout) => {
+  User.findById(userId)
+    .then((user) => {
+      let prevAvgLoggedInTime = user.avgLoggedInTime;
+      let currentAvgLoggedInTime = ((login + logout) / 2);
+      let avgLoggedInTime = ((prevAvgLoggedInTime + currentAvgLoggedInTime) / 2);
+      console.log('This is avg loggedInTime', avgLoggedInTime)
+      
+      user.update({ avgLoggedInTime });
+      console.log('It got updated')
+    });
+};
+
+const updateUserWordCount = (userId, wordCount, callback) => {
+  User.findById(userId)
+    .then((user) => {
+      user.update({ wordCount });
+    })
+    .then(() => {
+      callback()
+    })
+    .catch((err) => {
+      console.log('Error in updating userWordCount', err);
+    })
 };
 
 const setRoom = (userId, mentorId) => {
@@ -214,9 +273,11 @@ const getSocketId = (userId, cb) => {
 
 module.exports = {
   findUser,
+  findUserById,
   saveUser,
   allLocation,
   getMyMentors,
+  getAllMentors,
   setMyMentor,
   setMessage,
   loginUser,
@@ -224,4 +285,7 @@ module.exports = {
   setRoom,
   getRoomMessages,
   getSocketId,
-};
+  setAvgLoggedInTime,
+  updateUserWordCount,
+  getCurrentUserCategories
+}; 

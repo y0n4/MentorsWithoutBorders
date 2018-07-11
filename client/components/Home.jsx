@@ -12,12 +12,12 @@ class Home extends React.Component {
   // func to get users location using api call
   componentDidMount() {
   }
-
+ 
   render() {
     return (
-      <div className="world-map">
-        <Map />
-      </div>
+    <div className="world-map">
+      <Map />
+    </div>
     );
   }
 }

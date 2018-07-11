@@ -44,3 +44,22 @@ module.exports.addRandomMessages = (qty = 25) => {
   }
 };
 
+const messagesAPI = () => {
+  let quotes = [];
+
+  while (quotes.length < 10) {
+    axios({
+      method: 'get',
+      url: 'https://ajith-messages.p.mashape.com/getMsgs?category=random', 
+      headers: {
+      'X-Mashape-Key': 'czGDnXNx1gmshgfCx4vYASFY9Bnsp1ksXifjsnIGGtctpIGWtU'
+      }
+    }).then((results) => {
+      console.log('Results from messages', results);
+    }).catch((err) => {
+      console.log('Err from results', err);
+    })
+  }
+
+  return quotes;
+};
