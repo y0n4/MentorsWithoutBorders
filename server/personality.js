@@ -12,6 +12,7 @@ const PersonalityTextSummaries = require('personality-text-summary');
 const v3EnglishTextSummaries = new PersonalityTextSummaries({ locale: 'en', version: 'v3' });
 
 const getPersonality = tweets => new Promise((resolve, reject) => {
+  console.log(tweets, '👀👀👀👀👀👀👀');
   const params = {
     // Content items are tweets.
     content_items: tweets,
@@ -23,22 +24,22 @@ const getPersonality = tweets => new Promise((resolve, reject) => {
     },
   };
   personality_insights.profile(params, (error, personalityProfile) => {
-    if (error && error.code == 400) {
+    if (error && error.code === 400) {
       reject(Error('Ouch! You either do not have sufficient tweets, or your language is not supported. Sorry.'));
-    } else { resolve(personalityProfile); }
+    } else { resolve(personalityProfile, null, 2); }
   });
 });
 
-const getTextSummary = personalityProfile => new Promise((resolve, reject) => {
-  const textSummary = v3EnglishTextSummaries.getSummary(personalityProfile);
-  if (typeof (textSummary) !== 'string') {
-    reject(Error('Could not get summary.'));
-  } else {
-    resolve(textSummary);
-  }
-});
+// const getTextSummary = personalityProfile => new Promise((resolve, reject) => {
+//   const textSummary = v3EnglishTextSummaries.getSummary(personalityProfile);
+//   if (typeof (textSummary) !== 'string') {
+//     reject(Error('Could not get summary.'));
+//   } else {
+//     resolve(textSummary);
+//   }
+// });
 
 module.exports = {
   getPersonality,
-  getTextSummary,
+  // getTextSummary,
 };

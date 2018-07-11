@@ -10,6 +10,7 @@ const client = new Twitter({
 });
 
 const processTweets = username => new Promise((resolve, reject) => {
+  console.log(username, '😈😈😈😈😈😈😈');
   const params = {
     screen_name: username,
     count: 200,
@@ -23,7 +24,7 @@ const processTweets = username => new Promise((resolve, reject) => {
       return reject(Error(error));
     }
     // Filter out tweets with only relevant info
-    filteredTweets = newTweets.map(tweet => ({
+    const filteredTweets = newTweets.map(tweet => ({
       id: tweet.id_str,
       language: tweet.lang,
       contenttype: 'text/plain',
@@ -38,6 +39,7 @@ const processTweets = username => new Promise((resolve, reject) => {
       client.get('statuses/user_timeline', params, fetchTweets);
     } else {
       // if there are no more tweets to retrieve, just resolve already fetched tweets
+      console.log(tweets, '🤠🤠🤠🤠🤠🤠🤠🤠');
       resolve(tweets);
     }
   };
@@ -45,6 +47,7 @@ const processTweets = username => new Promise((resolve, reject) => {
 });
 
 const getTwitterProfile = username => new Promise((resolve, reject) => {
+  console.log(username, '👻👻👻👻👻👻👻👻👻');
   const params = {
     screen_name: username,
     include_entities: false,
