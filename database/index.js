@@ -3,8 +3,9 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
-const { Op } = Sequelize;
-const sequelize = new Sequelize(process.env.POSTGRES_URI, { logging: false });
+const sequelize = new Sequelize(process.env.POSTGRES_URI, {
+  logging: false,
+});
 
 sequelize
   .authenticate()
@@ -184,6 +185,7 @@ const setRoom = (userId, mentorId) => {
 const getRoomMessages = (roomId) => {
   Message.findAll({ where: { roomId } });
 };
+<<<<<<< HEAD
 
 const getSocketId = (userId, cb) => {
   User.findById(userId)
@@ -191,6 +193,8 @@ const getSocketId = (userId, cb) => {
       cb(user.dataValues);
     });
 };
+=======
+>>>>>>> added personality component
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];

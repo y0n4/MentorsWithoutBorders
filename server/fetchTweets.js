@@ -1,6 +1,6 @@
-const Twitter = require('twitter');
-require('dotenv').config({ path: '../.env' });
 
+require('dotenv').config({ path: '../.env' });
+const Twitter = require('twitter');
 
 const client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -23,7 +23,7 @@ const processTweets = username => new Promise((resolve, reject) => {
       return reject(Error(error));
     }
     // Filter out tweets with only relevant info
-    const filteredTweets = newTweets.map(tweet => ({
+    filteredTweets = newTweets.map(tweet => ({
       id: tweet.id_str,
       language: tweet.lang,
       contenttype: 'text/plain',
