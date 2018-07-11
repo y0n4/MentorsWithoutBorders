@@ -56,6 +56,7 @@ io.on('connection', (socket) => {
   console.log('✅  Socket Connection from id:', socket.id);
   users[socket.id] = {};
   socket.emit('loginCheck');
+  let logInTime = new Date().getHours();
 
   socket.on('userLoggedIn', (client) => {
     console.log('🔑🔑🔑 ', client.name, 'Logged In', client);
@@ -109,6 +110,8 @@ io.on('connection', (socket) => {
     io.emit('userDisconnect', socket.id);
     console.log(users[socket.id].userId);
     data.logoutUser(users[socket.id].userId);
+    let logOutTime = new Date().getHours();
+    data.setAvgLoggedInTime(users[socket.id].userId, logInTime, logOutTime);
     delete users[socket.id];
   });
 });
@@ -229,9 +232,9 @@ app.get('/recommendation', (req, res) => {
   data.findUser(userId, (user) => {
     let currentUserId = user.id;
 
-    data.getCurrentUserCategories(currentUserId, (data) => {
-      let categories = getCategoryIds(data);
-
+    data.getCurrentUserCategories(currentUserId, (datas) => {
+      let categories = getCategoryIds(datas);
+      
       data.getAllMentors((mentors) => {
         res.send({
           userCategories: categories,
