@@ -3,9 +3,8 @@ const pg = require('pg');
 pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize(process.env.POSTGRES_URI, {
-  logging: false,
-});
+const { Op } = Sequelize;
+const sequelize = new Sequelize(process.env.POSTGRES_URI, { logging: false });
 
 sequelize
   .authenticate()

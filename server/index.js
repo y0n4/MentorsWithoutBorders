@@ -22,6 +22,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const twitter = require('./fetchTweets');
+const personality = require('./personality');
 const { addDataToHeroku } = require('../database/dummyGen/generator');
 const { speechToText, translate, languageSupportList } = require('./watson');
 const auth = require('./auth');
@@ -226,12 +227,20 @@ app.get('/allMentors', (req, res) => {
 });
 
 
-// app.post('/result', (req, res) => {
-//   console.log(req.body.twitterHandle, '🐣🐣🐣🐣🐣🐣');
-//   const handle = req.body.twitterHandle;
-//   twitter.getTwitterProfile(handle)
-//   .then
-// });
+app.post('/result', (req, res) => {
+  console.log(req.body.twitterHandle, '🐣🐣🐣🐣🐣🐣');
+  const handle = req.body.twitterHandle;
+  twitter.getTwitterProfile(handle)
+    .then(profile => twitter.processTweets(profile.twitterHandle))
+    .then(tweets => personality.getPersonality(tweets))
+    .then(personalityProfile => personality.getTextSummary(personalityProfile.personality_profile))
+    .then(summary => res.json(summary))
+    .catch((error) => {
+      res.json({
+        message: error.message,
+      });
+    });
+});
 
 app.get('/result', (req, res) => {
   console.log(req.body, '🐣🐣🐣🐣🐣dfasdfsdfsdf🐣');

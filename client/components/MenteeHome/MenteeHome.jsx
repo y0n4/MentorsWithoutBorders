@@ -29,6 +29,7 @@ class MenteeHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMentor: this.props.isMentor,
     };
   }
 
@@ -108,8 +109,16 @@ class MenteeHome extends Component {
             <Grid item xs={4} style={{ paddingLeft: 90, height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
+                  {!this.state.isMentor
+                    ? (
+                      <button>
+                        <Link to="/mentor-sign-up">
+                      Become a Mentor
+                        </Link>
+                      </button>
+                    ) : <div />}
                   <SearchBar />
-                  {/* <MembersOnline userId={userId} socket={this.props.socket} /> */}
+                  <MembersOnline userId={userId} socket={this.props.socket} />
                 </div>
               </Paper>
             </Grid>
