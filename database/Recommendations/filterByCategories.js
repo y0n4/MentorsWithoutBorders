@@ -1,4 +1,5 @@
-// const { getCurrentUserCategories } = require('../index.js');
+// require('dotenv').load({ silent: true });
+// const { getCurrentUserCategories } = require('../index');
 const { getCategoryIds } = require('../../server/extractingInfo');
 
 /*
@@ -49,7 +50,7 @@ const { getCategoryIds } = require('../../server/extractingInfo');
   }
 */
 
-let topicScore = (userTopics, mentorTopics) => {
+const topicScore = (userTopics, mentorTopics) => {
   let score = 0;
   // Can refactor to a constant time userTopic by creating object
   userTopics.forEach((topic) => {
@@ -61,7 +62,7 @@ let topicScore = (userTopics, mentorTopics) => {
   return score;
 };
 
-let scoreByTopic = (currentUserTopics, allMentors) => {
+const scoreByTopic = (currentUserTopics, allMentors) => {
   let userTopics = currentUserTopics;
   // console.log('This is all mentors', allMentors)
   
@@ -84,7 +85,7 @@ let scoreByTopic = (currentUserTopics, allMentors) => {
   return filtered;
 };
 
-let scoreByAge = (currentUser, mentors, ageRestrict = 5) => {
+const scoreByAge = (currentUser, mentors, ageRestrict = 5) => {
   let userAge = currentUser.age;
 
   mentors.forEach((mentor) => {
@@ -97,7 +98,7 @@ let scoreByAge = (currentUser, mentors, ageRestrict = 5) => {
   });
 };
 
-let avgActiveTime = (currentUser, mentors) => {
+const avgActiveTime = (currentUser, mentors) => {
   let userAvgActiveTime = currentUser.avgLoggedInTime;
 
   let activeTimeFiltered = mentors.filter((mentor) => {
@@ -117,7 +118,7 @@ let avgActiveTime = (currentUser, mentors) => {
   return activeTimeFiltered;
 };
 
-let avgConvoTime = (currentUser, mentors) => {
+const avgConvoTime = (currentUser, mentors) => {
   let userAvgConvoTime = currentUser.convoTime;
 
   mentors.forEach((mentor) => {
