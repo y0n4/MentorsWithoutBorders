@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { Redirect, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import MembersOnline from './MembersOnline';
-import { Redirect, Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,6 @@ class MenteeHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMentor: this.props.isMentor,
     };
   }
 
@@ -109,14 +108,8 @@ class MenteeHome extends Component {
             <Grid item xs={4} style={{ paddingLeft: 90, height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
-                  {!this.state.isMentor ? 
-                    <button>
-                    <Link to="/mentor-sign-up">
-                      Become a Mentor
-                    </Link>
-                    </button> : <div></div>}
                   <SearchBar />
-                  <MembersOnline userId={userId} socket={this.props.socket} />
+                  {/* <MembersOnline userId={userId} socket={this.props.socket} /> */}
                 </div>
               </Paper>
             </Grid>

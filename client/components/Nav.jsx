@@ -67,7 +67,7 @@ class Nav extends Component {
 
 
   render() {
-    const { classes, name } = this.props;
+    const { classes, name, isUserOn } = this.props;
     const { anchorEl } = this.state;
 
     return (
@@ -77,7 +77,19 @@ class Nav extends Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Mentors Without Borders
             </Typography>
-
+            {isUserOn && (
+            <Button
+              style={{ fontSize: '18px' }}
+              component={Link}
+              to="/personality-analysis"
+              color="inherit"
+            >
+              <i className="material-icons">
+grade
+              </i>
+Analysis
+            </Button>
+            )}
             <Button
               style={{ fontSize: '18px' }}
               component={Link}
