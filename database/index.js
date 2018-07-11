@@ -4,7 +4,7 @@ pg.defaults.ssl = true;
 const Sequelize = require('sequelize');
 
 const { Op } = Sequelize;
-const sequelize = new Sequelize(process.env.POSTGRES_URI);
+const sequelize = new Sequelize(process.env.POSTGRES_URI, { logging: false });
 
 sequelize
   .authenticate()
@@ -133,9 +133,10 @@ const allLocation = (callback) => {
 };
 
 const getMyMentors = (userId, cb) => {
-  console.log(userId, 'getmymentors')
+  console.log(userId, 'getmymentors');
   MyMentor.findAll({ where: { userId } })
     .then((data) => {
+      // console.log(data, '********');
       const users = data.map(({ dataValues: { mentorId: id } }) => id);
       User.findAll({
         where: {
@@ -157,6 +158,7 @@ const setMessage = (userId, message, roomId) => {
 };
 
 const loginUser = (userId, socket) => {
+  console.log('login');
   User.findById(userId)
     .then((user) => {
       user.update({ socket });
@@ -181,7 +183,14 @@ const setRoom = (userId, mentorId) => {
 
 const getRoomMessages = (roomId) => {
   Message.findAll({ where: { roomId } });
-}
+};
+
+const getSocketId = (userId, cb) => {
+  User.findById(userId)
+    .then((user) => {
+      cb(user.dataValues);
+    });
+};
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
@@ -214,4 +223,5 @@ module.exports = {
   logoutUser,
   setRoom,
   getRoomMessages,
+  getSocketId,
 };
