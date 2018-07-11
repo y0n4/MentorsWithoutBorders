@@ -206,6 +206,7 @@ const logoutUser = (userId) => {
     });
 };
 
+<<<<<<< HEAD
 const setAvgLoggedInTime = (userId, login, logout) => {
   User.findById(userId)
     .then((user) => {
@@ -231,6 +232,13 @@ const updateUserWordCount = (userId, wordCount, callback) => {
       console.log('Error in updating userWordCount', err);
     })
 };
+=======
+const mentorStatus = (userId) => {
+  User.findById(userId).then((user) => {
+    // console.log(user);
+  });
+}
+>>>>>>> Function still wip for updating user's status of mentor
 
 const setRoom = (userId, mentorId) => {
   const roomName = Number(userId.toString() + mentorId.toString());
@@ -289,3 +297,5 @@ module.exports = {
   updateUserWordCount,
   getCurrentUserCategories
 }; 
+  mentorStatus,
+};
