@@ -312,6 +312,10 @@ app.post('/result', (req, res) => {
 });
 
 
+app.post('/mentorUpdate', (req, res) => {
+  console.log('THIS REQ FROM SERVER', req);
+});
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
   // res.sendFile(`${__dirname}/../client/dist/index.html`);
