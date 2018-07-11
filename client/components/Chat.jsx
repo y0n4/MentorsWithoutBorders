@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 
 import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
 import PropTypes from 'prop-types';
@@ -29,6 +31,7 @@ class Chat extends Component {
       messages: [],
       msgHistory: '',
       test: '',
+      language: '',
     };
     this.translate = this.translate.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -50,9 +53,9 @@ class Chat extends Component {
 
     socket.on('new message', (data) => {
       console.log('new message rec', data);
-      const temp = this.state.messages;
-      temp.push(data);
-      this.setState({ messages: temp });
+      this.setState(previousState => ({
+        messages: [...previousState.messages, data],
+      }));
     });
   }
 

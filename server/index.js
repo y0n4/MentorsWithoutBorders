@@ -22,7 +22,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const { addDataToHeroku } = require('../database/dummyGen/generator');
-const { speechToText, translate } = require('./watson');
+const { speechToText, translate, languageSupportList } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 const userData = require('../database/dummyGen/users').userList.results;
@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
   users[socket.id] = {};
 
   socket.on('userLoggedIn', (client) => {
-    console.log('🔑 ', client.name, 'Logged In', client);
+    console.log('🔑🔑🔑 ', client.name, 'Logged In', client);
     users[socket.id] = {
       userId: client.userId,
       name: client.name,
@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
     console.log('✅✅✅getmy', users[socket.id].userId);
     data.loginUser(client.userId, socket.id);
     data.getMyMentors(users[socket.id].userId, (mentors) => {
-      console.log('hey', mentors)
+      console.log('hey', mentors);
       socket.emit('mentorsOnline', mentors);
     });
   });
@@ -83,15 +83,26 @@ io.on('connection', (socket) => {
     translate(text, socket);
   });
 
+  socket.on('chatRequest', (client) => {
+    // console.log(client)
+    data.getSocketId(client.toUserId, (user) => {
+      const roomName = `${client.userId}${user.id}`;
+      const reqPkg = {
+        from: socket.id,
+        roomName,
+      };
+      console.log(user.socket, '⛔⛔ UserSocket @ chatrequest 94');
+      io.to(user.socket).emit('request', reqPkg);
+    });
+  });
+
   socket.on('disconnect', () => {
     console.log('⛔ ', socket.id, 'Disconnected from socket');
     io.emit('userDisconnect', socket.id);
-    console.log(users[socket.id].userId)
+    console.log(users[socket.id].userId);
     data.logoutUser(users[socket.id].userId);
     delete users[socket.id];
   });
-
-
 });
 
 app.use(cors());
@@ -217,8 +228,6 @@ app.get('/*', (req, res) => {
 //   // console.log(req.session);s
 //   res.redirect('/');
 // });
-
-
 server.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });

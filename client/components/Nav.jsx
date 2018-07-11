@@ -57,8 +57,8 @@ class Nav extends Component {
   renderMentor() {
     const { mentor } = this.state;
     console.log(this.props.isUserOn);
-    const { isUserOn } = this.props;
-    if (isUserOn) {
+    const { isUserOn, videoChat } = this.props;
+    if (isUserOn && !videoChat) {
       if (!mentor) {
         return <Redirect to="/mentee" />;
       } return <Redirect to="/mentor" />;
@@ -75,7 +75,7 @@ class Nav extends Component {
         <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
           <Toolbar>
             <Typography variant="title" color="inherit" className={classes.flex}>
-            Mentors Without Borders
+              Mentors Without Borders
             </Typography>
 
             <Button
@@ -85,9 +85,9 @@ class Nav extends Component {
               color="inherit"
             >
               <i className="material-icons">
-home
+                home
               </i>
-HOME
+              HOME
             </Button>
             <Button
               style={{ fontSize: '18px' }}
@@ -96,7 +96,7 @@ HOME
               color="inherit"
             >
               <i className="material-icons">
-              comment
+                comment
               </i>
               CHAT
             </Button>
@@ -110,7 +110,7 @@ HOME
                 onClick={this.handleClick}
               >
                 <i className="material-icons">
-              face
+                  face
                 </i>
                 {`HI ${name || ''} !`}
               </Button>
@@ -133,16 +133,16 @@ HOME
                       label="Mentor"
                     />
                   </FormGroup>
-               
+
                 </MenuItem>
                 <MenuItem onClick={this.handleClose}>
                   <Link to="/searchResults">
-Find a Mentor
+                    Find a Mentor
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={this.logsOff}>
                   <Link to="/logout" onClick={this.logsOff}>
-                  Log Out
+                    Log Out
                   </Link>
                 </MenuItem>
               </Menu>

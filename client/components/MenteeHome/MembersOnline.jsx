@@ -12,6 +12,7 @@ class MembersOnline extends Component {
       mentors: [],
     };
     this.socket = this.props.socket;
+    this.sendChatRequest = this.sendChatRequest.bind(this);
     this.socket.on('mentorsOnline', (mentors) => {
       this.setState({ mentors });
     });
@@ -20,7 +21,15 @@ class MembersOnline extends Component {
   componentDidMount() {
     const { userId } = this.props;
     this.socket.emit('getMyMentors', userId);
+  }
 
+  sendChatRequest(toUserId) {
+    const { userId } = this.props;
+    const data = {
+      userId, 
+      toUserId,
+    }
+    this.socket.emit('chatRequest', data);
   }
 
   render() {
@@ -34,10 +43,8 @@ class MembersOnline extends Component {
           >
             <center>
         Mentors Online
-    
             </center>
           </span>
-    
           <br />
           <hr />
           { mentors.map(mentor => (
@@ -46,6 +53,7 @@ class MembersOnline extends Component {
               primaryText={mentor.fullName}
               rightAvatar={<Avatar src={mentor.photo} />}
               rightIcon={<CommunicationChatBubble />}
+              onClick={() => this.sendChatRequest(mentor.id)}
             />
           ))}
         </List>

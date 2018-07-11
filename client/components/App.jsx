@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -25,34 +25,21 @@ class App extends Component {
       name: '',
       userId: '',
       isMentor: '',
+      videoChat: false,
+      roomName: '',
     };
-    this.socket = null;
+    this.socket = io();
     this.setIsUserOn = this.setIsUserOn.bind(this);
+    this.socket.on('request', (data) => {
+      this.setState({
+        videoChat: true,
+        roomName: data.roomName,
+      });
+    });
   }
-
-<<<<<<< HEAD
-  componentDidMount() {
-    console.log('app', this.state.isMentor);
-  }
-=======
-  // componentDidMount() {
-  //   axios.get('/home')
-  //     .then((res) => {
-  //       console.log(res.data, '!!!!');
-  //       if (res.data.status === 'cookie') {
-  //         this.setIsUserOn(res.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }
->>>>>>> Enable language selection for spech to text
-
 
   setIsUserOn(info) {
     const { isUserOn } = this.state;
-    this.socket = io.connect();
     console.log(info);
     this.setState({
       isUserOn: true,
@@ -61,7 +48,7 @@ class App extends Component {
       userId: info.dbInfo.id,
       isMentor: info.dbInfo.isMentor,
     });
-    console.log(isUserOn);
+    console.log(isUserOn, 'User Logged In');
     this.socket.emit('userLoggedIn', {
       userId: info.dbInfo.id,
       name: info.dbInfo.fullName,
@@ -70,9 +57,7 @@ class App extends Component {
   }
 
   render() {
-    const { isUserOn, messages, name, isMentor, userId } = this.state;
-    const appState = this.state;
-
+    const { isUserOn, messages, name, isMentor, userId, videoChat } = this.state;
     return (
       <div className="nav">
         <Nav name={name} isUserOn={isUserOn} />
@@ -84,6 +69,7 @@ class App extends Component {
         <Route path="/searchResults" component={MentorSearch} />
         <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} />} />
         <div className="main">
+          {!videoChat && <Redirect to="/chat" />}
           {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         </div>
       </div>
