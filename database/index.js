@@ -242,7 +242,14 @@ const setRoom = (userId, mentorId) => {
 
 const getRoomMessages = (roomId) => {
   Message.findAll({ where: { roomId } });
-}
+};
+
+const getSocketId = (userId, cb) => {
+  User.findById(userId)
+    .then((user) => {
+      cb(user.dataValues);
+    });
+};
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
