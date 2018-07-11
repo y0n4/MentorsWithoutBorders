@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { recommendationSystem } from '../../database/Recommendations/recommendationSystem';
 
 export default class RecommendedMentors extends Component {
@@ -10,7 +11,15 @@ export default class RecommendedMentors extends Component {
   }
 
   componentDidMount() {
-    recommendationSystem()
+    axios.get('/generateMessages')
+
+    recommendationSystem((recommendedMentors) => {
+      this.setState({
+        recommended: recommendedMentors
+      });
+
+      console.log('This is recommendedMentors', recommendedMentors)
+    });
   }
   
   render() {
