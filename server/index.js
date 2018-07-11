@@ -73,7 +73,11 @@ io.on('connection', (socket) => {
     console.log('✅✅✅getmy', users[socket.id].userId);
     data.loginUser(client.userId, socket.id);
     data.getMyMentors(users[socket.id].userId, (mentors) => {
+<<<<<<< HEAD
       console.log('hey', mentors);
+=======
+      // console.log('hey', mentors)
+>>>>>>> Route endpoint wip just console log the req
       socket.emit('mentorsOnline', mentors);
     });
   });
