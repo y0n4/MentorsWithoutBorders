@@ -295,7 +295,6 @@ module.exports = {
   getSocketId,
   setAvgLoggedInTime,
   updateUserWordCount,
-  getCurrentUserCategories
-}; 
+  getCurrentUserCategories,
   mentorStatus,
 };
