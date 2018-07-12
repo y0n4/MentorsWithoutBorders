@@ -59,7 +59,7 @@ class AutoComplete extends React.Component {
   }
 
   componentWillUnmount() {
-    axios.post('/addCategories', { categories: this.state.pickedCategories, deletedCategories: this.state.deletedCategories });
+    axios.post('/updateCategories', { categories: this.state.pickedCategories, deletedCategories: this.state.deletedCategories });
   }
 
   onChange(event, { newValue }) {
