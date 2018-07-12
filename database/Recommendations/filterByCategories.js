@@ -51,7 +51,7 @@ const { getCategoryIds } = require('../../server/extractingInfo');
 */
 
 const topicScore = (userTopics, mentorTopics) => {
-  let score = 0;
+  let score = 4;
   // Can refactor to a constant time userTopic by creating object
   userTopics.forEach((topic) => {
     if (mentorTopics.indexOf(topic) > -1) {
@@ -63,7 +63,6 @@ const topicScore = (userTopics, mentorTopics) => {
 };
 
 const scoreByTopic = (currentUserTopics, allMentors) => {
-  let userTopics = currentUserTopics;
   // console.log('This is all mentors', allMentors)
   
   let filtered = allMentors.filter((mentor) => {
@@ -73,7 +72,7 @@ const scoreByTopic = (currentUserTopics, allMentors) => {
 
          
     // });
-    let mentorScore = topicScore(userTopics, [4]);
+    let mentorScore = topicScore(currentUserTopics, [4]);
 
     if (mentorScore !== 0) {
       mentor.score = mentorScore;
