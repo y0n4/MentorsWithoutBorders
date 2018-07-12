@@ -47,7 +47,7 @@ class UserProfile extends Component {
         <br /><br />
         <div className="user-feed">
           quotes feed goes here if mentor<br />
-          question feed goges here if not mentor
+          question feed goes here if not mentor
         </div>
       </div>
     );
