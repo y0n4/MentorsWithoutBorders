@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
     console.log('✅✅✅getmy', users[socket.id].userId);
     data.loginUser(client.userId, socket.id);
     data.getMyMentors(users[socket.id].userId, (mentors) => {
-      // console.log('hey', mentors)
+      // console.log('hey', mentors);
       socket.emit('mentorsOnline', mentors);
     });
   });
