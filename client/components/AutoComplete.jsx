@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import ChipsArray from './Chips';
 import { occupations } from '../../database/dummyGen/occupations';
@@ -37,7 +38,8 @@ class AutoComplete extends React.Component {
     this.state = {
       value: '',
       suggestions: [],
-      pickedCategories: []
+      pickedCategories: [],
+      deletedCategories: [],
     };
 
     this.onChange = this.onChange.bind(this);
@@ -45,6 +47,19 @@ class AutoComplete extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/getCategories')
+     .then((data) => {
+       this.setState({
+         pickedCategories: data.data
+       });
+     })
+  }
+
+  componentWillUnmount() {
+    axios.post('/addCategories', { categories: this.state.pickedCategories, deletedCategories: this.state.deletedCategories });
   }
 
   onChange(event, { newValue }) {
@@ -59,7 +74,8 @@ class AutoComplete extends React.Component {
     chips.splice(chipToDelete, 1);
 
     this.setState({
-      pickedCategories: chips
+      pickedCategories: chips,
+      deletedCategories: [...this.state.deletedCategories, data]
     });
   }
 
