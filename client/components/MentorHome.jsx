@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import MentorFeed from './MentorHomeComponents/MentorFeed';
 import MentorFeedRight from './MentorHomeComponents/MentorFeedRight';
+import AutoComplete from './AutoComplete';
 
 const styles = theme => ({
   root: {
@@ -23,6 +24,7 @@ class MentorHome extends React.Component {
     super(props);
     this.state = {
       questions: '',
+      mentorHome: true
     };
   }
 
@@ -84,6 +86,9 @@ class MentorHome extends React.Component {
                 {this.renderMenteeOnline()}
               </div>
             </Paper>
+            <Paper className={classes.paper}>
+              <AutoComplete mentorHome={this.state.mentorHome} />
+            </Paper>  
           </Grid>
         </Grid>
       </div>
