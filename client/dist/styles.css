@@ -1,11 +1,11 @@
-  body, html{
+body, html{
     height:100%;
     background-image: url('https://i1.wp.com/www.dargadgetz.com/wp-content/uploads/2016/10/Lake-Minimal-Wallpaper-DarGadgetZ.png?w%5Cx3d1200');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-  }
+}
 
 .nav-btn {
   font-size: 18px;
@@ -114,11 +114,11 @@
 }
 
 .login-btn {
-  width: 120px;
+  width: 20%;
   height: 40px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #FE5353;
+  background-color: rgb(110, 168, 255);
   color: white;
 }
 
@@ -209,7 +209,7 @@
   text-align: center;
 }
 
-/*this is for mentee feed*/
+/*this is for mentee feed and other sub components*/
 .checkTime {
   font-size: 45px;
   color: rgb(88, 88, 88);
@@ -222,6 +222,15 @@
 
 .mentors-online {
   border: 1px solid;
+}
+
+.signup-btn {
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: rgb(110, 168, 255);
+  color: white;
 }
 
 /* .searchContainer {
@@ -285,4 +294,18 @@
 
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
+}
+
+.mentor-descrip {
+  margin: 100px auto 0 auto;
+  text-align: center;
+  width: 50%;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.mentor-snippet {
+  text-align: justify;
+  width: 80%;
+  margin: 0 auto;
 }
