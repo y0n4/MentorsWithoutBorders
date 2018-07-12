@@ -334,7 +334,7 @@ app.get('/getCategories', (req, res) => {
   })
 }); 
 
-app.post('/addCategories', (req, res) => {
+app.post('/updateCategories', (req, res) => {
   let categories = req.body.categories;
   let deletedCategories = req.body.deletedCategories;
   let categoryIds = [];
