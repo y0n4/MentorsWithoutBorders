@@ -93,28 +93,20 @@ class App extends Component {
         <Route path="/personality-analysis" component={PersonalityAnalysis} />
         <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} changeMentorStatus={this.changeMentorStatus} />} />
         <div className="main">
-          {!videoChat && (
-            <Button
-              component={Link}
-              to="/chat"
-            >
-              HEREEEE
-              
-        <div className="main">
-                {videoChat && (
-                  <Button
-                    component={Link}
-                    to="/chat"
-                  >
-                    HEREEEE
-            </Button>
-                )}
-                {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
-              </div>
+          {videoChat && (
+          <Button
+            component={Link}
+            to="/chat"
+          >
+HEREEEE
+          </Button>
+          )}
+          {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+        </div>
       </div>
-          );
-          }
-        }
-        
-        const AppWithRouter = withRouter(App);
-        export default AppWithRouter;
+    );
+  }
+}
+
+const AppWithRouter = withRouter(App);
+export default AppWithRouter;

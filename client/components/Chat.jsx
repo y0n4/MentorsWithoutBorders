@@ -9,7 +9,6 @@ import Select from '@material-ui/core/Select';
 
 import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
 import PropTypes from 'prop-types';
-import VideoComponent from './VideoComponent';
 
 const styles = theme => ({
   container: {
@@ -115,7 +114,7 @@ class Chat extends Component {
     const { name, message } = this.state;
     const newMessage = { name, message };
 
-    // this.socket.emit('new message', newMessage);
+    this.socket.emit('new message', newMessage);
     this.setState({ message: '' });
   }
 
