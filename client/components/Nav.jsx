@@ -56,7 +56,7 @@ class Nav extends Component {
 
   renderMentor() {
     const { mentor } = this.state;
-    console.log(this.props.isUserOn);
+    // console.log(this.props.isUserOn);
     const { isUserOn, videoChat } = this.props;
     if (isUserOn && !videoChat) {
       if (!mentor) {
