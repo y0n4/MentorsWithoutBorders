@@ -9,6 +9,7 @@ import MembersOnline from './MembersOnline';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    margin: '80px',
   },
   flex: {
     flex: 1,
@@ -17,10 +18,10 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
     fontFamily: 'sans-serif',
-    fontWeight: 'bold',
-    boxShadow: 'none',
+    // fontWeight: 'bold',
+    // boxShadow: 'none',
     overflow: 'auto',
   },
 });
@@ -49,56 +50,44 @@ class MenteeHome extends Component {
 
     return (
       <div className={classes.root}>
-        <div style={{ padding: 150 }}>
-          <div className="checkTime" style={{ fontSize: 45, color: 'white', fontFamily: 'Chela One' }}>
-            {this.checkTime()}
+        <div style={{ padding: 0 }}>
+          <div className="checkTime">
+            {this.checkTime()}<br />
           </div>
           <Grid container spacing={24}>
             <Grid item xs={8} style={{ height: 400, overflow: 'auto' }}>
               <Paper className={classes.paper}>
-                <div className="mentor-quote" style={{ lineHeight: 5, color: 'white', fontSize: 20 }}>
-                  Quote feed here
+                <div className="mentor-quote" style={{ lineHeight: 5, color: 'black', fontSize: 20 }}>
+                Check out these inspiring quotes from our mentors
                 </div>
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
+                <div className="mentor-quote-entry">
                 Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                {' '}
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
+                <div className="mentor-quote-entry">
                 Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 {' '}
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
+                <div className="mentor-quote-entry">
                 Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
                 {' '}
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
+                <div className="mentor-quote-entry">
                 Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
                   </bold>
                 </div>
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                <div className="mentor-quote-entry" style={{ lineHeight: 3 }}>
+                {' '}
+                <div className="mentor-quote-entry">
                 Somone is sitting in the shade today because someone planted a tree a long time ago
                   <bold style={{ color: 'blue' }}>
                     {' -  Warren Buffet'}
@@ -106,7 +95,7 @@ class MenteeHome extends Component {
                 </div>
               </Paper>
             </Grid>
-            <Grid item xs={4} style={{ paddingLeft: 90, height: 500 }}>
+            <Grid item xs={4} style={{ height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
                   {!this.state.isMentor
@@ -125,15 +114,12 @@ class MenteeHome extends Component {
             <Grid
               item
               xs={8}
-              style={{
-                overflow: 'auto', height: 500, maxWidth: '50%', marginLeft: '20%', marginTop: '5',
-              }}
             >
               <Paper className={classes.paper}>
                 <div
                   className="menteeOldQ"
                   style={{
-                    color: 'white', lineHeight: 5, fontSize: 20,
+                    color: 'black', lineHeight: 5, fontSize: 20,
                   }}
                 >
                 Here are the recent questions you've posted!
