@@ -29,16 +29,15 @@ class Nav extends Component {
       mentor: false,
       anchorEl: null,
     };
-    this.switchMode = this.switchMode.bind(this);
+    this.switchToMentor = this.switchToMentor.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  switchMode() {
-    const { mentor } = this.state;
-    this.setState({
-      mentor: !mentor,
-    });
+  switchToMentor() {
+    this.setState(prevState => ({
+      mentor: !prevState.mentor,
+    }));
   }
 
 
@@ -133,7 +132,7 @@ class Nav extends Component {
                     <FormControlLabel
                       control={(
                         <Switch
-                          onChange={this.switchMode}
+                          onChange={this.switchToMentor}
                           value="mentor"
                         />
                       )}

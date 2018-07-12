@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SelectedMentors from './SelectedMentors';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -19,6 +18,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import SelectedMentors from './SelectedMentors';
 
 const styles = theme => ({
   root: {
@@ -64,7 +64,7 @@ class MentorSearch extends Component {
       selectedMentors: [],
       ageOptions: [],
       page: 0,
-      rowsPerPage: 5
+      rowsPerPage: 5,
     };
 
     this.handleClose = this.handleClose.bind(this);
@@ -76,92 +76,92 @@ class MentorSearch extends Component {
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
 
-    this.handleChange = name => event => {
+    this.handleChange = name => (event) => {
       if (name === 'online') {
         this.setState({ [name]: !this.state.online });
         this.filterOnlineNow();
       } else {
         this.setState({ [name]: event.target.value });
       }
-    }
+    };
   }
 
   componentDidMount() {
     axios.get('/allMentors')
-    .then((res) => {
-      this.setState({
-        allMentors: res.data
-      });
+      .then((res) => {
+        this.setState({
+          allMentors: res.data,
+        });
 
-      this.selectMentors(0, 5);
-    });
+        this.selectMentors(0, 5);
+      });
 
     this.createAgeOptions();
   }
 
   filterOnlineNow() {
-    let mentors = this.state.filteredMentors.length < 1 ? this.state.allMentors : this.state.filteredMentors;
-    let filtered = mentors.filter(mentor => mentor.online === this.state.online );
+    const mentors = this.state.filteredMentors.length < 1 ? this.state.allMentors : this.state.filteredMentors;
+    const filtered = mentors.filter(mentor => mentor.online === this.state.online);
 
     this.setState({
-      filteredMentors: filtered
+      filteredMentors: filtered,
     });
   }
 
   filterAgeRange() {
-    let mentors = this.state.filteredMentors.length < 1 ? this.state.allMentors : this.state.filteredMentors;
-    let filtered = mentors.filter((mentor) => {
-      return mentor.dob.age >= this.state.startAge && mentor.dob.age <= this.state.endAge;
-    });
+    const mentors = this.state.filteredMentors.length < 1 ? this.state.allMentors : this.state.filteredMentors;
+    const filtered = mentors.filter((mentor) => mentor.dob.age >= this.state.startAge && mentor.dob.age <= this.state.endAge);
 
     if (filtered.length === 0) {
       alert('Sorry, no results found');
     } else {
       this.setState({
-        filteredMentors: filtered
+        filteredMentors: filtered,
       });
     }
   }
 
   createAgeOptions() {
-    let ageOptions = [];
+    const ageOptions = [];
 
     for (let i = 18; i <= 100; i++) {
-      ageOptions.push(<option value={i}>{i}</option>)
+      ageOptions.push(<option value={i}>
+{i}
+</option>);
     }
 
     this.setState({
-      ageOptions: ageOptions
+      ageOptions,
     });
   }
 
   selectMentors(pgNum, rows) {
-    pgNum = pgNum + 1;
+    pgNum += 1;
 
-    let mentors = this.state.filteredMentors.length < 1 ? this.state.allMentors : this.state.filteredMentors;
+    const mentors = this.state.filteredMentors.length < 1 ? this.state.allMentors : this.state.filteredMentors;
 
-    let endNum = pgNum * rows;
-    let startNum = endNum - rows;
-    let selectedMentors = mentors.slice(startNum, endNum);
-    
+    const endNum = pgNum * rows;
+    const startNum = endNum - rows;
+    const selectedMentors = mentors.slice(startNum, endNum);
+
     this.setState({
-      selectedMentors: selectedMentors
+      selectedMentors,
     });
   }
 
   handleChangePage(event, page) {
     this.selectMentors(page, this.state.rowsPerPage);
     this.setState({ page });
-  };
+  }
 
   handleChangeRowsPerPage(event) {
     this.setState({ rowsPerPage: event.target.value });
-    this.selectMentors(this.state.page, event.target.value)
-  };
+    this.selectMentors(this.state.page, event.target.value);
+  }
 
   handleClickOpen() {
     this.setState({ open: true });
-  };
+  }
 
   handleClose(name) {
     if (name === 'cancel') {
@@ -172,23 +172,21 @@ class MentorSearch extends Component {
     } else {
       alert('Please make sure Min Age is less than Max Age');
     }
-  };
+  }
 
   render() {
     const { classes } = this.props;
     const spacing = 16;
 
     return (
-      <div className='mentorsArea'>
+      <div className="mentorsArea">
         <Grid container className={classes.root} spacing={16}>
           <Grid item xs={10}>
             <Card className={classes.card}>
-              <CardContent> 
-                {this.state.selectedMentors.map((mentor, idx) => {
-                  return (
+              <CardContent>
+                {this.state.selectedMentors.map((mentor, idx) => (
                     <SelectedMentors mentor={mentor} key={idx} />
-                  );
-                })}
+                  ))}
               </CardContent>
             </Card>
             <Card className={classes.card}>
@@ -204,90 +202,104 @@ class MentorSearch extends Component {
                   'aria-label': 'Next Page',
                 }}
                 onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage} 
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
               />
             </Card>
           </Grid>
           <Grid item xs={2}>
             <Card className={classes.card}>
               <CardContent>
-                <div className='onlineStatus'>
+                <div className="onlineStatus">
                   <FormControlLabel
-                    control={
-                      <Checkbox
+                    control={(
+<Checkbox
                         checked={this.state.checkedB}
                         onChange={this.handleChange('online')}
                         value="online"
                         color="primary"
                       />
-                    }
+)}
                     label="Online Now"
                   />
                 </div>
-                <div className='ageSelector'>
-                  <Button onClick={this.handleClickOpen}>Select an age range</Button>
+                <div className="ageSelector">
+                  <Button onClick={this.handleClickOpen}>
+Select an age range
+</Button>
                   <Dialog
                     disableBackdropClick
                     disableEscapeKeyDown
                     open={this.state.open}
                     onClose={this.handleClose}
                   >
-                    <DialogTitle>Age Range</DialogTitle>
+                    <DialogTitle>
+Age Range
+</DialogTitle>
                     <DialogContent>
                       <form className={classes.container}>
                         <FormControl className={classes.formControl}>
-                          <InputLabel htmlFor='age-native-simple'>Min Age</InputLabel>
+                          <InputLabel htmlFor="age-native-simple">
+Min Age
+</InputLabel>
                           <Select
                             native
                             value={this.state.startAge}
                             onChange={this.handleChange('startAge')}
-                            input={<Input id='age-native-simple' />}
+                            input={<Input id="age-native-simple" />}
                           >
-                            <option value='' />
-                            {this.state.ageOptions.map((option) => {
-                              return option;
-                            })}
+                            <option value="" />
+                            {this.state.ageOptions.map((option) => option)}
                           </Select>
                         </FormControl>
                         <FormControl className={classes.formControl}>
-                          <InputLabel htmlFor='age-native-simple'>Max Age</InputLabel>
+                          <InputLabel htmlFor="age-native-simple">
+Max Age
+</InputLabel>
                           <Select
                             native
                             value={this.state.endAge}
                             onChange={this.handleChange('endAge')}
-                            input={<Input id='age-native-simple' />}
+                            input={<Input id="age-native-simple" />}
                           >
-                            <option value='' />
-                            {this.state.ageOptions.map((option) => {
-                              return option;
-                            })}
+                            <option value="" />
+                            {this.state.ageOptions.map((option) => option)}
                           </Select>
                         </FormControl>
                       </form>
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={() => { this.handleClose('cancel')} }  color='primary'>
+                      <Button onClick={() => { this.handleClose('cancel'); }} color="primary">
                         Cancel
                       </Button>
-                      <Button onClick={this.handleClose} color='primary'>
+                      <Button onClick={this.handleClose} color="primary">
                         Ok
                       </Button>
                     </DialogActions>
                   </Dialog>
                 </div>
-                <div className='language'>
-                  <InputLabel htmlFor='language-simple'>Language</InputLabel>
+                <div className="language">
+                  <InputLabel htmlFor="language-simple">
+Language
+</InputLabel>
                   <Select
                     native
                     value={this.state.language}
                     onChange={this.handleChange('language')}
-                    input={<Input id='language-simple' />}
+                    input={<Input id="language-simple" />}
                   >
-                    <option value='' />
-                    <option value={'english'}>English</option>
-                    <option value={'chinese'}>Chinese</option>
-                    <option value={'japanese'}>Japanese</option>
-                    <option value={'korean'}>Korean</option>
+                    <option value="" />
+                    <option value="english">
+English
+</option>
+                    <option value="chinese">
+Chinese
+</option>
+                    <option value="japanese">
+Japanese
+</option>
+                    <option value="korean">
+Korean
+</option>
                   </Select>
                 </div>
               </CardContent>

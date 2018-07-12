@@ -85,8 +85,10 @@ class MentorHome extends React.Component {
                 <button onClick={this.saveMentorQ}>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
-                Help guide your mentee's with tips that can help answer their worries/questions!<br />
-                Simply visit their profile and chat with them!<br />
+                Help guide your mentee's with tips that can help answer their worries/questions!
+<br />
+                Simply visit their profile and chat with them!
+<br />
                 {this.renderMenteeQs()}
               </div>
             </Paper>
@@ -95,11 +97,17 @@ class MentorHome extends React.Component {
             <Paper className={classes.paper}>
               <div className="mentor-rating">
                 Your Mentor Rating
-                <div>⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews</div>
+                <div>
+⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews
+</div>
               </div>
-              <br /><br />
+              <br />
+<br />
               <div className="mentor-connect-mentee">
-                Current Mentees Online <br /><br />
+                Current Mentees Online 
+{' '}
+<br />
+<br />
                 {this.renderMenteeOnline()}
               </div>
             </Paper>
