@@ -26,7 +26,9 @@ class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      name: this.props.name,
+      photo: this.props.photo.replace(50, 300),
+      isMentor: this.props.isMentor,
     };
   }
 
@@ -34,32 +36,19 @@ class UserProfile extends Component {
     const { classes } = this.props;
 
     return (
-
       <div className={classes.root} style={{ padding: 150, height: 824 }}>
-
-        <Grid container spacing={0}>
-          <Grid item xs={6}>
-            <Paper className={classes.paper1}>
-              <p style={{ fontFamily: 'Chela One', fontSize: 100 }}>
-                {' '}
-Jack Daniel
-                <div style={{ fontFamily: 'Chela One', fontSize: 35, color: 'white' }}>
-Software Engineer
-                </div>
-              </p>
-              <p style={{ fontSize: 28 }}>
-                <i>
-"Never stop learning, because life never stops teaching."
-                </i>
-              </p>
-            </Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <img src="https://images.unsplash.com/photo-1506349548872-e96212963180?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9abc394cf9a1fc882a89d8b49e778b79&auto=format&fit=crop&w=1350&q=80" alt="Moutain view" height="820" width="100%" />
-            </Paper>
-          </Grid>
-        </Grid>
+          <img src={this.state.photo} className="user-pic"/>
+          <div className="user-descrip">
+            <div className="user-name">{this.state.name}</div>
+            <p className="user-occupation">Software Engineer</p>
+            <p className="user-bio"><i>"Never stop learning, because life never stops teaching"</i></p>
+          </div>
+        
+        <br /><br />
+        <div className="user-feed">
+          quotes feed goes here if mentor<br />
+          question feed goges here if not mentor
+        </div>
       </div>
     );
   }
