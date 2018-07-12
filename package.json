@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/Team-Mysk/MentorsWithoutBorders#readme",
   "devDependencies": {
+    "@material-ui/icons": "^1.1.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
@@ -49,6 +50,7 @@
     "jest": "^23.1.0",
     "nodemon": "^1.17.5",
     "prop-types": "^15.6.2",
+    "react-autosuggest": "^9.3.4",
     "reactstrap": "^6.2.0",
     "regenerator-runtime": "^0.12.0",
     "style-loader": "^0.21.0",
@@ -57,7 +59,6 @@
   },
   "dependencies": {
     "@material-ui/core": "^1.2.3",
-    "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
     "babel-core": "^6.0.20",
     "babel-polyfill": "^6.26.0",

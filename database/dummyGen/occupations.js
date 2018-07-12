@@ -1,4 +1,4 @@
-export const occupationsList = {
+const occupationsList = {
 	"description": "A list of occupations (jobs that people might have).",
 	"occupations":
 	[
@@ -968,4 +968,8 @@ export const occupationsList = {
 		"yardmaster",
 		"zoologist"
 	]
+}
+
+module.exports = {
+	occupations: occupationsList.occupations
 }
