@@ -40,9 +40,6 @@ Our mentors and mentees are located throughout the world!
         <br />
         <br />
         <div className="login-descrip">
-          <br />
-          <br />
-
 Sign up and join to become a mentor/mentee and meet amazing people over the world who love to share their knowledge in our growing community!
         </div>
       </div>
