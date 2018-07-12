@@ -28,8 +28,9 @@ const { speechToText, translate, languageSupportList } = require('./watson');
 const auth = require('./auth');
 const exampleData = require('./exampleData').exampleMessages;
 const userData = require('../database/dummyGen/users').userList.results;
-const { getCategoryIds } = require('./extractingInfo');
+const { getCategoryIds, getMentorInfo } = require('./extractingInfo');
 const { occupations } = require('../database/dummyGen/occupations');
+const { topicScore } = require('../database/Recommendations/filterByCategories');
 const { userWordCounts } = require('../database/Recommendations/wordCount');
 // temp stuff
 app.use(bodyParser.json());
@@ -262,6 +263,35 @@ app.post('/mentorUpdate', (req, res) => {
   data.mentorStatus(req.body.userId);
 });
 
+async function mentorScore(userCategories, mentor) {
+  let score = 0;
+  let retrieved = await data.getCurrentMentorCategories(mentor.id);
+  let categoryIds = getCategoryIds(retrieved);
+
+  userCategories.forEach((category) => {
+    if (categoryIds.indexOf(category) > -1) {
+      score += 40;
+    }
+  });
+
+  mentor.mentorScore = score;
+
+  return mentor
+};
+
+async function addMentorScore(userId, categories, mentors) {
+  let filtered = [];
+
+  for (let mentor of mentors) {
+    if (mentor.id !== userId) {
+      let response = await mentorScore(categories, mentor);
+      filtered.push(response);
+    }
+  }
+
+  return filtered;
+}
+
 // Send the user data to MentorSearch component
 app.get('/recommendation', (req, res) => {
   let userId = req.session.passport.user.profile.id;
@@ -273,11 +303,15 @@ app.get('/recommendation', (req, res) => {
       let categories = getCategoryIds(datas);
       
       data.getAllMentors((mentors) => {
-        res.send({
-          userCategories: categories,
-          allMentors: mentors,
-          currentUser: user
-        });
+        let mentorData = getMentorInfo(mentors);
+
+        addMentorScore(currentUserId, categories, mentorData).then((filteredMentors) => {
+          res.send({
+            userCategories: categories,
+            allMentors: filteredMentors,
+            currentUser: user
+          });
+        })
       });
     });
   });

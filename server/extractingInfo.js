@@ -5,6 +5,14 @@ const getCategoryIds = (data) => {
   }, []);
 };
 
+const getMentorInfo = (mentors) => {
+  return mentors.reduce((mentorInfo, mentor) => {
+    mentorInfo.push(mentor.dataValues);
+    return mentorInfo;
+  }, []);
+}
+
 module.exports = {
-  getCategoryIds
+  getCategoryIds,
+  getMentorInfo
 };
