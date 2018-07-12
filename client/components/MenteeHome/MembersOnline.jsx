@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
+import AutoComplete from '../AutoComplete';
 
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 // import MobileTearSheet from '../../../MobileTearSheet';
@@ -36,28 +37,33 @@ class MembersOnline extends Component {
   render() {
     const { mentors } = this.state;
     return (
-      <div className="onlineContainer">
-        <List style={{ maxWidth: '100%', overflow: 'auto' }}>
-          <span style={{
-            fontFamily: 'sans-serif', fontWeight: 'bold', fontSize: '18px',
-          }}
-          >
-            <center>
-              Mentors Online
-            </center>
-          </span>
-          <br />
-          <hr />
-          {mentors.map(mentor => (
-            <ListItem
-              key={mentor.id}
-              primaryText={mentor.fullName}
-              rightAvatar={<Avatar src={mentor.photo} />}
-              rightIcon={<CommunicationChatBubble />}
-              onClick={(e) => this.sendChatRequest(e, mentor.id)}
-            />
-          ))}
-        </List>
+      <div>
+        <div className="onlineContainer">
+          <List style={{ maxWidth: '100%', overflow: 'auto' }}>
+            <span style={{
+              fontFamily: 'sans-serif', fontWeight: 'bold', fontSize: '18px',
+            }}
+            >
+              <center>
+          Mentors Online
+              </center>
+            </span>
+            <br />
+            <hr />
+            { mentors.map(mentor => (
+              <ListItem
+                key={mentor.id}
+                primaryText={mentor.fullName}
+                rightAvatar={<Avatar src={mentor.photo} />}
+                rightIcon={<CommunicationChatBubble />}
+                onClick={() => this.sendChatRequest(mentor.id)}
+              />
+            ))}
+          </List>
+        </div>
+        <div className='menteeCategories'>
+          <AutoComplete />
+        </div>
       </div>
     );
   }
