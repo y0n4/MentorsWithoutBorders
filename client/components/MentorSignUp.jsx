@@ -14,12 +14,10 @@ class MentorSignUp extends Component {
   }
 
   isMentorNow() {
-    console.log('clicked', this.state.userId);
     this.setState({ isMentor: true });
-
+    this.props.changeMentorStatus();
     axios.post('/mentorUpdate', {userId: this.state.userId})
       .then((res) => {
-        console.log(res);
       });
   }
 

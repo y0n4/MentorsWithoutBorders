@@ -32,6 +32,7 @@ class App extends Component {
     };
     this.socket = io();
     this.setIsUserOn = this.setIsUserOn.bind(this);
+    this.changeMentorStatus = this.changeMentorStatus.bind(this);
     this.socket.on('request', (data) => {
       this.setState({
         videoChat: true,
@@ -52,7 +53,7 @@ class App extends Component {
   //       console.error(err);
   //     });
   // }
-
+  
 
   setIsUserOn(info) {
     const { isUserOn } = this.state;
@@ -73,6 +74,10 @@ class App extends Component {
     });
   }
 
+  changeMentorStatus() {
+    this.setState({ isMentor: true });
+  }
+
   render() {
     const {
       isUserOn, messages, userId, name, videoChat, isMentor,
@@ -91,7 +96,7 @@ class App extends Component {
         <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
         <Route path="/personality-analysis" component={PersonalityAnalysis} />
-        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} />} />
+        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} changeMentorStatus={this.changeMentorStatus} />} />
         <div className="main">
           {!videoChat && (
           <Button
