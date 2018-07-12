@@ -189,6 +189,30 @@
   font-weight: bold,
 }
 
+.user-name {
+  font-family: 'Chela One';
+  font-size: 100px;
+}
+
+.user-occupation {
+  font-family: 'Chela One';
+  font-size: 35px;
+  color: white;
+}
+
+.user-bio {
+  font-size: 28px;
+}
+
+.user-pic {
+  float: left;
+  margin-right: 5px;
+}
+
+.user-feed {
+  margin-top: 40px;
+  text-align: center;
+}
 /* .searchContainer {
   height: 60px
 } */
