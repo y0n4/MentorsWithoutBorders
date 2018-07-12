@@ -184,6 +184,9 @@ const getCurrentUserCategories = (userId, callback) => {
   }).then((data) => {
     callback(data);
   })
+  .catch((err) => {
+    console.log('Error in getting categories', err)
+  })
 };
 
 const setMyMentor = (userId, mentorId) => {
@@ -233,6 +236,14 @@ const updateUserWordCount = (userId, wordCount, callback) => {
       console.log('Error in updating userWordCount', err);
     })
 };
+
+const updateUserCategories = (userId, categoryId) => {
+  UserCategory.findOrCreate({ where: { userId, categoryId }});
+};
+
+const deleteUserCategories = (userId, categoryId) => {
+  UserCategory.destroy({ where: { userId, categoryId }});
+}
 
 // sets the user to become a mentor
 const mentorStatus = (userId) => {
@@ -297,5 +308,7 @@ module.exports = {
   setAvgLoggedInTime,
   updateUserWordCount,
   getCurrentUserCategories,
+  deleteUserCategories,
+  updateUserCategories,
   mentorStatus,
 };
