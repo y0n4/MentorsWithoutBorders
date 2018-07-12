@@ -189,6 +189,18 @@ const getCurrentUserCategories = (userId, callback) => {
   })
 };
 
+const getCurrentMentorCategories = (userId, callback) => {
+  MentorCategory.findAll({
+    where: { userId: userId }
+  }).then((data) => {
+    callback(data);
+  })
+  .catch((err) => {
+    console.log('Error in getting categories', err)
+  })
+};
+
+
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
 };
@@ -243,7 +255,15 @@ const updateUserCategories = (userId, categoryId) => {
 
 const deleteUserCategories = (userId, categoryId) => {
   UserCategory.destroy({ where: { userId, categoryId }});
-}
+};
+
+const updateMentorCategories = (userId, categoryId) => {
+  MentorCategory.findOrCreate({ where: { userId, categoryId }});
+};
+
+const deleteMentorCategories = (userId, categoryId) => {
+  MentorCategory.destroy({ where: { userId, categoryId }});
+};
 
 // sets the user to become a mentor
 const mentorStatus = (userId) => {
@@ -308,7 +328,10 @@ module.exports = {
   setAvgLoggedInTime,
   updateUserWordCount,
   getCurrentUserCategories,
+  getCurrentMentorCategories,
   deleteUserCategories,
   updateUserCategories,
+  updateMentorCategories,
+  deleteMentorCategories,
   mentorStatus,
 };
