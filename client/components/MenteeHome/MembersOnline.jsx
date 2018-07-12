@@ -38,7 +38,7 @@ class MembersOnline extends Component {
   render() {
     const { mentors } = this.state;
     return (
-      <div>
+      <div className="mentors-online">
         <div className="onlineContainer">
           <List style={{ maxWidth: '100%', overflow: 'auto' }}>
             <span style={{

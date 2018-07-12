@@ -7,6 +7,11 @@
     background-attachment: fixed;
   }
 
+.nav-btn {
+  font-size: 18px;
+  color: #959595;
+}
+
 .main {
   text-align: center;
 }
@@ -108,11 +113,6 @@
   border: 1px solid #77777769;
 }
 
-.login-pitch {
-  color: #fff;
-  text-shadow: 2px 2px #FF0000;
-}
-
 .login-btn {
   width: 120px;
   height: 40px;
@@ -123,22 +123,17 @@
 }
 
 .login-descrip {
-  color: white;
   text-align: justify;
   margin: auto;
   width: 20%;
 }
 
-/*this is for mentor homepage and sub components*/
+/*this is for mentor feed and sub components*/
 .mentor-input {
   height: 40px;
   width: 70%;
   font-size: 14px;
   padding: 5px;
-}
-
-.menteeHome {
-  
 }
 
 .mentee-qs {
@@ -189,6 +184,7 @@
   font-weight: bold,
 }
 
+/*this is user profile at home icon page*/
 .user-name {
   font-family: 'Chela One';
   font-size: 100px;
@@ -197,7 +193,6 @@
 .user-occupation {
   font-family: 'Chela One';
   font-size: 35px;
-  color: white;
 }
 
 .user-bio {
@@ -213,6 +208,22 @@
   margin-top: 40px;
   text-align: center;
 }
+
+/*this is for mentee feed*/
+.checkTime {
+  font-size: 45px;
+  color: rgb(88, 88, 88);
+  font-family: 'Chela One';
+}
+
+.mentor-quote-entry {
+  line-height: 200%;
+}
+
+.mentors-online {
+  border: 1px solid;
+}
+
 /* .searchContainer {
   height: 60px
 } */

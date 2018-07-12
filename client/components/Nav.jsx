@@ -74,27 +74,24 @@ class Nav extends Component {
       <div className={classes.root}>
         <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
           <Toolbar>
-            <Typography variant="title" color="inherit" className={classes.flex}>
-              Mentors Without Borders   @NotSillSmith
+            <Typography variant="title" color="#959595" className={classes.flex}>
+              Mentors Without Borders
             </Typography>
-            {isUserOn && (
-            <Button
-              style={{ fontSize: '18px' }}
+            {isUserOn && (<Button
+              className="nav-btn"
               component={Link}
               to="/personality-analysis"
-              color="inherit"
             >
               <i className="material-icons">
-grade
+                grade
               </i>
-Analysis
+              Analysis
             </Button>
             )}
             <Button
-              style={{ fontSize: '18px' }}
+              className="nav-btn"
               component={Link}
               to="/user-profile"
-              color="inherit"
             >
               <i className="material-icons">
                 home
@@ -102,10 +99,9 @@ Analysis
               HOME
             </Button>
             <Button
-              style={{ fontSize: '18px' }}
+              className="nav-btn"
               component={Link}
               to="/chat"
-              color="inherit"
             >
               <i className="material-icons">
                 comment
@@ -115,8 +111,7 @@ Analysis
             {this.renderMentor()}
             <div>
               <Button
-                style={{ fontSize: '18px' }}
-                color="inherit"
+                className="nav-btn"
                 aria-owns={anchorEl ? 'dropdown-menu' : null}
                 aria-haspopup="true"
                 onClick={this.handleClick}
