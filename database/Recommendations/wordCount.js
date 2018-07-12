@@ -52,17 +52,18 @@ let userWordCounts = (user, messages) => {
   let updatedWordCount = words.reduce((wordCount, word) => {
     word = word.toLowerCase();
 
-    if (cussWords.indexOf(word) > -1) {
-      wordCounts.cussCount++;
-    } else if (wordCounts[word]) {
-      wordCounts[word]++; 
-    } else {
-    	wordCounts[word] = 1;
+    if (word.length > 1 && word !== '' && word !== ' ') {
+      if (cussWords.indexOf(word) > -1) {
+        wordCounts.cussCount++;
+      } else if (wordCounts[word]) {
+        wordCounts[word]++; 
+      } else {
+        wordCounts[word] = 1;
+      }
     }
 
     return wordCount;
   }, wordCounts);
-
 
   return updatedWordCount;
 };
@@ -84,7 +85,7 @@ let userWordCounts = (user, messages) => {
   }
 */
 
-let getWordCountScore = (mentorWordCount, userWordCount) => {
+let getWordCountScore = (userWordCount, mentorWordCount) => {
   let score = 0;
 
   for (let word in userWordCount) {
@@ -114,11 +115,13 @@ let getWordCountScore = (mentorWordCount, userWordCount) => {
 let wordCountScore = (user, mentors) => {
   let userWordCount = user.wordCount;
 
+
   mentors.forEach((mentor) => {
-    let mentorWordCount = mentor.wordCount
+    let mentorWordCount = mentor.wordCount;
+    console.log('This is mentor word count', userWordCount)
     let score = getWordCountScore(userWordCount, mentorWordCount);
 
-    mentor.score += score;
+    mentor.mentorScore += score;
   });
 };
 

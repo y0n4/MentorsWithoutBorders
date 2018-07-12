@@ -50,39 +50,42 @@ const { getCategoryIds } = require('../../server/extractingInfo');
   }
 */
 
-const topicScore = (userTopics, mentorTopics) => {
-  let score = 4;
-  // Can refactor to a constant time userTopic by creating object
-  userTopics.forEach((topic) => {
-    if (mentorTopics.indexOf(topic) > -1) {
-      score += 4;
-    }
-  });
+// const topicScore = (userTopics, mentorTopics) => {
+//   let score = 0;
+//   // Can refactor to a constant time userTopic by creating object
+//   userTopics.forEach((topic) => {
+//     if (mentorTopics.indexOf(topic) > -1) {
+//       score += 4;
+//     }
+//   });
 
-  return score;
-};
+//   return new Promise ((resolved) => {
+//     resolved(score);
+//   });
+// };
 
-const scoreByTopic = (currentUserTopics, allMentors) => {
-  // console.log('This is all mentors', allMentors)
+
+// const scoreByTopic = (currentUserTopics, allMentors) => {
+//   // console.log('This is all mentors', allMentors)
   
-  let filtered = allMentors.filter((mentor) => {
-    let mentorId = mentor.id;
-    // let mentorCategoryData = getCurrentUserCategories(mentorId, (data) => {
-    //   let mentorCategories = getCategoryIds(data);
+//   let filtered = allMentors.filter((mentor) => {
+//     let mentorId = mentor.id;
+//     // let mentorCategoryData = getCurrentUserCategories(mentorId, (data) => {
+//     //   let mentorCategories = getCategoryIds(data);
 
          
-    // });
-    let mentorScore = topicScore(currentUserTopics, [4]);
+//     // });
+//     let mentorScore = topicScore(currentUserTopics, [4]);
 
-    if (mentorScore !== 0) {
-      mentor.score = mentorScore;
+//     if (mentorScore !== 0) {
+//       mentor.score = mentorScore;
 
-      return mentor;
-    }
-  });
+//       return mentor;
+//     }
+//   });
 
-  return filtered;
-};
+//   return filtered;
+// };
 
 const scoreByAge = (currentUser, mentors, ageRestrict = 5) => {
   let userAge = currentUser.age;
@@ -92,7 +95,7 @@ const scoreByAge = (currentUser, mentors, ageRestrict = 5) => {
     let maxAge = userAge + ageRestrict;
     
     if (mentor.age <= maxAge && mentor.age >= minAge) {
-      mentor.score += 7;
+      mentor.mentorScore += 7;
     }
   });
 };
@@ -109,7 +112,7 @@ const avgActiveTime = (currentUser, mentors) => {
       score = 12 - avgTimeDiff;
     }
 
-    mentor.score += score;
+    mentor.mentorScore += score;
 
     return mentor;
   });
@@ -129,13 +132,13 @@ const avgConvoTime = (currentUser, mentors) => {
       score = 60 - avgConvoDiff;
     }
 
-    mentor.score += score;
+    mentor.mentorScore += score;
   });
 };
 
 module.exports = {
-  topicScore,
-  scoreByTopic,
+  // topicScore,
+  // scoreByTopic,
   scoreByAge,
   avgActiveTime,
   avgConvoTime

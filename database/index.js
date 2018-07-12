@@ -189,17 +189,15 @@ const getCurrentUserCategories = (userId, callback) => {
   })
 };
 
-const getCurrentMentorCategories = (userId, callback) => {
-  MentorCategory.findAll({
+async function getCurrentMentorCategories(userId) {
+  let found = await MentorCategory.findAll({
     where: { userId: userId }
-  }).then((data) => {
-    callback(data);
   })
-  .catch((err) => {
-    console.log('Error in getting categories', err)
+
+  return new Promise((resolve) => {
+    resolve(found);
   })
 };
-
 
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
