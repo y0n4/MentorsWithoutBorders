@@ -232,6 +232,13 @@ const updateUserWordCount = (userId, wordCount, callback) => {
     })
 };
 
+// sets the user to become a mentor
+const mentorStatus = (userId) => {
+  User.findById(userId).then((user) => {
+    user.update({isMentor: true});
+  });
+}
+
 const setRoom = (userId, mentorId) => {
   const roomName = Number(userId.toString() + mentorId.toString());
 
@@ -287,5 +294,6 @@ module.exports = {
   getSocketId,
   setAvgLoggedInTime,
   updateUserWordCount,
-  getCurrentUserCategories
-}; 
+  getCurrentUserCategories,
+  mentorStatus,
+};

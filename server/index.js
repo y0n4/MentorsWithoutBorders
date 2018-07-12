@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
     console.log('✅✅✅getmy', users[socket.id].userId);
     data.loginUser(client.userId, socket.id);
     data.getMyMentors(users[socket.id].userId, (mentors) => {
-      console.log('hey', mentors);
+      // console.log('hey', mentors)
       socket.emit('mentorsOnline', mentors);
     });
   });
@@ -247,6 +247,11 @@ app.get('/token', (req, res) => {
   });
 });
 
+// send req for user to become mentor
+app.post('/mentorUpdate', (req, res) => {
+  data.mentorStatus(req.body.userId);
+});
+
 // Send the user data to MentorSearch component
 app.get('/recommendation', (req, res) => {
   let userId = req.session.passport.user.profile.id;
@@ -292,7 +297,6 @@ app.get('/allMentors', (req, res) => {
   res.send(userData);
 });
 
-
 app.post('/result', (req, res) => {
   console.log(req.body.twitterHandle, '🐣🐣🐣🐣🐣🐣');
   const handle = req.body.twitterHandle;
@@ -306,7 +310,6 @@ app.post('/result', (req, res) => {
       });
     });
 });
-
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

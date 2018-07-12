@@ -44,7 +44,13 @@ class MenteeHome extends Component {
     return 'Good Evening 🙂';
   }
 
+
+  changeMentorStatus() {
+    this.setState({ isMentor: true });
+  }
+
   render() {
+    console.log('mentee home', this.state.isMentor);
     const { classes, userId } = this.props;
 
     return (
