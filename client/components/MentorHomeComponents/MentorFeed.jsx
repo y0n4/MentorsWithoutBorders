@@ -4,10 +4,10 @@ function MentorFeed(props) {
   return (
     <div>
     <div className="mentee-qs">
-      <img src="http://i64.tinypic.com/20uwyl0.jpg" width="50" height="50" className="feed-icon" alt=""/>
+      <img src="https://lh5.googleusercontent.com/-TmnJQRrW878/AAAAAAAAAAI/AAAAAAAAAIU/KGlHPb0a2_s/photo.jpg?sz=50" className="feed-icon" alt=""/>
       <div className="feed-post">
       <strong>
-        Wade Watts
+        yona n
       </strong>
         <br />
         <br />
@@ -16,10 +16,10 @@ function MentorFeed(props) {
     </div>
 
     <div className="mentee-qs">
-      <img src="https://bloximages.newyork1.vip.townnews.com/lancasteronline.com/content/tncms/assets/v3/editorial/5/8c/58c86ab4-ecb1-11e3-bc18-001a4bcf6878/53906a000a1b2.image.jpg" width="50" height="50" className="feed-icon" alt=""/>
+      <img src="https://lh5.googleusercontent.com/-_jJRpF_XESU/AAAAAAAAAAI/AAAAAAAAAAA/AAnnY7oXu-v_h51SoZ5bstl6IlE2EzPI6Q/mo/photo.jpg?sz=50" className="feed-icon" alt=""/>
       <div className="feed-post">
       <strong>
-        Samantha Zapit
+        Selena Xu
       </strong>
         <br />
         <br />
@@ -28,10 +28,10 @@ function MentorFeed(props) {
     </div>
 
       <div className="mentee-qs">
-      <img src="http://i673.photobucket.com/albums/vv99/mynyankoworld/Nyanko/NyankoCreamPuffy1.jpg" width="50" height="50" className="feed-icon" alt=""/>
+      <img src="https://lh4.googleusercontent.com/-9ra4IoPESgo/AAAAAAAAAAI/AAAAAAAAAIg/9H0_-cuQEMQ/photo.jpg?sz=50" className="feed-icon" alt=""/>
       <div className="feed-post">
       <strong>
-        Foodie Queen
+        Kav Linkin
       </strong>
         <br />
         <br />

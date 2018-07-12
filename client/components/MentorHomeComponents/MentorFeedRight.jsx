@@ -4,8 +4,8 @@ function MentorFeedRight(props) {
   return (
     <div>
     <div className="mentee-online">
-      <img src="http://i64.tinypic.com/20uwyl0.jpg" width="50" height="50" alt=""/><br />
-      <strong>Wade Watts</strong>
+      <img src="https://lh4.googleusercontent.com/-9ra4IoPESgo/AAAAAAAAAAI/AAAAAAAAAIg/9H0_-cuQEMQ/photo.jpg?sz=50" alt=""/><br />
+      <strong>Kav Linkin</strong>
     </div>
     </div>
   )
