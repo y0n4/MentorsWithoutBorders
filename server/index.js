@@ -321,7 +321,7 @@ app.post('/result', (req, res) => {
     });
 });
 
-app.get('/getCategories', (req, res) => {
+app.get('/menteeCategories', (req, res) => {
   data.getCurrentUserCategories(users.userId, (categories) => {
     let categoryIds = getCategoryIds(categories);
     let categoryNames = [];
@@ -334,7 +334,20 @@ app.get('/getCategories', (req, res) => {
   })
 }); 
 
-app.post('/updateCategories', (req, res) => {
+app.get('/mentorCategories', (req, res) => {
+  data.getCurrentMentorCategories(users.userId, (categories) => {
+    let categoryIds = getCategoryIds(categories);
+    let categoryNames = [];
+
+    categoryIds.forEach((id) => {
+      categoryNames.push(occupations[id]);
+    });
+
+    res.send(categoryNames);
+  })
+}); 
+
+app.post('/updateMenteeCategories', (req, res) => {
   let categories = req.body.categories;
   let deletedCategories = req.body.deletedCategories;
   let categoryIds = [];
@@ -357,7 +370,32 @@ app.post('/updateCategories', (req, res) => {
       data.deleteUserCategories(users.userId, id);
     });
   }
-})
+});
+
+app.post('/updateMentorCategories', (req, res) => {
+  let categories = req.body.categories;
+  let deletedCategories = req.body.deletedCategories;
+  let categoryIds = [];
+  let deletedCategoryIds = [];
+
+  categories.forEach((category) => {
+    categoryIds.push(occupations.indexOf(category));
+  });
+
+  categoryIds.forEach((id) => {
+    data.updateMentorCategories(users.userId, id);
+  });
+
+  if (deletedCategories.length > 0) {
+    deletedCategories.forEach((category) => {
+      deletedCategoryIds.push(occupations.indexOf(category));
+    });
+
+    deletedCategoryIds.forEach((id) => {
+      data.deleteMentorCategories(users.userId, id);
+    });
+  }
+});
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

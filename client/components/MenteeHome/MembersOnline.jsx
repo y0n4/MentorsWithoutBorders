@@ -10,6 +10,7 @@ class MembersOnline extends Component {
     super(props);
     this.state = {
       mentors: [],
+      menteeHome: true
     };
     this.socket = this.props.socket;
     this.sendChatRequest = this.sendChatRequest.bind(this);
@@ -62,7 +63,7 @@ class MembersOnline extends Component {
           </List>
         </div>
         <div className='menteeCategories'>
-          <AutoComplete />
+          <AutoComplete menteeHome={this.state.menteeHome} />
         </div>
       </div>
     );

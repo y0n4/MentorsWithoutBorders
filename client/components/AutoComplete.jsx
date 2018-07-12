@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
-import ChipsArray from './Chips';
+import Chips from './Chips';
 import { occupations } from '../../database/dummyGen/occupations';
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
@@ -27,8 +27,8 @@ const renderSuggestion = suggestion => (
 );
 
 class AutoComplete extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     // Autosuggest is a controlled component.
     // This means that you need to provide an input value
@@ -50,16 +50,35 @@ class AutoComplete extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/getCategories')
-     .then((data) => {
-       this.setState({
-         pickedCategories: data.data
-       });
-     })
+    if (this.props.menteeHome) {
+      axios.get('/menteeCategories')
+      .then((data) => {
+        this.setState({
+          pickedCategories: data.data
+        });
+      });
+    } else if (this.props.mentorHome) {
+      axios.get('/mentorCategories')
+      .then((data) => {
+        this.setState({
+          pickedCategories: data.data
+        });
+      });
+    }
   }
 
   componentWillUnmount() {
-    axios.post('/updateCategories', { categories: this.state.pickedCategories, deletedCategories: this.state.deletedCategories });
+    if (this.props.menteeHome) {
+      axios.post('/updateMenteeCategories', { 
+        categories: this.state.pickedCategories, 
+        deletedCategories: this.state.deletedCategories 
+      });
+    } else if (this.props.mentorHome) {
+      axios.post('/updateMentorCategories', { 
+        categories: this.state.pickedCategories, 
+        deletedCategories: this.state.deletedCategories 
+      });
+    }
   }
 
   onChange(event, { newValue }) {
@@ -77,7 +96,7 @@ class AutoComplete extends React.Component {
       pickedCategories: chips,
       deletedCategories: [...this.state.deletedCategories, data]
     });
-  }
+  };
 
   handleSubmit() {
     let category = this.state.value;
@@ -108,7 +127,7 @@ class AutoComplete extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: 'Topic Interested In',
       value,
       onChange: this.onChange
     };
@@ -125,7 +144,7 @@ class AutoComplete extends React.Component {
           inputProps={inputProps}
         />
         <button onClick={() => this.handleSubmit()}>Add Topic</button>
-        <ChipsArray chipData={this.state.pickedCategories} handleDelete={this.handleDelete}/>
+        <Chips chipData={this.state.pickedCategories} handleDelete={this.handleDelete}/>
       </div>
     );
   }
