@@ -73,7 +73,7 @@ class Nav extends Component {
       <div className={classes.root}>
         <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
           <Toolbar>
-            <Typography variant="title" color="#858585" className={classes.flex}>
+            <Typography variant="title" className={classes.flex}>
               Mentors Without Borders
             </Typography>
 

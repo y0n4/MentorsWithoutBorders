@@ -382,6 +382,30 @@ const allQuestions = (userId, callback) => {
   });
 };
 
+const allQuotes = (userId, callback) => {
+  Quote.findAll({
+    where: {
+      userId: {
+        [Op.notIn]: [userId],
+      }
+    },
+    include: [
+      { model: User }
+    ]
+  }).then((quotes) => {
+    // console.log(quotes[0].dataValues.user.dataValues);
+    let userQs = quotes.map((info) => {
+      let userInfo = info.dataValues.user.dataValues;
+      return {
+        quote: info.dataValues.quote,
+        fullName: userInfo.fullName,
+        photo: userInfo.photo,
+      }
+    });
+    callback(userQs);
+  });
+}
+
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
@@ -431,4 +455,5 @@ module.exports = {
   saveQuestion,
   savePersonality,
   allQuestions,
+  allQuotes,
 };

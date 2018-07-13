@@ -452,11 +452,15 @@ app.post('/addInput', (req, res) => {
 app.get('/seeInput', (req, res) => {
   if (req.query.type === 'question') {
     data.allQuestions(req.query.userId, (results) => {
-      res.send(results)
+      res.send(results);
+    });
+  }
+  if (req.query.type === 'quote') {
+    data.allQuotes(req.query.userId, (results) => {
+      res.send(results);
     });
   }
 });
-
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
