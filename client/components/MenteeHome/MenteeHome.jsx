@@ -60,7 +60,7 @@ class MenteeHome extends Component {
     let storedQ = this.state.question;
     console.log(storedQ);
     this.setState({ question: '' });
-    axios.post('/addQuestion', {
+    axios.post('/addInput', {
       userId: this.state.userId,
       question: storedQ,
     });
