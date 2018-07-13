@@ -35,7 +35,7 @@ class MenteeHome extends Component {
       isMentor: this.props.isMentor,
       question: '',
     };
-    this.onChanges = this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.saveMenteeQ = this.saveMenteeQ.bind(this);
   }
 
@@ -48,16 +48,6 @@ class MenteeHome extends Component {
     }).then((res) => {
       this.setState({ quotes: res.data });
     });
-  }
-
-  checkTime() {
-    const time = new Date().getHours();
-    if (time < 12) {
-      return 'Good Morning!';
-    } if (time < 18) {
-      return 'Good Afternoon!';
-    }
-    return 'Good Evening!';
   }
 
   // contains the input value
@@ -76,14 +66,23 @@ class MenteeHome extends Component {
     });
   }
 
+  checkTime() {
+    const time = new Date().getHours();
+    if (time < 12) {
+      return 'Good Morning!';
+    } if (time < 18) {
+      return 'Good Afternoon!';
+    }
+    return 'Good Evening!';
+  }
+
   renderMentorQs() {
     return (
       <div>
-        {this.state.quotes.reverse().map(info => <MenteeFeed info={info} />)}
+        {this.state.quotes.map(info => <MenteeFeed info={info} />)}
       </div>
     );
   }
-
 
   render() {
     const { classes, userId } = this.props;
@@ -99,7 +98,7 @@ class MenteeHome extends Component {
             <div className="input-descrip">
               Ask a question that mentors can help answer!<br /><br />
               <textarea 
-              className="input-value"
+              className="input-value" 
               value={this.state.question}
               onChange={this.onChange} /><br />
               <button onClick={this.saveMenteeQ}>Submit</button><br /><br /><br />
