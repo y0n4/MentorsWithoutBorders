@@ -21,7 +21,6 @@ class SelectedMentors extends Component {
   render() {
     let mentor = this.props.mentor;
     const { classes } = this.props;
-    console.log('This is mentor', mentor)
 
     return (
       <div className='eachMentor'>
@@ -38,7 +37,7 @@ class SelectedMentors extends Component {
             </Grid>
             <Grid item xs={4}>
               <div className='aQuote'>
-                <h2>A pretty cool quote from the mentor can go here...</h2>
+                <h2>{mentor.aQuote}</h2>
               </div>
             </Grid>
             <Grid item xs={4}>

@@ -84,18 +84,6 @@ class Nav extends Component {
               userId={userId}
               socket={socket}
             />
-            {isUserOn && (
-              <Button
-                className="nav-btn"
-                component={Link}
-                to="/personality-analysis"
-              >
-                <i className="material-icons">
-                  grade
-                </i>
-                Analysis
-              </Button>
-            )}
             <Button
               className="nav-btn"
               component={Link}
