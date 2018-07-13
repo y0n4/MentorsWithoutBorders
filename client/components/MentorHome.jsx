@@ -29,13 +29,29 @@ class MentorHome extends React.Component {
       mentorHome: true,
       quote: '',
     };
-    this.saveMentorQ = this.saveMentorQ.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.saveMentorQ = this.saveMentorQ.bind(this);
   }
 
   componentDidMount() {
     // get last 15 questions from connected mentees
     // get current online mentees
+  }
+
+  // contains the input value
+  onChange(e) {
+    this.setState({quote: e.target.value})
+  }
+
+  // stores the input value and send to server
+  saveMentorQ() {
+    let storedQ = this.state.quote;
+    console.log(storedQ);
+    this.setState({ quote: '' });
+    axios.post('/addQuote', {
+      userId: this.state.userId,
+      quote: storedQ,
+    });
   }
 
   // renders left side of component
@@ -49,24 +65,7 @@ class MentorHome extends React.Component {
   renderMenteeOnline() {
     return (
       <MentorFeedRight />
-    )
-  }
-
-  // contains the input value
-  onChange(e) {
-    this.setState({quote: e.target.value})
-    // console.log(this.state.quote);
-  }
-
-  // stores the input value and send to server
-  saveMentorQ() {
-    let storedQ = this.state.quote;
-    console.log(storedQ);
-    this.setState({quote: ''});
-    axios.post('/addQuote', {
-      userId: this.state.userId,
-      quote: storedQ,
-    });
+    );
   }
 
   render() {
@@ -77,10 +76,10 @@ class MentorHome extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={8}>
             <Paper className={classes.paper}>
-              <div className="mentor-quote">
+              <div className="input-descrip">
                 Share with your mentees about what inspired you today?<br /><br />
                 <textarea 
-                className="mentor-input"
+                className="input-value"
                 value={this.state.quote}
                 onChange={this.onChange} /><br />
                 <button onClick={this.saveMentorQ}>Submit</button><br /><br /><br />
