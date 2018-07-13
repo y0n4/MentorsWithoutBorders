@@ -162,12 +162,6 @@ class Nav extends Component {
                       label="Mentor"
                     />
                   </FormGroup>
-
-                </MenuItem>
-                <MenuItem onClick={this.handleClose}>
-                  <Link to="/searchResults">
-                    Find a Mentor
-                  </Link>
                 </MenuItem>
                 <MenuItem onClick={this.logsOff}>
                   <Link to="/logout" onClick={this.logsOff}>

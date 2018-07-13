@@ -32,6 +32,11 @@ body, html{
   right: 30px;
 }
 
+.material-icons.md-48 { 
+  position: absolute;
+  font-size: 48px;
+}
+
 .addMentor {
   position: absolute;
   top: 46px;
@@ -46,9 +51,9 @@ body, html{
 }
 
 .chatBubble {
-  position: absolute;
-  top: 49px;
-  right: 180px;
+  position: absolute !important;
+  top: 49px !important;
+  right: 180px !important;
 }
 
 .eachMentor {

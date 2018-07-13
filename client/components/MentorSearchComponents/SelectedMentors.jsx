@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -40,8 +42,12 @@ class SelectedMentors extends Component {
               </div>
             </Grid>
             <Grid item xs={4}>
-              <div className='startChat'>
-                <i className='far fa-comments fa-2x chatBubble' />
+              <div className='startChat chatBubble'>
+              <Button component={Link} to='/chat'>
+              <i class="material-icons md-48 chat">
+                voice_chat
+              </i>
+              </Button>
               </div>
               <div className='addMentorFA'>
                 <i className='fas fa-user-plus fa-2x addMentor'></i>
