@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import { Redirect, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import MembersOnline from './MembersOnline';
+import MenteeFeed from './MenteeFeed';
+
 
 const styles = theme => ({
   root: {
@@ -19,10 +21,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    // backgroundColor: 'transparent',
     fontFamily: 'sans-serif',
-    // fontWeight: 'bold',
-    // boxShadow: 'none',
     overflow: 'auto',
   },
 });
@@ -32,22 +31,23 @@ class MenteeHome extends Component {
     super(props);
     this.state = {
       userId: this.props.userId,
+      quotes: [],
       isMentor: this.props.isMentor,
       question: '',
     };
-    this.onChanges = this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.saveMenteeQ = this.saveMenteeQ.bind(this);
   }
 
-  checkTime() {
-    const time = new Date().getHours();
-    // console.log(time);
-    if (time < 12) {
-      return 'Good Morning!';
-    } if (time < 18) {
-      return 'Good Afternoon!';
-    }
-    return 'Good Evening!';
+  componentDidMount() {
+    axios.get('/seeInput', {
+      params: {
+        type: 'quote',
+        userId: this.state.userId,
+      }
+    }).then((res) => {
+      this.setState({ quotes: res.data });
+    });
   }
 
   // contains the input value
@@ -60,10 +60,28 @@ class MenteeHome extends Component {
     let storedQ = this.state.question;
     console.log(storedQ);
     this.setState({ question: '' });
-    axios.post('/addQuestion', {
+    axios.post('/addInput', {
       userId: this.state.userId,
       question: storedQ,
     });
+  }
+
+  checkTime() {
+    const time = new Date().getHours();
+    if (time < 12) {
+      return 'Good Morning!';
+    } if (time < 18) {
+      return 'Good Afternoon!';
+    }
+    return 'Good Evening!';
+  }
+
+  renderMentorQs() {
+    return (
+      <div>
+        {this.state.quotes.map(info => <MenteeFeed info={info} />)}
+      </div>
+    );
   }
 
   render() {
@@ -71,55 +89,29 @@ class MenteeHome extends Component {
 
     return (
       <div className={classes.root}>
-          <div className="checkTime">
-            {this.checkTime()}<br />
-          </div>
-          <Grid container spacing={24}>
-            <Grid item xs={8} style={{ height: 400, overflow: 'auto' }}>
-              <Paper className={classes.paper}>
-              <div className="input-descrip">
-                Ask a question that mentors can help answer!<br /><br />
-                <textarea 
-                className="input-value"
-                value={this.state.question}
-                onChange={this.onChange} /><br />
-                <button onClick={this.saveMenteeQ}>Submit</button><br /><br /><br />
-              </div>
-                <div className="mentor-quote-entry">
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                <div className="mentor-quote-entry">
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                {' '}
-                <div className="mentor-quote-entry">
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                {' '}
-                <div className="mentor-quote-entry">
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-                {' '}
-                <div className="mentor-quote-entry">
-                Somone is sitting in the shade today because someone planted a tree a long time ago
-                  <bold style={{ color: 'blue' }}>
-                    {' -  Warren Buffet'}
-                  </bold>
-                </div>
-              </Paper>
-            </Grid>
+        <div className="checkTime">
+          {this.checkTime()}<br />
+        </div>
+        <Grid container spacing={24}>
+          <Grid item xs={8} style={{ height:650, overflow: 'auto' }}>
+            <Paper className={classes.paper}>
+            <div className="input-descrip">
+              Ask a question that mentors can help answer!<br /><br />
+              <textarea 
+              className="input-value" 
+              value={this.state.question}
+              onChange={this.onChange} /><br />
+              <button onClick={this.saveMenteeQ}>Submit</button><br /><br /><br />
+            </div>
+            <div className="mentee-question-feed">
+              Help guide your mentee's with tips that can help answer their worries/questions!
+              <br />
+                Simply visit their profile and chat with them!
+              <br />
+              {this.renderMentorQs()}
+            </div>
+            </Paper>
+          </Grid>
             <Grid item xs={4} style={{ height: 500 }}>
               <Paper className={classes.paper}>
                 <div>
