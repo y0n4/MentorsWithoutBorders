@@ -16,6 +16,7 @@ import UserProfile from './UserProfile';
 import MentorSignUp from './MenteeHome/MentorSignUp';
 import '../dist/styles.css';
 import PersonalityAnalysis from './PersonalityAnalysis';
+import AnalyzeScore from './AnalyzeScore';
 
 class App extends Component {
   constructor() {
@@ -90,7 +91,7 @@ class App extends Component {
         <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
         <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
-        <Route path="/personality-analysis" component={PersonalityAnalysis} />
+        <Route path="/personality-analysis" component={() => <PersonalityAnalysis userId={userId} />} />
         <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} changeMentorStatus={this.changeMentorStatus} />} />
         <div className="main">
           {videoChat && (
@@ -101,8 +102,10 @@ class App extends Component {
 HEREEEE
           </Button>
           )}
+        <div className="main">
           {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
         </div>
+      </div>
       </div>
     );
   }

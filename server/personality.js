@@ -12,7 +12,7 @@ const PersonalityTextSummaries = require('personality-text-summary');
 const v3EnglishTextSummaries = new PersonalityTextSummaries({ locale: 'en', version: 'v3' });
 
 const getPersonality = tweets => new Promise((resolve, reject) => {
-  console.log(tweets, '👀👀👀👀👀👀👀');
+  // console.log(tweets, '👀👀👀👀👀👀👀');
   const params = {
     // Content items are tweets.
     content_items: tweets,

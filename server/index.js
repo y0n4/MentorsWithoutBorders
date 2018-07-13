@@ -339,6 +339,7 @@ app.get('/allMentors', (req, res) => {
   res.send(userData);
 });
 
+// watson-twitter chart
 app.post('/result', (req, res) => {
   console.log(req.body.twitterHandle, '🐣🐣🐣🐣🐣🐣');
   const handle = req.body.twitterHandle;
@@ -352,6 +353,12 @@ app.post('/result', (req, res) => {
       });
     });
 });
+
+app.post('/recommend', (req, res) => {
+  data.savePersonality(req.body.userId, req.body.personality);
+  console.log(req.body.personality, 'for you YONA BACKKKK ');
+});
+
 
 app.get('/menteeCategories', (req, res) => {
   data.getCurrentUserCategories(users.userId, (categories) => {
@@ -444,6 +451,7 @@ app.post('/addQuestion', (req, res) => {
   // console.log(req.body);
   data.saveQuestion(req.body);
 });
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

@@ -39,7 +39,7 @@ const processTweets = username => new Promise((resolve, reject) => {
       client.get('statuses/user_timeline', params, fetchTweets);
     } else {
       // if there are no more tweets to retrieve, just resolve already fetched tweets
-      console.log(tweets, '🤠🤠🤠🤠🤠🤠🤠🤠');
+      // console.log(tweets, '🤠🤠🤠🤠🤠🤠🤠🤠');
       resolve(tweets);
     }
   };
@@ -47,7 +47,7 @@ const processTweets = username => new Promise((resolve, reject) => {
 });
 
 const getTwitterProfile = username => new Promise((resolve, reject) => {
-  console.log(username, '👻👻👻👻👻👻👻👻👻');
+  // console.log(username, '👻👻👻👻👻👻👻👻👻');
   const params = {
     screen_name: username,
     include_entities: false,

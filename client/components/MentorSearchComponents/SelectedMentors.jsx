@@ -11,54 +11,59 @@ const styles = theme => ({
   },
   control: {
     padding: theme.spacing.unit * 2,
-  }
+  },
 });
 
 
 class SelectedMentors extends Component {
-
-  capitalize (words) {
+  capitalize(words) {
     words = words.split(' ');
-    let capitalized = [];
+    const capitalized = [];
 
     words.forEach((word) => {
       capitalized.push(`${word[0].toUpperCase()}${word.slice(1)}`);
-    })
+    });
 
     return capitalized.join(' ');
   }
 
   render() {
-    let mentor = this.props.mentor;
+    const mentor = this.props.mentor;
     const { classes } = this.props;
 
     return (
-      <div className='eachMentor'>
+      <div className="eachMentor">
         <ListItem>
           <Grid container className={classes.root} spacing={0}>
             <Grid item xs={4}>
-              <Avatar src={mentor.picture.thumbnail} className='theAvatar' />
-              <div className='theName'>
-                <h2>{`${this.capitalize(`${mentor.name.first} ${mentor.name.last}`)}`}</h2> 
+              <Avatar src={mentor.picture.thumbnail} className="theAvatar" />
+              <div className="theName">
+                <h2>
+{`${this.capitalize(`${mentor.name.first} ${mentor.name.last}`)}`}
+</h2>
               </div>
-              <div className='state'>
-                <h3>{`${this.capitalize(mentor.location.state)}`}</h3> 
+              <div className="state">
+                <h3>
+{`${this.capitalize(mentor.location.state)}`}
+</h3>
               </div>
             </Grid>
             <Grid item xs={4}>
-              <div className='aQuote'>
-                <h2>A pretty cool quote from the mentor can go here...</h2>
+              <div className="aQuote">
+                <h2>
+A pretty cool quote from the mentor can go here...
+</h2>
               </div>
             </Grid>
             <Grid item xs={4}>
-              <div className='startChat'>
-                <i className='far fa-comments fa-2x chatBubble' />
+              <div className="startChat">
+                <i className="far fa-comments fa-2x chatBubble" />
               </div>
-              <div className='addMentorFA'>
-                <i className='fas fa-user-plus fa-2x addMentor'></i>
+              <div className="addMentorFA">
+                <i className="fas fa-user-plus fa-2x addMentor" />
               </div>
-              <div className='profileFA'>
-                <i className='far fa-id-card fa-2x viewProfile'></i>
+              <div className="profileFA">
+                <i className="far fa-id-card fa-2x viewProfile" />
               </div>
             </Grid>
           </Grid>
@@ -67,7 +72,7 @@ class SelectedMentors extends Component {
       </div>
     );
   }
-};
+}
 
 SelectedMentors.propTypes = {
   classes: PropTypes.object.isRequired,

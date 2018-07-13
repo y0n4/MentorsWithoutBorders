@@ -35,6 +35,7 @@ const User = sequelize.define('user', {
   },
   mentors: Sequelize.ARRAY(Sequelize.TEXT),
   mentees: Sequelize.ARRAY(Sequelize.TEXT),
+  personality: Sequelize.ARRAY(Sequelize.TEXT),
   blocked: Sequelize.ARRAY(Sequelize.TEXT),
   location: Sequelize.JSON,
   locale: Sequelize.STRING,
@@ -233,6 +234,13 @@ const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
 };
 
+const savePersonality = (userId, personality) => {
+  User.findById(userId)
+    .then((user) => {
+      user.update({ personality });
+    });
+};
+
 const setMessage = (userId, message, roomId) => {
   Message.create({ userId: userId, message: message, roomId: roomId });
 };
@@ -384,15 +392,5 @@ module.exports = {
   setRoom,
   getRoomMessages,
   getSocketId,
-  setAvgLoggedInTime,
-  updateUserWordCount,
-  getCurrentUserCategories,
-  getCurrentMentorCategories,
-  deleteUserCategories,
-  updateUserCategories,
-  updateMentorCategories,
-  deleteMentorCategories,
-  mentorStatus,
-  saveQuote,
-  saveQuestion,
+  savePersonality,
 };

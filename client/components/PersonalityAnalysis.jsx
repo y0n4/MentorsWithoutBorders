@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { Pie } from 'react-chartjs-2';
 import 'babel-polyfill';
+import BigFiveChart from './BigFiveChart';
+import AnalyzeScore from './AnalyzeScore';
+
 
 class PersonalityAnalysis extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
       term: '',
       bigFive: null,
+
     };
+
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    // this.chart = this.chart.bind(this);
   }
 
   onInputChange(event) {
@@ -30,21 +34,12 @@ class PersonalityAnalysis extends Component {
     console.log(this.state.bigFive, 'big five here whatup');
   }
 
-  chart() {
-    const { bigFive } = this.state;
-    if (bigFive !== null) {
-      const traits = bigFive.map(trait => trait.percentile);
-      console.log(traits);
-    }
-  }
-
   render() {
-    const { bigFive } = this.state;
+    const { bigFive, input } = this.state;
+    const { userId } = this.props;
 
     return (
       <div>
-        {/* {this.chart} */}
-
         <form onSubmit={this.onFormSubmit} className="searchContainer">
           <div style={{ color: 'white', fontSize: 18 }}>
 @
@@ -53,40 +48,22 @@ class PersonalityAnalysis extends Component {
             <input
               placeholder="enter twitter handle"
               className="form-control"
-              value={this.state.input}
+              value={input}
               onChange={this.onInputChange}
             />
             <span className="submitButton">
-              <Button type="submit" className="btn btn-secondary">
+              <Button type="submit">
 Go!
               </Button>
             </span>
           </div>
         </form>
-        {/* {bigFive !== null && (
-        <Pie
-          data={'bigFive.map((trait)) => trait.percentile)'}
-          options={{
-            maintainAspectRatio: false,
-          }}
-          height={500}
-          width={700}
-        />
-        )} */}
-
-        {bigFive !== null && bigFive.map(trait => (
-          <div key={trait.percentile}>
-
-            {trait.name}
-:
-            {' '}
-            {trait.percentile}
-
-          </div>
-        ))}
+        {bigFive ? <BigFiveChart traits={bigFive} /> : 'enter handle and wait' }
+        {bigFive && <AnalyzeScore traits={bigFive} userId={userId} />}
       </div>
     );
   }
 }
+
 
 export default PersonalityAnalysis;
