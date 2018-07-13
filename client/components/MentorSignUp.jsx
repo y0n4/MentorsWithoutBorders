@@ -16,9 +16,7 @@ class MentorSignUp extends Component {
   isMentorNow() {
     this.setState({ isMentor: true });
     this.props.changeMentorStatus();
-    axios.post('/mentorUpdate', {userId: this.state.userId})
-      .then((res) => {
-      });
+    axios.post('/mentorUpdate', { userId: this.state.userId });
   }
 
   checkMentor() {
