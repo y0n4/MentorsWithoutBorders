@@ -34,6 +34,7 @@ class MentorHome extends React.Component {
   }
 
   componentDidMount() {
+    // get all questions
     axios.get('/seeInput', {
       params: {
         type: 'question',
@@ -41,7 +42,6 @@ class MentorHome extends React.Component {
       }
     }).then((res) => {
       this.setState({ questions: res.data });
-      console.log(this.state.questions);
     });
   }
 
@@ -53,19 +53,12 @@ class MentorHome extends React.Component {
   // stores the input value and send to server
   saveMentorQ() {
     let storedQ = this.state.quote;
-    // console.log(storedQ);
     this.setState({ quote: '' });
     axios.post('/addInput', {
       userId: this.state.userId,
       quote: storedQ,
     });
   }
-
-  // <div className="feed">
-  // <ul>
-  //   {this.state.items.map(item => <Feed item={item} event={this.renderView()}/>, this)}
-  // </ul>
-  // </div>
 
   // renders left side of component
   renderMenteeQs() {
@@ -84,7 +77,6 @@ class MentorHome extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
     const { classes } = this.props;
     return (
       <div className={classes.root}>
