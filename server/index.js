@@ -442,15 +442,19 @@ app.post('/mentorUpdate', (req, res) => {
   data.mentorStatus(req.body.userId);
 });
 
-// send req to add quote
-app.post('/addQuote', (req, res) => {
-  data.saveQuote(req.body);
+// add quote/question depending on query content
+app.post('/addInput', (req, res) => {
+  if (req.body.quote) data.saveQuote(req.body);
+  if (req.body.question) data.saveQuestion(req.body);
 });
 
-// send req to add quote
-app.post('/addQuestion', (req, res) => {
-  // console.log(req.body);
-  data.saveQuestion(req.body);
+// retrieve quote/question depending on query content
+app.get('/seeInput', (req, res) => {
+  if (req.query.type === 'question') {
+    data.allQuestions(req.query.userId, (results) => {
+      res.send(results)
+    });
+  }
 });
 
 
