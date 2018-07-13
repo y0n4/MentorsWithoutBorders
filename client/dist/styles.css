@@ -12,6 +12,11 @@ body, html{
   color: #959595;
 }
 
+.theTitle {
+  font-family: 'Aldrich', sans-serif !important;
+  font-size: 2.4em !important;
+}
+
 .main {
   text-align: center;
 }
@@ -47,7 +52,8 @@ body, html{
   position: absolute;
   top: 30px;
   left: 500px;
-  font-family: 'Satisfy', cursive;
+  font-family: 'Rancho', cursive;
+  font-size: 1.3em !important;
 }
 
 .chatBubble {
