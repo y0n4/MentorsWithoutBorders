@@ -26,6 +26,7 @@ const User = sequelize.define('user', {
   fullName: Sequelize.STRING,
   photo: Sequelize.STRING,
   gender: Sequelize.STRING,
+  age: Sequelize.INTEGER,
   ratings: Sequelize.INTEGER,
   totalRatings: Sequelize.INTEGER,
   bio: Sequelize.STRING,

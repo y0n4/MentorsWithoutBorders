@@ -22,7 +22,6 @@ const recommendationSystem = (callback) => {
     let allMentors = res.data.allMentors;
     let userCategories = res.data.userCategories;
 
-    console.log('This is all mentors', allMentors)
     // Get only the mentors that mentor in topics the 
     // current user is interested in
  

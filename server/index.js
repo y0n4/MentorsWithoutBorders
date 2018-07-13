@@ -21,7 +21,7 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const { createUser } = require('../database/dummyGen/fakeUsers');
-// createUser(20);
+// createUser(10); 
 const cookieSession = require('cookie-session');
 const twitter = require('./twitter');
 const { getPersonality, getTextSummary } = require('./personality');

@@ -18,7 +18,7 @@ let randomName = () => {
 };
 
 let randomGender = (num) => {
-  return (num === 1) ? 'male' : 'female';
+  return (num === 1) ? 'male' : 'female'; 
 };
 
 let randomBoolean = (num) => {
@@ -46,6 +46,7 @@ async function createUsers() {
   return {
     fullName: randomName(),
     gender: randomGender(Math.floor(randomNumGen(1, 2))),
+    age: Math.floor(randomNumGen(18, 62)),
     photo: pictures[Math.floor(randomNumGen(0, pictures.length))],
     location: {
       latLng: latLon,
