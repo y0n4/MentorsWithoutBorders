@@ -35,7 +35,7 @@ class MenteeHome extends Component {
       isMentor: this.props.isMentor,
       question: '',
     };
-    this.onChange = this.onChange.bind(this);
+    this.onChanges = this.onChange.bind(this);
     this.saveMenteeQ = this.saveMenteeQ.bind(this);
   }
 
@@ -43,11 +43,11 @@ class MenteeHome extends Component {
     const time = new Date().getHours();
     // console.log(time);
     if (time < 12) {
-      return 'Good Morning! 😄 ';
-    } else if (time < 18) {
-      return 'Good Afternoon! 😄';
+      return 'Good Morning!';
+    } if (time < 18) {
+      return 'Good Afternoon!';
     }
-    return 'Good Evening 🙂';
+    return 'Good Evening!';
   }
 
   // contains the input value

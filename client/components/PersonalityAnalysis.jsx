@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import 'babel-polyfill';
 import BigFiveChart from './BigFiveChart';
+import AnalyzeScore from './AnalyzeScore';
 
 
 class PersonalityAnalysis extends Component {
@@ -24,22 +25,18 @@ class PersonalityAnalysis extends Component {
   }
 
   async onFormSubmit(event) {
-    const { term } = this.state;
     event.preventDefault();
-    console.log(term, 'tweet awayyyy!');
-    const res = await axios.post('/result', { twitterHandle: term });
+    console.log(this.state.term, 'tweet awayyyy!');
+    const res = await axios.post('/result', { twitterHandle: this.state.term });
 
     const { personality } = await res.data;
-
-    this.setState({
-      bigFive: personality,
-      term: '',
-    });
-    console.log(term, this.state.bigFive);
+    this.setState({ bigFive: personality });
+    console.log(this.state.bigFive, 'big five here whatup');
   }
 
   render() {
     const { bigFive, input } = this.state;
+    const { userId } = this.props;
 
     return (
       <div>
@@ -61,7 +58,8 @@ Go!
             </span>
           </div>
         </form>
-        {bigFive && <BigFiveChart traits={bigFive} /> }
+        {bigFive ? <BigFiveChart traits={bigFive} /> : 'enter handle and wait' }
+        {bigFive && <AnalyzeScore traits={bigFive} userId={userId} />}
       </div>
     );
   }

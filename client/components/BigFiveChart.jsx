@@ -12,6 +12,10 @@ export default class BigFiveChart extends Component {
   }
 
   componentDidMount() {
+    this.makeGraph();
+  }
+
+  makeGraph() {
     const { traits } = this.props;
     console.log(traits);
     const name = [];
@@ -55,14 +59,17 @@ export default class BigFiveChart extends Component {
       maintainAspectRatio: false,
     };
     return (
-      <div>
-        <Pie
-          data={Data}
-          width={400}
-          height={400}
-          options={options}
-        />
+      <div className="chartContainer">
 
+
+        <div>
+          <Pie
+            data={Data}
+            width={400}
+            height={400}
+            options={options}
+          />
+        </div>
       </div>
     );
   }
