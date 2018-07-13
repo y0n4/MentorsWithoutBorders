@@ -100,6 +100,17 @@ const Quote = sequelize.define('quote', {
 
 Quote.belongsTo(User); // shared foreign key w userId
 
+const Question = sequelize.define('question', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  question: Sequelize.STRING,
+}, { timestamps: false });
+
+Question.belongsTo(User); // shared foreign key w userId
+
 // sync model to database
 User.sync({ force: false }).then(() => { // set true if overwite existing database
   // Table created
@@ -312,7 +323,22 @@ const saveQuote = (query) => {
   }).catch((err) => {
     console.log('not saved to db')
   });
-}
+};
+
+Question.sync({ force: false }).then(() => { // set true if overwite existing database
+  // Table created
+  console.log('Question is synced');
+}).catch((err) => {
+  console.log('Question is not synced');
+});
+
+const saveQuestion = (query) => {
+  Question.create(query).then((question) => {
+    console.log('question is saved to db');
+  }).catch((err) => {
+    console.log('not saved to db')
+  });
+};
 
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
@@ -358,4 +384,5 @@ module.exports = {
   deleteMentorCategories,
   mentorStatus,
   saveQuote,
+  saveQuestion,
 };

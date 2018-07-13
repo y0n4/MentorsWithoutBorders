@@ -13,7 +13,7 @@ import Login from './Login';
 import Chat from './Chat';
 import Home from './Home';
 import UserProfile from './UserProfile';
-import MentorSignUp from './MentorSignUp';
+import MentorSignUp from './MenteeHome/MentorSignUp';
 import '../dist/styles.css';
 import PersonalityAnalysis from './PersonalityAnalysis';
 

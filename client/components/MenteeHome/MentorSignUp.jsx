@@ -26,7 +26,7 @@ class MentorSignUp extends Component {
           <h2>So you want to be in our mentoring community?</h2>
 
           <p className="mentor-snippet">
-          Anyone can be a mentor in our community. It feels so rewarding when helping a fellow mentee grow, gain knowledge, and be thankful for your efforts! Not only are you giving, you are also learning to be patient, understanding, and more about yourself along the way.
+          Anyone can be a mentor in our community. It feels so rewarding when helping a fellow mentee grow, gain knowledge, and be thankful for your efforts! Not only are you giving, you are also learning to be patient, understanding, and learn more about yourself along the way.
           </p>
           <br />
           Simply click on the button below!<br /><br />

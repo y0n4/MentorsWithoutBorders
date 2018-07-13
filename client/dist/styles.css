@@ -128,14 +128,19 @@ body, html{
   width: 20%;
 }
 
-/*this is for mentor feed and sub components*/
-.mentor-input {
+/* styles shared between mentor and mentee feed */
+.input-descrip {
+  font-weight: bold,
+}
+
+.input-value {
   height: 40px;
   width: 70%;
   font-size: 14px;
   padding: 5px;
 }
 
+/*this is for mentor feed and sub components*/
 .mentee-qs {
   width: 80%;
   margin: 15px auto;
@@ -157,31 +162,28 @@ body, html{
   border: 1px solid black;
 }
 
-.world-map {
-  /* display: block; */
-  margin: 20px auto;
-  width: 100%;
-  height: 400px;
+/*this is for mentee feed and other sub components*/
+.checkTime {
+  font-size: 45px;
+  color: rgb(88, 88, 88);
+  font-family: 'Chela One';
 }
 
-.flex-item {
-  display: inline-block;
+.mentor-quote-entry {
+  line-height: 200%;
 }
 
-.onlineContainer {
-  /* float: right; */
+.mentors-online {
+  border: 1px solid;
+}
+
+.signup-btn {
   width: 100%;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: rgb(110, 168, 255);
   color: white;
-}
-
-.form-control {
- height: 25px;
- width: 150px;
- text-align: center;
-
-}
-.mentor-quote {
-  font-weight: bold,
 }
 
 /*this is user profile at home icon page*/
@@ -209,34 +211,33 @@ body, html{
   text-align: center;
 }
 
-/*this is for mentee feed and other sub components*/
-.checkTime {
-  font-size: 45px;
-  color: rgb(88, 88, 88);
-  font-family: 'Chela One';
-}
-
-.mentor-quote-entry {
-  line-height: 200%;
-}
-
-.mentors-online {
-  border: 1px solid;
-}
-
-.signup-btn {
-  width: 100%;
-  height: 40px;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: rgb(110, 168, 255);
-  color: white;
-}
-
 /* .searchContainer {
   height: 60px
 } */
 /*end*/ 
+
+.world-map {
+  /* display: block; */
+  margin: 20px auto;
+  width: 100%;
+  height: 400px;
+}
+
+.flex-item {
+  display: inline-block;
+}
+
+.onlineContainer {
+  /* float: right; */
+  width: 100%;
+  color: white;
+}
+
+.form-control {
+ height: 25px;
+ width: 150px;
+ text-align: center;
+}
 
 .react-autosuggest__container {
   position: relative;
