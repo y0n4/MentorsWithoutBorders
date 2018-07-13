@@ -76,21 +76,11 @@ class Nav extends Component {
             <Typography variant="title" color="#858585" className={classes.flex}>
               Mentors Without Borders
             </Typography>
-            {isUserOn && (<Button
-              className="nav-btn"
-              component={Link}
-              to="/personality-analysis"
-            >
-              <i className="material-icons">
-                grade
-              </i>
-              Analysis
-            </Button>
-            )}
+
             <Button
               className="nav-btn"
               component={Link}
-              to="/user-profile"
+              to="/mentee"
             >
               <i className="material-icons">
                 home
@@ -109,6 +99,17 @@ class Nav extends Component {
             </Button>
             {this.renderMentor()}
             <div>
+            {isUserOn && (<Button
+              className="nav-btn"
+              component={Link}
+              to="/personality-analysis"
+            >
+              <i className="material-icons">
+                grade
+              </i>
+              Analysis
+            </Button>
+            )}
               <Button
                 className="nav-btn"
                 aria-owns={anchorEl ? 'dropdown-menu' : null}
@@ -119,6 +120,9 @@ class Nav extends Component {
                   face
                 </i>
                 {`HI ${name || ''} !`}
+                <i class="material-icons">
+                  expand_more
+                </i>
               </Button>
               <Menu
                 id="dropdown-menu"

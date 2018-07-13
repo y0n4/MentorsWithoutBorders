@@ -12,7 +12,6 @@ import Nav from './Nav';
 import Login from './Login';
 import Chat from './Chat';
 import Home from './Home';
-import UserProfile from './UserProfile';
 import MentorSignUp from './MenteeHome/MentorSignUp';
 import '../dist/styles.css';
 import PersonalityAnalysis from './PersonalityAnalysis';
@@ -86,7 +85,6 @@ class App extends Component {
         <Nav name={name} isUserOn={isUserOn} />
 
         <Route exact path="/" component={Home} />
-        <Route path="/user-profile" component={() => <UserProfile {...this.state} />} />
         <Route path="/mentor" component={() => <MentorHome userId={userId} />} />
         <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
         <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />

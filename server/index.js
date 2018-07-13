@@ -314,6 +314,10 @@ app.get('/recommendation', (req, res) => {
   });
 });
 
+app.get('/search', (req, res) => {
+  
+});
+
 // app.get('/generateMessages', (req, res) => {
 
 //   axios({
