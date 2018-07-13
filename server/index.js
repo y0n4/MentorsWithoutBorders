@@ -21,8 +21,7 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const { createUser } = require('../database/dummyGen/fakeUsers');
-// createUser(2);
-// createUsers();
+// createUser(20);
 const cookieSession = require('cookie-session');
 const twitter = require('./twitter');
 const { getPersonality, getTextSummary } = require('./personality');
@@ -336,7 +335,9 @@ app.get('/recommendation', (req, res) => {
 // });
 
 app.get('/allMentors', (req, res) => {
-  res.send(userData);
+  data.getAllMentors((mentors) => {
+    res.send(mentors);
+  });
 });
 
 // watson-twitter chart
