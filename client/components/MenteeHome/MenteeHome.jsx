@@ -128,7 +128,7 @@ class MenteeHome extends Component {
                 </div>
               </Paper>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               xs={8}
             >
@@ -148,8 +148,7 @@ class MenteeHome extends Component {
                   What would happen if I binge eat hot cheetos? 🤔🤔🤔
                 </div>
               </Paper>
-            </Grid>
-
+            </Grid> */}
           </Grid>
       </div>
     );
