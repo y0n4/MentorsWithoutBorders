@@ -25,7 +25,7 @@ class MentorHome extends React.Component {
     super(props);
     this.state = {
       userId: this.props.userId,
-      questions: '',
+      questions: [],
       mentorHome: true,
       quote: '',
     };
@@ -34,8 +34,15 @@ class MentorHome extends React.Component {
   }
 
   componentDidMount() {
-    // get last 15 questions from connected mentees
-    // get current online mentees
+    axios.get('/seeInput', {
+      params: {
+        type: 'question',
+        userId: this.state.userId,
+      }
+    }).then((res) => {
+      this.setState({ questions: res.data });
+      console.log(this.state.questions);
+    });
   }
 
   // contains the input value
@@ -46,18 +53,26 @@ class MentorHome extends React.Component {
   // stores the input value and send to server
   saveMentorQ() {
     let storedQ = this.state.quote;
-    console.log(storedQ);
+    // console.log(storedQ);
     this.setState({ quote: '' });
-    axios.post('/addQuote', {
+    axios.post('/addInput', {
       userId: this.state.userId,
       quote: storedQ,
     });
   }
 
+  // <div className="feed">
+  // <ul>
+  //   {this.state.items.map(item => <Feed item={item} event={this.renderView()}/>, this)}
+  // </ul>
+  // </div>
+
   // renders left side of component
   renderMenteeQs() {
     return (
-      <MentorFeed />
+      <div>
+       {this.state.questions.reverse().map(info => <MentorFeed info={info} />)}
+      </div>
     );
   }
 
@@ -74,7 +89,7 @@ class MentorHome extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={8}>
+          <Grid item xs={8} style={{ height: 800, overflow: 'auto' }}>
             <Paper className={classes.paper}>
               <div className="input-descrip">
                 Share with your mentees about what inspired you today?<br /><br />
