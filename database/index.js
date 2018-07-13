@@ -89,6 +89,16 @@ User.belongsToMany(Category, { through: MentorCategory });
 Category.belongsToMany(User, { through: UserCategory });
 Category.belongsToMany(User, { through: MentorCategory });
 
+const Quote = sequelize.define('quote', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  quote: Sequelize.STRING,
+}, { timestamps: false });
+
+Quote.belongsTo(User); // shared foreign key w userId
 
 // sync model to database
 User.sync({ force: false }).then(() => { // set true if overwite existing database
@@ -289,6 +299,21 @@ const getSocketId = (userId, cb) => {
     });
 };
 
+Quote.sync({ force: false }).then(() => { // set true if overwite existing database
+  // Table created
+  console.log('Quote is synced');
+}).catch((err) => {
+  console.log('Quote is not synced');
+});
+
+const saveQuote = (query) => {
+  Quote.create(query).then((quote) => {
+    console.log('quote is saved to db');
+  }).catch((err) => {
+    console.log('not saved to db')
+  });
+}
+
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
 //   const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
@@ -332,4 +357,5 @@ module.exports = {
   updateMentorCategories,
   deleteMentorCategories,
   mentorStatus,
+  saveQuote,
 };
