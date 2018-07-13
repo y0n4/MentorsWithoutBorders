@@ -44,7 +44,7 @@ const User = sequelize.define('user', {
   wordCount: Sequelize.JSON,
   birthdate: Sequelize.DATEONLY,
   avgLoggedInTime: Sequelize.INTEGER,
-  onlineNow: Sequelize.BOOLEAN
+  onlineNow: Sequelize.BOOLEAN,
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
@@ -75,11 +75,26 @@ const Room = sequelize.define('room', {
   },
 }, { timestamps: true, updatedAt: false });
 
+const Request = sequelize.define('request', {
+  roomName: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    unique: true,
+  },
+  from: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    unique: true,
+  },
+}, { timestamps: true, updatedAt: false });
+
+
 const MyMentor = sequelize.define('myMentor', {}, { timestamps: false });
 const RoomMembers = sequelize.define('roomMembers', {}, { timestamps: false });
 const UserCategory = sequelize.define('userCategories', {}, { timestamps: false });
 const MentorCategory = sequelize.define('mentorCategories', {}, { timestamps: false });
 
+Request.belongsTo(User);
 Room.hasMany(Message);
 Message.belongsTo(User);
 User.belongsToMany(User, { as: 'mentor', through: 'myMentor' });
@@ -126,7 +141,7 @@ Category.sync({ force: false }).catch((err) => { throw err; });
 UserCategory.sync({ force: false }).catch((err) => { throw err; });
 MentorCategory.sync({ force: false }).catch((err) => { throw err; });
 
-const tableSync = [Message, Room, MyMentor, RoomMembers];
+const tableSync = [Message, Room, MyMentor, RoomMembers, Request];
 tableSync.forEach((table) => {
   table.sync({ force: false }).catch((err) => {
     console.log(`> > > ${table.name} SYNC ERROR < < <`, err);
@@ -152,7 +167,7 @@ const findUserById = (userId, callback) => {
         callback(user);
       })
       .catch((err) => {
-        console.log('This is userId', userId)
+        console.log('This is userId', userId);
         console.log('Error finding user by id', err);
       });
   }
@@ -168,12 +183,12 @@ const saveUser = (query) => {
 };
 
 async function asyncSaveUser(query) {
-  let saved = await User.create(query);
+  const saved = await User.create(query);
 
-  return new Promise ((resolve) => {
+  return new Promise((resolve) => {
     resolve('Saved');
   });
-};  
+}
 
 // get location information from users
 const allLocation = (callback) => {
@@ -203,8 +218,8 @@ const getMyMentors = (userId, cb) => {
 const getAllMentors = (callback) => {
   User.findAll({
     where: {
-      isMentor: true
-    }
+      isMentor: true,
+    },
   }).then((data) => {
     callback(data);
   });
@@ -212,24 +227,24 @@ const getAllMentors = (callback) => {
 
 const getCurrentUserCategories = (userId, callback) => {
   UserCategory.findAll({
-    where: { userId: userId }
+    where: { userId },
   }).then((data) => {
     callback(data);
   })
-  .catch((err) => {
-    console.log('Error in getting categories', err)
-  })
+    .catch((err) => {
+      console.log('Error in getting categories', err);
+    });
 };
 
 async function getCurrentMentorCategories(userId) {
-  let found = await MentorCategory.findAll({
-    where: { userId: userId }
-  })
+  const found = await MentorCategory.findAll({
+    where: { userId },
+  });
 
   return new Promise((resolve) => {
     resolve(found);
-  })
-};
+  });
+}
 
 const setMyMentor = (userId, mentorId) => {
   MyMentor.create({ userId, mentorId });
@@ -243,7 +258,7 @@ const savePersonality = (userId, personality) => {
 };
 
 const setMessage = (userId, message, roomId) => {
-  Message.create({ userId: userId, message: message, roomId: roomId });
+  Message.create({ userId, message, roomId });
 };
 
 const loginUser = (userId, socket) => {
@@ -263,13 +278,13 @@ const logoutUser = (userId) => {
 const setAvgLoggedInTime = (userId, login, logout) => {
   User.findById(userId)
     .then((user) => {
-      let prevAvgLoggedInTime = user.avgLoggedInTime;
-      let currentAvgLoggedInTime = ((login + logout) / 2);
-      let avgLoggedInTime = ((prevAvgLoggedInTime + currentAvgLoggedInTime) / 2);
-      console.log('This is avg loggedInTime', avgLoggedInTime)
+      const prevAvgLoggedInTime = user.avgLoggedInTime;
+      const currentAvgLoggedInTime = ((login + logout) / 2);
+      const avgLoggedInTime = ((prevAvgLoggedInTime + currentAvgLoggedInTime) / 2);
+      console.log('This is avg loggedInTime', avgLoggedInTime);
 
       user.update({ avgLoggedInTime });
-      console.log('It got updated')
+      console.log('It got updated');
     });
 };
 
@@ -279,27 +294,27 @@ const updateUserWordCount = (userId, wordCount, callback) => {
       user.update({ wordCount });
     })
     .then(() => {
-      callback()
+      callback();
     })
     .catch((err) => {
       console.log('Error in updating userWordCount', err);
-    })
+    });
 };
 
 const updateUserCategories = (userId, categoryId) => {
-  UserCategory.findOrCreate({ where: { userId, categoryId }});
+  UserCategory.findOrCreate({ where: { userId, categoryId } });
 };
 
 const deleteUserCategories = (userId, categoryId) => {
-  UserCategory.destroy({ where: { userId, categoryId }});
+  UserCategory.destroy({ where: { userId, categoryId } });
 };
 
 const updateMentorCategories = (userId, categoryId) => {
-  MentorCategory.findOrCreate({ where: { userId, categoryId }});
+  MentorCategory.findOrCreate({ where: { userId, categoryId } });
 };
 
 const deleteMentorCategories = (userId, categoryId) => {
-  MentorCategory.destroy({ where: { userId, categoryId }});
+  MentorCategory.destroy({ where: { userId, categoryId } });
 };
 
 // sets the user to become a mentor
@@ -307,7 +322,7 @@ const mentorStatus = (userId) => {
   User.findById(userId).then((user) => {
     user.update({ isMentor: true });
   });
-}
+};
 
 const setRoom = (userId, mentorId) => {
   const roomName = Number(userId.toString() + mentorId.toString());
@@ -328,6 +343,20 @@ const getSocketId = (userId, cb) => {
     });
 };
 
+const setRequest = (userId, roomName, from, cb) => {
+  Request.create({ userId, roomName, from })
+    .then((request) => {
+      cb();
+    });
+};
+
+const getRequests = (userId, cb) => {
+  Request.findAll({ where: { userId } })
+    .then((requests) => {
+      cb(requests);
+    });
+};
+
 Quote.sync({ force: false }).then(() => { // set true if overwite existing database
   // Table created
   console.log('Quote is synced');
@@ -339,7 +368,7 @@ const saveQuote = (query) => {
   Quote.create(query).then((quote) => {
     console.log('quote is saved to db');
   }).catch((err) => {
-    console.log('not saved to db')
+    console.log('not saved to db');
   });
 };
 
@@ -354,7 +383,7 @@ const saveQuestion = (query) => {
   Question.create(query).then((question) => {
     console.log('question is saved to db');
   }).catch((err) => {
-    console.log('not saved to db')
+    console.log('not saved to db');
   });
 };
 
@@ -363,20 +392,20 @@ const allQuestions = (userId, callback) => {
     where: {
       userId: {
         [Op.notIn]: [userId],
-      }
+      },
     },
     include: [
-      { model: User }
-    ]
+      { model: User },
+    ],
   }).then((questions) => {
     // console.log(questions[0].dataValues.user.dataValues);
-    let userQs = questions.map((info) => {
-      let userInfo = info.dataValues.user.dataValues;
+    const userQs = questions.map((info) => {
+      const userInfo = info.dataValues.user.dataValues;
       return {
         question: info.dataValues.question,
         fullName: userInfo.fullName,
         photo: userInfo.photo,
-      }
+      };
     });
     callback(userQs);
   });
@@ -387,24 +416,24 @@ const allQuotes = (userId, callback) => {
     where: {
       userId: {
         [Op.notIn]: [userId],
-      }
+      },
     },
     include: [
-      { model: User }
-    ]
+      { model: User },
+    ],
   }).then((quotes) => {
     // console.log(quotes[0].dataValues.user.dataValues);
-    let userQs = quotes.map((info) => {
-      let userInfo = info.dataValues.user.dataValues;
+    const userQs = quotes.map((info) => {
+      const userInfo = info.dataValues.user.dataValues;
       return {
         quote: info.dataValues.quote,
         fullName: userInfo.fullName,
         photo: userInfo.photo,
-      }
+      };
     });
     callback(userQs);
   });
-}
+};
 
 
 // const addRandomMessages = (qty = 25) => {
@@ -456,4 +485,6 @@ module.exports = {
   savePersonality,
   allQuestions,
   allQuotes,
+  setRequest,
+  getRequests,
 };

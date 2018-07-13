@@ -109,16 +109,11 @@ io.on('connection', (socket) => {
     data.getSocketId(client.toUserId, (user) => {
       const roomName = `${client.userId}${user.id}`;
       console.log('socket.id:', socket.id, 'user.socket', user.socket);
-      const reqPkg = {
-        roomName,
-        from: client.userId,
-        fromSocket: socket.id,
-        to: user.id,
-        toSocket: user.socket,
-      };
+      data.setRequest(client.toUserId, roomName, client.userId, () => {
+        io.to(user.socket).emit('request', user.name);
+      });
       console.log(user.socket, '⛔⛔ UserSocket @ chatrequest 94');
-      io.to(user.socket).emit('request', reqPkg);
-      socket.emit('enterVideoChat', reqPkg);
+      // socket.emit('enterVideoChat');
     });
   });
 

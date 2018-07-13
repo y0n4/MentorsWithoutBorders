@@ -30,20 +30,16 @@ class App extends Component {
       roomName: '',
       socketId: '',
       socketName: '',
-      mailCount: 0,
+      mailCount: [],
     };
     this.socket = io();
     this.setIsUserOn = this.setIsUserOn.bind(this);
     this.changeMentorStatus = this.changeMentorStatus.bind(this);
     this.socket.on('request', (data) => {
       console.log('request', data);
-      this.setState({
-        videoChat: true,
-        roomName: data.roomName,
-        socketId: data.fromSocket,
-        socketName: data.name,
-      });
+      this.getRequests();
     });
+
     this.socket.on('enterVideoChat', (data) => {
       console.log('entervideochat', data);
       this.setState({
@@ -53,6 +49,10 @@ class App extends Component {
         socketName: data.name,
       });
     });
+  }
+
+  componentDidMount() {
+    this.getRequests();
   }
 
   setIsUserOn(info) {
@@ -72,6 +72,16 @@ class App extends Component {
 
   changeMentorStatus() {
     this.setState({ isMentor: true });
+  }
+
+  getRequests() {
+    axios.get('/requests')
+      .then(({ data }) => {
+        console.log('request data', data);
+        this.setState(previousState => ({
+          mailCount: [...previousState.mailCount, data],
+        }));
+      });
   }
 
   render() {
@@ -100,10 +110,10 @@ class App extends Component {
               HEREEEE
             </Button>
           )}
-        <div className="main">
-          {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+          <div className="main">
+            {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+          </div>
         </div>
-      </div>
       </div>
     );
   }

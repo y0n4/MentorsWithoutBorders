@@ -6,10 +6,10 @@ import IconButton from '@material-ui/core/IconButton';
 function Mail(props) {
   const { mailCount, handleClickOpen } = props;
 
-  if (mailCount) {
+  if (mailCount.length > 0) {
     return (
       <IconButton onClick={handleClickOpen}>
-        <Badge badgeContent={mailCount} color="secondary">
+        <Badge badgeContent={mailCount.length} color="secondary">
           <MailIcon />
         </Badge>
       </IconButton>
