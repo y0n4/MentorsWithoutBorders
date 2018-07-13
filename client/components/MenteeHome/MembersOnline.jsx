@@ -1,38 +1,40 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
+import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import AutoComplete from '../AutoComplete';
 
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 // import MobileTearSheet from '../../../MobileTearSheet';
 class MembersOnline extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mentors: [],
-      menteeHome: true
+      menteeHome: true,
     };
     this.socket = this.props.socket;
     this.sendChatRequest = this.sendChatRequest.bind(this);
-    this.socket.on('mentorsOnline', (mentors) => {
-      this.setState({ mentors });
-    });
   }
 
   componentDidMount() {
+    console.log('mounting');
     const { userId } = this.props;
     this.socket.emit('getMyMentors', userId);
+    this.socket.on('mentorsOnline', (mentors) => {
+      this.setState({ mentors });
+    });
+    console.log(this.state.mentors);
   }
 
-  sendChatRequest(e, toUserId) {
+  sendChatRequest(toUserId, e) {
     e.preventDefault();
     const { userId } = this.props;
     const data = {
       userId,
       toUserId,
-    }
+    };
     this.socket.emit('chatRequest', data);
-    this.socket.emit('getMyMentors', userId);
+    // this.socket.emit('getMyMentors', userId);
   }
 
   render() {
@@ -46,23 +48,23 @@ class MembersOnline extends Component {
             }}
             >
               <center>
-          Mentors Online
+                Mentors Online
               </center>
             </span>
             <br />
             <hr />
-            { mentors.map(mentor => (
+            {mentors.map(mentor => (
               <ListItem
                 key={mentor.id}
                 primaryText={mentor.fullName}
                 rightAvatar={<Avatar src={mentor.photo} />}
                 rightIcon={<CommunicationChatBubble />}
-                onClick={() => this.sendChatRequest(mentor.id)}
+                onClick={e => this.sendChatRequest(mentor.id, e)}
               />
             ))}
           </List>
         </div>
-        <div className='menteeCategories'>
+        <div className="menteeCategories">
           <AutoComplete menteeHome={this.state.menteeHome} />
         </div>
       </div>
