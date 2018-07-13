@@ -42,6 +42,7 @@ class MentorHome extends React.Component {
       }
     }).then((res) => {
       this.setState({ questions: res.data });
+      console.log(this.state.questions);
     });
   }
 
@@ -64,7 +65,7 @@ class MentorHome extends React.Component {
   renderMenteeQs() {
     return (
       <div>
-       {this.state.questions.reverse().map(info => <MentorFeed info={info} />)}
+        {this.state.questions.reverse().map(info => <MentorFeed info={info} />)}
       </div>
     );
   }
@@ -93,9 +94,9 @@ class MentorHome extends React.Component {
               </div>
               <div className="mentee-question-feed">
                 Help guide your mentee's with tips that can help answer their worries/questions!
-<br />
+                <br />
                 Simply visit their profile and chat with them!
-<br />
+                <br />
                 {this.renderMenteeQs()}
               </div>
             </Paper>
@@ -105,16 +106,16 @@ class MentorHome extends React.Component {
               <div className="mentor-rating">
                 Your Mentor Rating
                 <div>
-⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews
-</div>
+                  ⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews
+                </div>
               </div>
               <br />
-<br />
+              <br />
               <div className="mentor-connect-mentee">
                 Current Mentees Online 
-{' '}
-<br />
-<br />
+                {' '}
+                <br />
+                <br />
                 {this.renderMenteeOnline()}
               </div>
             </Paper>
