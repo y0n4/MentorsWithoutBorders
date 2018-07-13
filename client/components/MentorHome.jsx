@@ -42,7 +42,6 @@ class MentorHome extends React.Component {
       }
     }).then((res) => {
       this.setState({ questions: res.data });
-      console.log(this.state.questions);
     });
   }
 

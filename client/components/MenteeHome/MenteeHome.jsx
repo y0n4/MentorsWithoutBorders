@@ -40,8 +40,6 @@ class MenteeHome extends Component {
   }
 
   componentDidMount() {
-    console.log('getting mounted');
-    // get all questions
     axios.get('/seeInput', {
       params: {
         type: 'quote',
@@ -49,13 +47,11 @@ class MenteeHome extends Component {
       }
     }).then((res) => {
       this.setState({ quotes: res.data });
-      console.log(this.state.quotes)
     });
   }
 
   checkTime() {
     const time = new Date().getHours();
-    // console.log(time);
     if (time < 12) {
       return 'Good Morning!';
     } if (time < 18) {
