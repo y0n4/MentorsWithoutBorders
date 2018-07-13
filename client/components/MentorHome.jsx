@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -23,9 +24,13 @@ class MentorHome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: this.props.userId,
       questions: '',
-      mentorHome: true
+      mentorHome: true,
+      quote: '',
     };
+    this.saveMentorQ = this.saveMentorQ.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -33,29 +38,39 @@ class MentorHome extends React.Component {
     // get current online mentees
   }
 
-  // renders mentees questions on homepage
+  // renders left side of component
   renderMenteeQs() {
     return (
       <MentorFeed />
     );
   }
 
-  // renders current online mentees on homepage
+  // renders right side of component
   renderMenteeOnline() {
     return (
       <MentorFeedRight />
     )
   }
 
-  // when submit button is clicked, save quote to db
+  // contains the input value
+  onChange(e) {
+    this.setState({quote: e.target.value})
+    // console.log(this.state.quote);
+  }
+
+  // stores the input value and send to server
   saveMentorQ() {
-    console.log('oui');
-    // save textarea input as value
-    // delete textarea input
-    // do post req to save to db
+    let storedQ = this.state.quote;
+    console.log(storedQ);
+    this.setState({quote: ''});
+    axios.post('/addQuote', {
+      userId: this.state.userId,
+      quote: storedQ,
+    });
   }
 
   render() {
+    // console.log(this.state);
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -64,7 +79,10 @@ class MentorHome extends React.Component {
             <Paper className={classes.paper}>
               <div className="mentor-quote">
                 Share with your mentees about what inspired you today?<br /><br />
-                <textarea className="mentor-input" /><br />
+                <textarea 
+                className="mentor-input"
+                value={this.state.quote}
+                onChange={this.onChange} /><br />
                 <button onClick={this.saveMentorQ}>Submit</button><br /><br /><br />
               </div>
               <div className="mentee-question-feed">
