@@ -100,13 +100,13 @@ class MenteeHome extends Component {
                 <div>
                   {!this.state.isMentor
                     ? (
-                      <button>
+                      <button className="signup-btn">
                         <Link to="/mentor-sign-up">
-                      Become a Mentor
+                          Become a Mentor!
                         </Link>
                       </button>
-                    ) : <div />}
-                  <SearchBar />
+                    ) : <div />}<br /><br />
+                  <SearchBar /><br /><br />
                   <MembersOnline userId={userId} socket={this.props.socket} />
                 </div>
               </Paper>

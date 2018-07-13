@@ -258,11 +258,6 @@ app.get('/token', (req, res) => {
   });
 });
 
-// send req for user to become mentor
-app.post('/mentorUpdate', (req, res) => {
-  data.mentorStatus(req.body.userId);
-});
-
 async function mentorScore(userCategories, mentor) {
   let score = 0;
   let retrieved = await data.getCurrentMentorCategories(mentor.id);
@@ -430,6 +425,16 @@ app.post('/updateMentorCategories', (req, res) => {
     });
   }
 });
+
+// send req for user to become mentor
+app.post('/mentorUpdate', (req, res) => {
+  data.mentorStatus(req.body.userId);
+});
+
+// send req to add quote
+app.post('/addQuote', (req, res) => {
+  data.saveQuote(req.body);
+})
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

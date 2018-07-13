@@ -86,7 +86,7 @@ class App extends Component {
 
         <Route exact path="/" component={Home} />
         <Route path="/user-profile" component={() => <UserProfile {...this.state} />} />
-        <Route path="/mentor" component={MentorHome} />
+        <Route path="/mentor" component={() => <MentorHome userId={userId} />} />
         <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
         <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
         <Route path="/searchResults" component={MentorSearch} />
