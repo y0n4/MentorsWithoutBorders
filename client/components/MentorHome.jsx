@@ -64,7 +64,7 @@ class MentorHome extends React.Component {
   renderMenteeQs() {
     return (
       <div>
-        {this.state.questions.reverse().map(info => <MentorFeed info={info} />)}
+        {this.state.questions.map(info => <MentorFeed info={info} />)}
       </div>
     );
   }
