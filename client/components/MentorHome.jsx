@@ -89,7 +89,7 @@ class MentorHome extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={8} style={{ height: 800, overflow: 'auto' }}>
+          <Grid item xs={8} style={{ height: 650, overflow: 'auto' }}>
             <Paper className={classes.paper}>
               <div className="input-descrip">
                 Share with your mentees about what inspired you today?<br /><br />
