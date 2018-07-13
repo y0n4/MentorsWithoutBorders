@@ -358,6 +358,31 @@ const saveQuestion = (query) => {
   });
 };
 
+const allQuestions = (userId, callback) => {
+  Question.findAll({
+    where: {
+      userId: {
+        [Op.notIn]: [userId],
+      }
+    },
+    include: [
+      { model: User }
+    ]
+  }).then((questions) => {
+    // console.log(questions[0].dataValues.user.dataValues);
+    let userQs = questions.map((info) => {
+      let userInfo = info.dataValues.user.dataValues;
+      return {
+        question: info.dataValues.question,
+        fullName: userInfo.fullName,
+        photo: userInfo.photo,
+      }
+    });
+    callback(userQs);
+  });
+};
+
+
 // const addRandomMessages = (qty = 25) => {
 //   const coolKids = ['Matt', 'Yona', 'Selena', 'Kav'];
 //   const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
@@ -405,4 +430,5 @@ module.exports = {
   saveQuote,
   saveQuestion,
   savePersonality,
+  allQuestions,
 };
