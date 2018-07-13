@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 import 'babel-polyfill';
-import BigFiveChart from './BigFiveChart';
 
 
 class AnalyzeScore extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // result: [],
     };
   }
 

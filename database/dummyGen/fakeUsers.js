@@ -1,4 +1,4 @@
-const { asyncSaveUser } = require('../index');
+const { asyncSaveUser } = require('..');
 const axios = require('axios');
 const { 
   firstNames, 

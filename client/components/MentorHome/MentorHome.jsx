@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import MentorFeed from './MentorHomeComponents/MentorFeed';
-import MentorFeedRight from './MentorHomeComponents/MentorFeedRight';
-import AutoComplete from './AutoComplete';
+import MentorFeed from './MentorFeed';
+import MentorFeedRight from './MentorFeedRight';
+import AutoComplete from '../AutoComplete';
 
 const styles = theme => ({
   root: {
@@ -39,7 +38,7 @@ class MentorHome extends React.Component {
       params: {
         type: 'question',
         userId: this.state.userId,
-      }
+      },
     }).then((res) => {
       this.setState({ questions: res.data });
     });
@@ -52,12 +51,7 @@ class MentorHome extends React.Component {
 
   // stores the input value and send to server
   saveMentorQ() {
-<<<<<<< HEAD
-    let storedQ = this.state.quote;
-=======
     const storedQ = this.state.quote;
-    console.log(storedQ);
->>>>>>> added privateroute.jsx, now users won't be able to navigate through our app without logging in
     this.setState({ quote: '' });
     axios.post('/addInput', {
       userId: this.state.userId,
@@ -100,7 +94,7 @@ class MentorHome extends React.Component {
                 <br />
                 <button onClick={this.saveMentorQ}>
 Submit
-                                </button>
+                </button>
                 <br />
                 <br />
                 <br />
@@ -142,8 +136,5 @@ Submit
   }
 }
 
-MentorHome.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(MentorHome);

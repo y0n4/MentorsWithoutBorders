@@ -7,16 +7,16 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 import VideoChatRoom from './VideoChatRoom';
-import MentorSearch from './MentorSearchComponents/MentorSearch';
-import MentorHome from './MentorHome';
+import MentorSearch from './MentorSearch/MentorSearch';
+import MentorHome from './MentorHome/MentorHome';
 import MenteeHome from './MenteeHome/MenteeHome';
 import Nav from './Nav';
-import Login from './Login';
+import Login from './LandingPage/Login';
 import Chat from './Chat';
-import Home from './Home';
+import Home from './LandingPage/Home';
 import MentorSignUp from './MenteeHome/MentorSignUp';
 import '../dist/styles.css';
-import PersonalityAnalysis from './PersonalityAnalysis';
+import PersonalityAnalysis from './Personality/PersonalityAnalysis';
 import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
@@ -38,7 +38,6 @@ class App extends Component {
     this.setIsUserOn = this.setIsUserOn.bind(this);
     this.changeMentorStatus = this.changeMentorStatus.bind(this);
     this.socket.on('request', (data) => {
-      console.log('request', data);
       this.getRequests();
     });
 
@@ -88,7 +87,7 @@ class App extends Component {
 
   render() {
     const {
-      isUserOn, userId, name, videoChat, isMentor,
+      isUserOn, messages, userId, name, videoChat, isMentor, mailCount,
     } = this.state;
 
     return (

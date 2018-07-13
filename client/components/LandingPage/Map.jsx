@@ -15,7 +15,7 @@ class Map extends React.Component {
 
   addData() {
     // console.log(this.refs.map.getMapObject())
-    // console.log(this.refs.map.getMapObject().scale = ['#C8EEFF', '#0071A4']);
+    // this.refs.map.getMapObject().scale = ['#C8EEFF', '#0071A4']
   }
 
   componentDidMount() {
@@ -33,12 +33,14 @@ class Map extends React.Component {
     return (
       <VectorMap
         map="world_mill"
+        regionStyle={{ initial: { fill: '#d2d6de' }, hover: { fill: '#A0D1DC' } }}
         ref="map"
         backgroundColor="clear"
         containerStyle={{
           width: '100%',
           height: '100%',
         }}
+       
         containerClassName="map"
         markers={data}
       />

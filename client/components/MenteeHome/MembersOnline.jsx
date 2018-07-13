@@ -42,7 +42,7 @@ class MembersOnline extends Component {
     return (
       <div className="mentors-online">
         <div className="onlineContainer">
-          <List style={{ maxWidth: '100%', overflow: 'auto' }}>
+          <List style={{ maxWidth: '100%', overflow: 'auto', height: 300, overflowX: 'auto', overflowY: 'auto'}}>
             <span style={{
               fontFamily: 'sans-serif', fontWeight: 'bold', fontSize: '18px',
             }}

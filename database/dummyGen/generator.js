@@ -1,7 +1,7 @@
 const { random } = require('faker');
 const axios = require('axios');
-const { saveUser } = require('../index');
-const { Message } = require('../index');
+const { saveUser } = require('..');
+const { Message } = require('..');
 
 module.exports.addDataToHeroku = (qty = 100) => {
   axios.get(`https://randomuser.me/api/?results=${qty}`)

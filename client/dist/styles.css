@@ -1,10 +1,12 @@
 body, html{
-    height:100%;
-    background-image: url('https://i1.wp.com/www.dargadgetz.com/wp-content/uploads/2016/10/Lake-Minimal-Wallpaper-DarGadgetZ.png?w%5Cx3d1200');
+    height: 100px;
+    width: 100%;
+    /* background-image: url('https://i1.wp.com/www.dargadgetz.com/wp-content/uploads/2016/10/Lake-Minimal-Wallpaper-DarGadgetZ.png?w%5Cx3d1200'); */
+    background: 'linear-gradient(to bottom, rgb(112, 184, 211) 0%, rgba(255,255,255,0) 100%';
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed;
+    background: fixed;
 }
 
 .nav-btn {
@@ -12,10 +14,10 @@ body, html{
   color: #959595;
 }
 
-.theTitle {
+/* .theTitle {
   font-family: 'Aldrich', sans-serif !important;
   font-size: 2.4em !important;
-}
+} */
 
 .main {
   text-align: center;
@@ -245,9 +247,10 @@ body, html{
 }
 
 .form-control {
- height: 25px;
- width: 150px;
+ height: 45px;
+ width: 16%;
  text-align: center;
+ font-size: 17px;
 }
 
 .react-autosuggest__container {
@@ -320,4 +323,10 @@ body, html{
   text-align: justify;
   width: 80%;
   margin: 0 auto;
+}
+
+.descriptionBig5 {
+  text-align: center;
+  font-family: Georgia;
+  font-size: 18;
 }
