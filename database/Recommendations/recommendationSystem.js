@@ -47,7 +47,7 @@ const recommendationSystem = (callback) => {
       return b.mentorScore - a.mentorScore;
     });
 
-    // allMentors = (allMentors.length > 5) ? allMentors.slice(0, 5) : allMentors;
+    allMentors = (allMentors.length > 5) ? allMentors.slice(0, 5) : allMentors;
 
     filtered = allMentors;
   }).then(() => {
