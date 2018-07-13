@@ -131,23 +131,23 @@ io.on('connection', (socket) => {
     // console.log('⛔ ', users[socket.id], 'Disconnected from socket');
     let logOutTime = new Date().getHours();
     // let userId = users[socket.id].userId;
-    data.setAvgLoggedInTime(users.userId, logInTime, logOutTime);
-    data.findUserById(users.userId, (user) => {
+    // data.setAvgLoggedInTime(users.userId, logInTime, logOutTime);
+    // data.findUserById(users.userId, (user) => {
 
-      if (messages.length !== 0) {
-        let updatedUserWordCount = userWordCounts(user, messages);
+      // if (messages.length !== 0) {
+      //   let updatedUserWordCount = userWordCounts(user, messages);
         
-        data.updateUserWordCount(users.userId, updatedUserWordCount, () => {
-          io.emit('userDisconnect', socket.id);
-          data.logoutUser(users[socket.id].userId);
-          delete users[socket.id];
-        });
-      } else {
+      //   data.updateUserWordCount(users.userId, updatedUserWordCount, () => {
+      //     io.emit('userDisconnect', socket.id);
+      //     data.logoutUser(users[socket.id].userId);
+      //     delete users[socket.id];
+      //   });
+      // } else {
         io.emit('userDisconnect', socket.id);
         data.logoutUser(users[socket.id].userId);
         delete users[socket.id];
-      }
-    });
+      // }
+    // });
   });
 });
 
