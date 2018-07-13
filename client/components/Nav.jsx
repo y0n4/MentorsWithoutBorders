@@ -84,18 +84,6 @@ class Nav extends Component {
               userId={userId}
               socket={socket}
             />
-            {isUserOn && (
-              <Button
-                className="nav-btn"
-                component={Link}
-                to="/personality-analysis"
-              >
-                <i className="material-icons">
-                  grade
-                </i>
-                Analysis
-              </Button>
-            )}
             <Button
               className="nav-btn"
               component={Link}
@@ -162,12 +150,6 @@ class Nav extends Component {
                       label="Mentor"
                     />
                   </FormGroup>
-
-                </MenuItem>
-                <MenuItem onClick={this.handleClose}>
-                  <Link to="/searchResults">
-                    Find a Mentor
-                  </Link>
                 </MenuItem>
                 <MenuItem onClick={this.logsOff}>
                   <Link to="/logout" onClick={this.logsOff}>

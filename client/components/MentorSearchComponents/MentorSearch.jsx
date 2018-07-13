@@ -39,6 +39,7 @@ const styles = theme => ({
   paper: {
     height: 140,
     width: 100,
+    color: 'black',
   },
   card: {
     minWidth: 275,

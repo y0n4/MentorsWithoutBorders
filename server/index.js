@@ -7,7 +7,7 @@ const axios = require('axios');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+ 
 const { AccessToken } = require('twilio').jwt;
 
 const { VideoGrant } = AccessToken;
@@ -21,7 +21,11 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const { createUser } = require('../database/dummyGen/fakeUsers');
-// createUser(10);
+// let i = 0;
+// while (i < 50) {
+//   setTimeout(() => createUser(1), 2000);
+//   i++
+// }  
 const cookieSession = require('cookie-session');
 const twitter = require('./twitter');
 const { getPersonality, getTextSummary } = require('./personality');
