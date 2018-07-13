@@ -21,7 +21,7 @@ const io = socketIo(server);
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const { createUser } = require('../database/dummyGen/fakeUsers');
-// createUser(10); 
+// createUser(10);
 const cookieSession = require('cookie-session');
 const twitter = require('./twitter');
 const { getPersonality, getTextSummary } = require('./personality');
@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
   console.log('✅  Socket Connection from id:', socket.id);
   users[socket.id] = {};
   socket.emit('loginCheck');
-  let logInTime = new Date().getHours();
+  const logInTime = new Date().getHours();
   messages = [];
 
   socket.on('userLoggedIn', (client) => {
@@ -82,12 +82,12 @@ io.on('connection', (socket) => {
     });
   });
 
-  // socket.on('getMyMentors', () => {
-  //   console.log('✅✅✅✅✅getmymentors', users[socket.id].userId);
-  //   data.getMyMentors(users[socket.id].userId, (mentors) => {
-  //     socket.emit('mentorsOnline', mentors);
-  //   });
-  // });
+  socket.on('getMyMentors', () => {
+    console.log('✅✅✅✅✅getmymentors', users[socket.id].userId);
+    data.getMyMentors(users[socket.id].userId, (mentors) => {
+      socket.emit('mentorsOnline', mentors);
+    });
+  });
 
   socket.on('new message', (message) => {
     console.log('✉️ socket.new message', message);
@@ -105,20 +105,15 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatRequest', (client) => {
-    // console.log(client)
+    console.log('chatrequest');
     data.getSocketId(client.toUserId, (user) => {
       const roomName = `${client.userId}${user.id}`;
       console.log('socket.id:', socket.id, 'user.socket', user.socket);
-      const reqPkg = {
-        roomName,
-        from: client.userId,
-        fromSocket: socket.id,
-        to: user.id,
-        toSocket: user.socket,
-      };
+      data.setRequest(client.toUserId, roomName, client.userId, () => {
+        io.to(user.socket).emit('request', user.name);
+      });
       console.log(user.socket, '⛔⛔ UserSocket @ chatrequest 94');
-      io.to(user.socket).emit('request', reqPkg);
-      socket.emit('enterVideoChat', reqPkg);
+      // socket.emit('enterVideoChat');
     });
   });
 
@@ -129,24 +124,24 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     // console.log('⛔ ', users[socket.id], 'Disconnected from socket');
-    let logOutTime = new Date().getHours();
+    const logOutTime = new Date().getHours();
     // let userId = users[socket.id].userId;
     // data.setAvgLoggedInTime(users.userId, logInTime, logOutTime);
     // data.findUserById(users.userId, (user) => {
 
-      // if (messages.length !== 0) {
-      //   let updatedUserWordCount = userWordCounts(user, messages);
-        
-      //   data.updateUserWordCount(users.userId, updatedUserWordCount, () => {
-      //     io.emit('userDisconnect', socket.id);
-      //     data.logoutUser(users[socket.id].userId);
-      //     delete users[socket.id];
-      //   });
-      // } else {
-        io.emit('userDisconnect', socket.id);
-        data.logoutUser(users[socket.id].userId);
-        delete users[socket.id];
-      // }
+    // if (messages.length !== 0) {
+    //   let updatedUserWordCount = userWordCounts(user, messages);
+
+    //   data.updateUserWordCount(users.userId, updatedUserWordCount, () => {
+    //     io.emit('userDisconnect', socket.id);
+    //     data.logoutUser(users[socket.id].userId);
+    //     delete users[socket.id];
+    //   });
+    // } else {
+    io.emit('userDisconnect', socket.id);
+    data.logoutUser(users[socket.id].userId);
+    delete users[socket.id];
+    // }
     // });
   });
 });
@@ -262,8 +257,8 @@ app.get('/token', (req, res) => {
 
 async function mentorScore(userCategories, mentor) {
   let score = 0;
-  let retrieved = await data.getCurrentMentorCategories(mentor.id);
-  let categoryIds = getCategoryIds(retrieved);
+  const retrieved = await data.getCurrentMentorCategories(mentor.id);
+  const categoryIds = getCategoryIds(retrieved);
 
   userCategories.forEach((category) => {
     if (categoryIds.indexOf(category) > -1) {
@@ -273,15 +268,15 @@ async function mentorScore(userCategories, mentor) {
 
   mentor.mentorScore = score;
 
-  return mentor
-};
+  return mentor;
+}
 
 async function addMentorScore(userId, categories, mentors) {
-  let filtered = [];
+  const filtered = [];
 
-  for (let mentor of mentors) {
+  for (const mentor of mentors) {
     if (mentor.id !== userId) {
-      let response = await mentorScore(categories, mentor);
+      const response = await mentorScore(categories, mentor);
       filtered.push(response);
     }
   }
@@ -291,24 +286,24 @@ async function addMentorScore(userId, categories, mentors) {
 
 // Send the user data to MentorSearch component
 app.get('/recommendation', (req, res) => {
-  let userId = req.session.passport.user.profile.id;
-  
+  const userId = req.session.passport.user.profile.id;
+
   data.findUser(userId, (user) => {
-    let currentUserId = user.id;
+    const currentUserId = user.id;
 
     data.getCurrentUserCategories(currentUserId, (datas) => {
-      let categories = getCategoryIds(datas);
-      
+      const categories = getCategoryIds(datas);
+
       data.getAllMentors((mentors) => {
-        let mentorData = getMentorInfo(mentors);
+        const mentorData = getMentorInfo(mentors);
 
         addMentorScore(currentUserId, categories, mentorData).then((filteredMentors) => {
           res.send({
             userCategories: categories,
             allMentors: filteredMentors,
-            currentUser: user
+            currentUser: user,
           });
-        })
+        });
       });
     });
   });
@@ -318,7 +313,7 @@ app.get('/recommendation', (req, res) => {
 
 //   axios({
 //     method: 'get',
-//     url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies&count=10', 
+//     url: 'https://andruxnet-random-famous-quotes.p.mashape.com/?cat=movies&count=10',
 //     headers: {
 //     'X-Mashape-Key': 'czGDnXNx1gmshgfCx4vYASFY9Bnsp1ksXifjsnIGGtctpIGWtU'
 //     }
@@ -326,7 +321,7 @@ app.get('/recommendation', (req, res) => {
 //     results.data.forEach((quote) => {
 //       data.setMessage(2, quote.quote, 1);
 //     })
-    
+
 //     console.log('It ran')
 //     res.send('200')
 //   }).catch((err) => {
@@ -363,35 +358,35 @@ app.post('/recommend', (req, res) => {
 
 app.get('/menteeCategories', (req, res) => {
   data.getCurrentUserCategories(users.userId, (categories) => {
-    let categoryIds = getCategoryIds(categories);
-    let categoryNames = [];
+    const categoryIds = getCategoryIds(categories);
+    const categoryNames = [];
 
     categoryIds.forEach((id) => {
       categoryNames.push(occupations[id]);
     });
 
     res.send(categoryNames);
-  })
-}); 
+  });
+});
 
 app.get('/mentorCategories', (req, res) => {
   data.getCurrentMentorCategories(users.userId, (categories) => {
-    let categoryIds = getCategoryIds(categories);
-    let categoryNames = [];
+    const categoryIds = getCategoryIds(categories);
+    const categoryNames = [];
 
     categoryIds.forEach((id) => {
       categoryNames.push(occupations[id]);
     });
 
     res.send(categoryNames);
-  })
-}); 
+  });
+});
 
 app.post('/updateMenteeCategories', (req, res) => {
-  let categories = req.body.categories;
-  let deletedCategories = req.body.deletedCategories;
-  let categoryIds = [];
-  let deletedCategoryIds = [];
+  const categories = req.body.categories;
+  const deletedCategories = req.body.deletedCategories;
+  const categoryIds = [];
+  const deletedCategoryIds = [];
 
   categories.forEach((category) => {
     categoryIds.push(occupations.indexOf(category));
@@ -413,10 +408,10 @@ app.post('/updateMenteeCategories', (req, res) => {
 });
 
 app.post('/updateMentorCategories', (req, res) => {
-  let categories = req.body.categories;
-  let deletedCategories = req.body.deletedCategories;
-  let categoryIds = [];
-  let deletedCategoryIds = [];
+  const categories = req.body.categories;
+  const deletedCategories = req.body.deletedCategories;
+  const categoryIds = [];
+  const deletedCategoryIds = [];
 
   categories.forEach((category) => {
     categoryIds.push(occupations.indexOf(category));

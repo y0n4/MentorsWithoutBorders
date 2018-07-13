@@ -11,6 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import MailVideoConnect from './MailVideoConnect';
 
 const styles = {
   root: {
@@ -66,7 +67,9 @@ class Nav extends Component {
 
 
   render() {
-    const { classes, name, isUserOn } = this.props;
+    const {
+      classes, name, isUserOn, mailCount, socket, userId,
+    } = this.props;
     const { anchorEl } = this.state;
 
     return (
@@ -76,7 +79,23 @@ class Nav extends Component {
             <Typography variant="title" className={classes.flex}>
               Mentors Without Borders
             </Typography>
-
+            <MailVideoConnect
+              mailCount={mailCount}
+              userId={userId}
+              socket={socket}
+            />
+            {isUserOn && (
+              <Button
+                className="nav-btn"
+                component={Link}
+                to="/personality-analysis"
+              >
+                <i className="material-icons">
+                  grade
+                </i>
+                Analysis
+              </Button>
+            )}
             <Button
               className="nav-btn"
               component={Link}
@@ -99,7 +118,7 @@ class Nav extends Component {
             </Button>
             {this.renderMentor()}
             <div>
-            {isUserOn && (<Button
+              {isUserOn && (<Button
               className="nav-btn"
               component={Link}
               to="/personality-analysis"
@@ -108,7 +127,7 @@ class Nav extends Component {
                 grade
               </i>
               Analysis
-            </Button>
+                          </Button>
             )}
               <Button
                 className="nav-btn"
@@ -120,7 +139,7 @@ class Nav extends Component {
                   face
                 </i>
                 {`HI ${name || ''} !`}
-                <i class="material-icons">
+                <i className="material-icons">
                   expand_more
                 </i>
               </Button>

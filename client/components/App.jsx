@@ -30,19 +30,16 @@ class App extends Component {
       roomName: '',
       socketId: '',
       socketName: '',
+      mailCount: [],
     };
     this.socket = io();
     this.setIsUserOn = this.setIsUserOn.bind(this);
     this.changeMentorStatus = this.changeMentorStatus.bind(this);
     this.socket.on('request', (data) => {
       console.log('request', data);
-      this.setState({
-        videoChat: true,
-        roomName: data.roomName,
-        socketId: data.fromSocket,
-        socketName: data.name,
-      });
+      this.getRequests();
     });
+
     this.socket.on('enterVideoChat', (data) => {
       console.log('entervideochat', data);
       this.setState({
@@ -54,8 +51,11 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    this.getRequests();
+  }
+
   setIsUserOn(info) {
-    const { isUserOn } = this.state;
     this.setState({
       isUserOn: true,
       name: info.dbInfo.fullName,
@@ -74,15 +74,25 @@ class App extends Component {
     this.setState({ isMentor: true });
   }
 
+  getRequests() {
+    axios.get('/requests')
+      .then(({ data }) => {
+        console.log('request data', data);
+        this.setState(previousState => ({
+          mailCount: [...previousState.mailCount, data],
+        }));
+      });
+  }
+
   render() {
     const {
-      isUserOn, messages, userId, name, videoChat, isMentor,
+      isUserOn, messages, userId, name, videoChat, isMentor, mailCount,
     } = this.state;
 
     return (
 
       <div className="nav">
-        <Nav name={name} isUserOn={isUserOn} />
+        <Nav name={name} isUserOn={isUserOn} mailCount={mailCount} socket={this.socket} userId={userId} />
 
         <Route exact path="/" component={Home} />
         <Route path="/mentor" component={() => <MentorHome userId={userId} />} />
@@ -93,17 +103,17 @@ class App extends Component {
         <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} changeMentorStatus={this.changeMentorStatus} />} />
         <div className="main">
           {videoChat && (
-          <Button
-            component={Link}
-            to="/chat"
-          >
-HEREEEE
-          </Button>
+            <Button
+              component={Link}
+              to="/chat"
+            >
+              HEREEEE
+            </Button>
           )}
-        <div className="main">
-          {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+          <div className="main">
+            {!isUserOn && <Login setIsUserOn={this.setIsUserOn} />}
+          </div>
         </div>
-      </div>
       </div>
     );
   }
