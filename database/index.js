@@ -42,6 +42,7 @@ const User = sequelize.define('user', {
   wordCount: Sequelize.JSON,
   birthdate: Sequelize.DATEONLY,
   avgLoggedInTime: Sequelize.INTEGER,
+  onlineNow: Sequelize.BOOLEAN
 }, { timestamps: false });
 
 // category table is not being used atm (will need to have some fields already saved in it automatically, this is not meant for users to submit a field profession (only for our use))
@@ -163,6 +164,14 @@ const saveUser = (query) => {
     console.log('not saved to database');
   });
 };
+
+async function asyncSaveUser(query) {
+  let saved = await User.create(query);
+
+  return new Promise ((resolve) => {
+    resolve('Saved');
+  });
+};  
 
 // get location information from users
 const allLocation = (callback) => {
@@ -364,6 +373,7 @@ module.exports = {
   findUser,
   findUserById,
   saveUser,
+  asyncSaveUser,
   allLocation,
   getMyMentors,
   getAllMentors,

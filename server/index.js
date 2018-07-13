@@ -20,6 +20,9 @@ const io = socketIo(server);
 // ⬇⬇⬇ for google oauth ⬇⬇⬇
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
+const { createUser } = require('../database/dummyGen/fakeUsers');
+// createUser(2);
+// createUsers();
 const cookieSession = require('cookie-session');
 const twitter = require('./twitter');
 const { getPersonality, getTextSummary } = require('./personality');
