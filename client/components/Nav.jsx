@@ -120,6 +120,9 @@ class Nav extends Component {
                   face
                 </i>
                 {`HI ${name || ''} !`}
+                <i class="material-icons">
+                  expand_more
+                </i>
               </Button>
               <Menu
                 id="dropdown-menu"
