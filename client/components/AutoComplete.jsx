@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import Autosuggest from 'react-autosuggest';
 import Chips from './Chips';
+import Autosuggest from 'react-autosuggest';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { occupations } from '../../database/dummyGen/occupations';
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
@@ -25,6 +28,15 @@ const renderSuggestion = suggestion => (
     {suggestion}
   </div>
 );
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class AutoComplete extends React.Component {
   constructor(props) {
@@ -124,6 +136,7 @@ class AutoComplete extends React.Component {
 
   render() {
     const { value, suggestions } = this.state;
+    const { classes } = this.props;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
@@ -143,11 +156,19 @@ class AutoComplete extends React.Component {
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />
-        <button onClick={() => this.handleSubmit()}>Add Topic</button>
+        <Button variant="extendedFab" className={classes.button} onClick={() => this.handleSubmit()}>
+          <i class="material-icons">
+            add_circle_outline
+          </i>Add Topic
+        </Button>
         <Chips chipData={this.state.pickedCategories} handleDelete={this.handleDelete}/>
       </div>
     );
   }
 }
 
-export default AutoComplete;
+AutoComplete.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(AutoComplete);
