@@ -47,12 +47,17 @@ class MentorHome extends React.Component {
 
   // contains the input value
   onChange(e) {
-    this.setState({quote: e.target.value})
+    this.setState({ quote: e.target.value });
   }
 
   // stores the input value and send to server
   saveMentorQ() {
+<<<<<<< HEAD
     let storedQ = this.state.quote;
+=======
+    const storedQ = this.state.quote;
+    console.log(storedQ);
+>>>>>>> added privateroute.jsx, now users won't be able to navigate through our app without logging in
     this.setState({ quote: '' });
     axios.post('/addInput', {
       userId: this.state.userId,
@@ -84,12 +89,21 @@ class MentorHome extends React.Component {
           <Grid item xs={8} style={{ height: 650, overflow: 'auto' }}>
             <Paper className={classes.paper}>
               <div className="input-descrip">
-                Share with your mentees about what inspired you today?<br /><br />
-                <textarea 
-                className="input-value"
-                value={this.state.quote}
-                onChange={this.onChange} /><br />
-                <button onClick={this.saveMentorQ}>Submit</button><br /><br /><br />
+                Share with your mentees about what inspired you today?
+                <br />
+                <br />
+                <textarea
+                  className="input-value"
+                  value={this.state.quote}
+                  onChange={this.onChange}
+                />
+                <br />
+                <button onClick={this.saveMentorQ}>
+Submit
+                                </button>
+                <br />
+                <br />
+                <br />
               </div>
               <div className="mentee-question-feed">
                 Help guide your mentee's with tips that can help answer their worries/questions!
@@ -105,13 +119,13 @@ class MentorHome extends React.Component {
               <div className="mentor-rating">
                 Your Mentor Rating
                 <div>
-                  ⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews
+⭐️ ⭐ ️⭐️ ⭐️ ⭐️ 5 reviews
                 </div>
               </div>
               <br />
               <br />
               <div className="mentor-connect-mentee">
-                Current Mentees Online 
+                Current Mentees Online
                 {' '}
                 <br />
                 <br />
@@ -120,7 +134,7 @@ class MentorHome extends React.Component {
             </Paper>
             <Paper className={classes.paper}>
               <AutoComplete mentorHome={this.state.mentorHome} />
-            </Paper>  
+            </Paper>
           </Grid>
         </Grid>
       </div>

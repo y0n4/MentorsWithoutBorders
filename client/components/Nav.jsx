@@ -107,16 +107,16 @@ class Nav extends Component {
             {this.renderMentor()}
             <div>
               {isUserOn && (<Button
-              className="nav-btn"
-              component={Link}
-              to="/personality-analysis"
-            >
-              <i className="material-icons">
+                className="nav-btn"
+                component={Link}
+                to="/personality-analysis"
+              >
+                <i className="material-icons">
                 grade
-              </i>
+                </i>
               Analysis
-                          </Button>
-            )}
+                            </Button>
+              )}
               <Button
                 className="nav-btn"
                 aria-owns={anchorEl ? 'dropdown-menu' : null}
@@ -166,6 +166,7 @@ class Nav extends Component {
 }
 
 Nav.propTypes = {
+  name: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
