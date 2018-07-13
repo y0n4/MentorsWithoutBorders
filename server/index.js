@@ -434,7 +434,13 @@ app.post('/mentorUpdate', (req, res) => {
 // send req to add quote
 app.post('/addQuote', (req, res) => {
   data.saveQuote(req.body);
-})
+});
+
+// send req to add quote
+app.post('/addQuestion', (req, res) => {
+  // console.log(req.body);
+  data.saveQuestion(req.body);
+});
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
