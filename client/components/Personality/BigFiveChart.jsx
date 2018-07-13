@@ -60,17 +60,15 @@ export default class BigFiveChart extends Component {
     };
     return (
       <div className="chartContainer">
-
-
-        <div>
-          <Pie
-            data={Data}
-            width={400}
-            height={400}
-            options={options}
-          />
-        </div>
+        
+        <Pie
+          data={Data}
+          width={400}
+          height={400}
+          options={options}
+        />
       </div>
+
     );
   }
 }

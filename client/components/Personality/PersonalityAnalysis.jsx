@@ -41,25 +41,43 @@ class PersonalityAnalysis extends Component {
 
     return (
       <div>
-        <form onSubmit={this.onFormSubmit} className="searchContainer">
-          <div style={{ color: 'white', fontSize: 18 }}>
+        <div
+          className="descriptionBig5"
+          style={{
+            font: 'Georgia', textAligh: 'center', padding: 20, boxSizing: 'border-box',
+          }}
+        >
+          <p>
+Understanding your personality can help us give you better recommendations.
+          </p>
+
+          <p>
+Let's find out your Big 5 personality!
+          </p>
+
+        </div>
+        <form onSubmit={this.onFormSubmit} className="searchContainer" style={{ marginTop: '20px', marginBottom: '30px', textAlign: 'center' }}>
+          <div style={{ color: '#7ed6c8', fontSize: '29px' }}>
 @
             {' '}
-
             <input
+
               placeholder="enter twitter handle"
               className="form-control"
+              name="@"
               value={input}
+              height={400}
+              fontSize="15px"
               onChange={this.onInputChange}
             />
             <span className="submitButton">
-              <Button type="submit">
+              <Button type="submit" style={{ fontSize: '20px' }}>
 Go!
               </Button>
             </span>
           </div>
         </form>
-        {bigFive ? <BigFiveChart traits={bigFive} /> : 'enter handle and wait' }
+        {bigFive && <BigFiveChart traits={bigFive} />}
         {bigFive && <AnalyzeScore traits={bigFive} userId={userId} />}
       </div>
     );

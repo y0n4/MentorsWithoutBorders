@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -74,20 +74,36 @@ class Nav extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
+        <AppBar
+          position="static"
+          style={{
+            width: '100%',
+            height: '150px',
+            background: 'linear-gradient(to bottom, rgb(112, 184, 211) 0%, rgba(255,255,255,0) 100%)',
+            paddingBottom: 50,
+            boxShadow: 'none',
+            color: '#ffffff',
+          }}
+        >
           <Toolbar>
-            <Typography variant="title" className={`${classes.flex} theTitle`}>
+            <Typography variant="title" className={`${classes.flex} theTitle`} style={{ color: 'white', fontSize: 30 }}>
               Mentors Without Borders
             </Typography>
-            <MailVideoConnect
-              mailCount={mailCount}
-              userId={userId}
-              socket={socket}
-            />
+            {isUserOn ? (
+              <MailVideoConnect
+                style={{ fontSize: '18px' }}
+                mailCount={mailCount}
+                userId={userId}
+                socket={socket}
+                color="inherit"
+              />
+            ) : null}
             <Button
+              style={{ fontSize: '19px' }}
               className="nav-btn"
               component={Link}
               to="/mentee"
+              color="inherit"
             >
               <i className="material-icons">
                 home
@@ -95,9 +111,11 @@ class Nav extends Component {
               HOME
             </Button>
             <Button
+              style={{ fontSize: '18px' }}
               className="nav-btn"
               component={Link}
               to="/chat"
+              color="inherit"
             >
               <i className="material-icons">
                 comment
@@ -107,21 +125,25 @@ class Nav extends Component {
             {this.renderMentor()}
             <div>
               {isUserOn && (<Button
+                style={{ fontSize: '18px' }}
                 className="nav-btn"
                 component={Link}
                 to="/personality-analysis"
+                color="inherit"
               >
                 <i className="material-icons">
                 grade
                 </i>
               Analysis
-                            </Button>
+              </Button>
               )}
               <Button
+                style={{ fontSize: '18px' }}
                 className="nav-btn"
                 aria-owns={anchorEl ? 'dropdown-menu' : null}
                 aria-haspopup="true"
                 onClick={this.handleClick}
+                color="inherit"
               >
                 <i className="material-icons">
                   face
@@ -165,9 +187,5 @@ class Nav extends Component {
   }
 }
 
-Nav.propTypes = {
-  name: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(Nav);
