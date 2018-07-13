@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import {
+  Route, Link, Redirect, Switch, BrowserRouter,
+} from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -15,7 +17,7 @@ import Home from './Home';
 import MentorSignUp from './MenteeHome/MentorSignUp';
 import '../dist/styles.css';
 import PersonalityAnalysis from './PersonalityAnalysis';
-import AnalyzeScore from './AnalyzeScore';
+import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
   constructor() {
@@ -86,7 +88,7 @@ class App extends Component {
 
   render() {
     const {
-      isUserOn, messages, userId, name, videoChat, isMentor, mailCount,
+      isUserOn, userId, name, videoChat, isMentor,
     } = this.state;
 
     return (
@@ -95,12 +97,13 @@ class App extends Component {
         <Nav name={name} isUserOn={isUserOn} mailCount={mailCount} socket={this.socket} userId={userId} />
 
         <Route exact path="/" component={Home} />
-        <Route path="/mentor" component={() => <MentorHome userId={userId} />} />
-        <Route path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} isMentor={isMentor} socket={this.socket} />} />
-        <Route path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} />} />
-        <Route path="/searchResults" component={MentorSearch} />
-        <Route path="/personality-analysis" component={() => <PersonalityAnalysis userId={userId} />} />
-        <Route path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} changeMentorStatus={this.changeMentorStatus} />} />
+        <PrivateRoute isUserOn={isUserOn} path="/mentor" component={() => <MentorHome userId={userId} />} />
+        <PrivateRoute isUserOn={isUserOn} path="/mentee" component={() => <MenteeHome isUserOn={isUserOn} userId={userId} socket={this.socket} />} />
+        <PrivateRoute isUserOn={isUserOn} path="/chat" component={() => <VideoChatRoom {...this.state} socket={this.socket} isUserOn={isUserOn} />} />
+        <PrivateRoute isUserOn={isUserOn} path="/searchResults" component={MentorSearch} isUserOn={isUserOn} />
+        <PrivateRoute isUserOn={isUserOn} path="/personality-analysis" component={() => <PersonalityAnalysis userId={userId} isUserOn={isUserOn} />} />
+        <PrivateRoute isUserOn={isUserOn} path="/mentor-sign-up" component={() => <MentorSignUp isMentor={isMentor} userId={userId} changeMentorStatus={this.changeMentorStatus} isUserOn={isUserOn} />} />
+
         <div className="main">
           {videoChat && (
             <Button

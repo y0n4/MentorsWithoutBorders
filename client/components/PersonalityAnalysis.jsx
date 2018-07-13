@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import 'babel-polyfill';
@@ -66,4 +67,4 @@ Go!
 }
 
 
-export default PersonalityAnalysis;
+export default withRouter(PersonalityAnalysis);

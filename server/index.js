@@ -7,7 +7,7 @@ const axios = require('axios');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const path = require('path');
- 
+
 const { AccessToken } = require('twilio').jwt;
 
 const { VideoGrant } = AccessToken;
@@ -25,7 +25,7 @@ const { createUser } = require('../database/dummyGen/fakeUsers');
 // while (i < 50) {
 //   setTimeout(() => createUser(1), 2000);
 //   i++
-// }  
+// }
 const cookieSession = require('cookie-session');
 const twitter = require('./twitter');
 const { getPersonality, getTextSummary } = require('./personality');
@@ -358,7 +358,7 @@ app.post('/recommend', (req, res) => {
   data.savePersonality(req.body.userId, req.body.personality);
   console.log(req.body.personality, 'for you YONA BACKKKK ');
 });
-
+// end watson-twitter chart
 
 app.get('/menteeCategories', (req, res) => {
   data.getCurrentUserCategories(users.userId, (categories) => {
